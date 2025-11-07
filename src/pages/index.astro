@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import HeroSection from "../components/hero-section";
+import HeroSection from "../components/hero-section.astro";
 import AboutUs from "../components/about";
 import History from "../components/history";
 import Allies from "../components/allies";
@@ -8,7 +8,7 @@ import Footer from "../components/footer";
 ---
 
 <Layout>
-	<HeroSection client:load />
+	<HeroSection />
 	<AboutUs client:load />
 	<History client:load />
 	<Allies client:load />

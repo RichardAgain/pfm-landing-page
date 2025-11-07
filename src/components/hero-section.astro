@@ -1,0 +1,88 @@
+---
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+import { Swiper, SwiperWrapper, SwiperSlide } from "astro-swiper"
+
+// Navigation routes (could be hoisted to a config later)
+const routes: { href: string; label: string }[] = [
+  { href: "#nosotros", label: "Nosotros" },
+  { href: "#historia", label: "Historia" },
+  { href: "#aliados", label: "Aliados" },
+  { href: "/programa-t21-down", label: "Programa T21 Down" },
+  { href: "/galeria", label: "Galería" },
+  { href: "#contacto", label: "Contacto" }
+];
+
+const images = Object.values(import.meta.glob<{ default: ImageMetadata }>("/src/assets/herosection/*.{jpg,JPG}", { eager: true })).map((m) => m.default);
+---
+
+<section id="inicio" class="relative w-full min-h-130 md:min-h-screen bottom-fade overflow-hidden">
+  <div class="absolute inset-0 z-0 w-full">
+<Swiper options={{
+  autoplay: { 
+    delay: 5000,
+  },
+  loop: true
+}}>
+      <SwiperWrapper>
+        {images.map((img) => (
+          <SwiperSlide>
+            <Picture src={img} formats={["avif","webp"]} alt="Academia Internacional de Música - Maestro José Calabrese" class="w-full h-130 md:h-[100%] object-cover" />
+          </SwiperSlide>
+        ))}
+      </SwiperWrapper>
+      <div class="absolute inset-0 z-5 h-130 md:h-[100%] bg-black opacity-50 pointer-events-none"></div>
+    </Swiper>
+  </div>
+
+  <header class="flex items-center p-8 md:px-24 md:py-6 z-10 relative">
+    <div class="flex w-full items-center justify-start z-10">
+      <div class="flex w-1/2 lg:w-1/5 items-center">
+        <img src="/logo-white.png" alt="Academia Internacional de Música - Maestro José Calabrese" class="w-15 md:w-20" />
+      </div>
+
+      <nav class="hidden lg:flex lg:w-3/5 justify-center gap-8">
+        {routes.map((route) => (
+          <a href={route.href} class="md:text-sm text-white font-montserrat font-medium py-1 border-b-2 border-b-transparent hover:border-b-white">{route.label}</a>
+        ))}
+      </nav>
+
+      <div class="hidden lg:flex lg:w-1/5 items-center justify-end gap-2">
+        <a href="/registro" class="flex w-fit items-center justify-center bg-[#C19310] hover:bg-[#a57f0d] gap-1 px-4 py-[0.8vh] rounded-full md:text-sm font-montserrat text-white font-medium duration-300 cursor-pointer">Inscripción</a>
+        <a href="/login" class="flex w-fit items-center justify-center bg-[#C19310] hover:bg-[#a57f0d] gap-[2px] px-4 py-[0.8vh] rounded-full md:text-sm font-montserrat text-white font-medium duration-300 cursor-pointer">Iniciar sesión <span aria-hidden="true" class="inline-block align-middle ml-1">➔</span></a>
+      </div>
+
+      <details class="ml-auto lg:hidden relative group" data-mobile-menu>
+        <summary class="list-none cursor-pointer flex items-center justify-end">
+          <span class="sr-only">Abrir menú</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </summary>
+        <div class="absolute right-0 top-full mt-4 w-60 bg-white rounded-md shadow-lg py-6 px-6 border border-gray-200">
+          <nav class="flex flex-col gap-6">
+            {routes.map((route) => (
+              <a href={route.href} class="text-lg font-montserrat text-gray-800 font-medium hover:font-semibold">{route.label}</a>
+            ))}
+            <a href="/registro" class="text-lg font-montserrat text-gray-800 font-semibold hover:font-bold">Inscripción</a>
+            <a href="/login" class="text-lg font-montserrat text-gray-800 font-semibold hover:font-bold">Iniciar sesión</a>
+          </nav>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <div class="relative z-10 top-5 md:top-30 flex flex-col w-[85vw] gap-4 md:gap-6 mx-auto">
+    <h1 class="font-montserrat text-white text-center md:leading-[4rem] animate-fade-slide" style="animation-delay:750ms">
+      <span class="text-lg md:text-5xl font-light">Academia Internacional de Música</span> <br /> <span class="text-4xl md:text-6xl bg-clip-text text-transparent bg-[#C19319] font-bold">Maestro José Calabrese</span>
+    </h1>
+    <p class="text-base md:text-3xl font-montserrat text-white text-center px-6 md:px-0 animate-fade-slide" style="animation-delay:1500ms">
+      <i>Desde el corazón de Carabobo, resonando con historia y pasión</i>
+    </p>
+    <div class="flex justify-center gap-2 my-4 md:my-8 animate-fade-slide" style="animation-delay:2250ms">
+      <a href="/registro" class="flex w-fit items-center justify-center bg-[#56070c] hover:bg-[#6e0a11] gap-1 px-4 md:px-8 py-1 md:py-2 rounded-full text-sm md:text-base font-montserrat text-white font-medium duration-300 cursor-pointer">Inscribirse <span aria-hidden="true" class="inline-block align-middle ml-1">➔</span></a>
+      <a href="#contacto" class="flex w-fit items-center justify-center bg-[#7a1a1f] hover:bg-[#942026] gap-1 px-4 md:px-8 py-1 md:py-2 rounded-full text-sm md:text-base font-montserrat text-white font-medium duration-300 cursor-pointer">Contáctanos</a>
+    </div>
+  </div>
+</section>
+
+
