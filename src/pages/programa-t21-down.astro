@@ -2,11 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/ui/alt-header";
 import Program from "../components/t21-down-program/t21-program";
-import Footer from "../components/footer";
+import Footer from "@components/sections/footer.astro";
 ---
 
 <Layout>
     <Header />
     <Program client:load />
-    <Footer client:load />
+    <Footer />
 </Layout>
