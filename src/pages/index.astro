@@ -1,16 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import HeroSection from "../components/hero-section";
-import AboutUs from "../components/about";
-import History from "../components/history";
-import Allies from "../components/allies";
-import Footer from "../components/footer";
+import HeroSection from "@components/hero-section.astro";
+import AboutUs from "@components/about.astro";
+import ImageGridHistory from "@components/grids/image-grid-history.astro"
+import History from "@components/history.astro";
+import Allies from "@components/allies.astro";
+import Contact from "@components/sections/contact.astro"
+import Footer from "@components/sections/footer.astro";
 ---
 
 <Layout>
-	<HeroSection client:load />
-	<AboutUs client:load />
-	<History client:load />
-	<Allies client:load />
-	<Footer client:load />
+	<HeroSection />
+	<AboutUs />
+  <ImageGridHistory />
+	<History />
+  <Allies />
+  <Contact />
+	<Footer />
 </Layout>

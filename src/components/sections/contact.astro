@@ -1,0 +1,55 @@
+
+<section class="relative w-full min-h-300 md:min-h-screen border-y-6 border-white">
+  <div class="absolute inset-0 z-0 w-full grid md:grid-cols-2">
+    <div class="flex flex-col w-full bg-gradient-to-b from-[#7A5C20] to-[#BFA75A] gap-12 px-12 md:px-24 items-center md:items-start justify-center">
+      <h2 class="text-5xl md:text-7xl font-montserrat text-white text-center md:text-left"><b>¿Quieres formar parte de la academia?</b></h2>
+      <a href="/registro" class="flex w-fit items-center md:items-start justify-center md:justify-start bg-[#7A5C20] hover:bg-[#7A5C20]/80 gap-1 px-12 py-[1vh] rounded-full text-lg md:text-2xl font-montserrat text-white font-medium duration-300 cursor-pointer">Inscríbete ya <span aria-hidden="true" class="inline-block align-middle ml-1">➔</span></a>
+    </div>
+
+    <div id="contacto" class="flex w-full bg-gradient-to-b from-[#4B0C0C] to-[#7A1F1F] border-t-6 md:border-t-0 md:border-l-6 border-white items-center justify-center">
+      <div class="flex flex-col w-[85%] md:w-[60%] bg-white/10 backdrop-blur-md rounded-xl shadow-lg gap-8 px-10 py-6">
+        <h2 class="text-3xl md:text-5xl font-montserrat text-white font-bold text-center md:text-right pt-4 pb-6 border-b border-white/20">¿Quieres contactarnos?</h2>
+
+        <form id="contact-form" class="w-full max-w-xl mx-auto text-sm font-montserrat text-gray-200 tracking-wide space-y-4">
+          <div class="relative">
+            <input id="nombre" name="nombre" type="text" placeholder=" " class="peer w-full px-4 pt-6 pb-1 rounded-md bg-white/20 text-white placeholder-transparent border border-white/30 focus:outline-none focus:ring-2 focus:ring-[#C19310] transition duration-300" required />
+            <label for="nombre" class="absolute left-4 top-2 text-xs text-white font-semibold transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-300 peer-focus:top-2 peer-focus:text-sm peer-focus:text-[#C19310]">Nombre completo</label>
+          </div>
+
+          <div class="relative">
+            <input id="email" name="email" type="email" placeholder=" " class="peer w-full px-4 pt-6 pb-1 rounded-md bg-white/20 text-white placeholder-transparent border border-white/30 focus:outline-none focus:ring-2 focus:ring-[#C19310] transition duration-300" required />
+            <label for="email" class="absolute left-4 top-2 text-sm text-white font-semibold transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-300 peer-focus:top-2 peer-focus:text-sm peer-focus:text-[#C19310]">Correo electrónico</label>
+          </div>
+
+          <div class="relative">
+            <textarea id="motivo" name="motivo" placeholder=" " rows="6" class="peer w-full px-4 pt-6 pb-1 rounded-md bg-white/20 text-white placeholder-transparent border border-white/30 focus:outline-none focus:ring-2 focus:ring-[#C19310] transition duration-300 resize-none" required></textarea>
+            <label for="motivo" class="absolute left-4 top-2 text-sm text-white font-semibold transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-300 peer-focus:top-2 peer-focus:text-sm peer-focus:text-[#C19310]">Motivo</label>
+          </div>
+
+          <button type="submit" class="flex items-center justify-center bg-[#C19310] hover:bg-[#a57f0d] px-6 py-1 rounded-full text-white font-medium tracking-wide transition-all duration-300 shadow-md hover:shadow-lg mx-auto">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+    (function(){
+      const form = document.querySelector('#contact-form');
+      if (!form) return;
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const name = /** @type {HTMLInputElement|null} */(document.getElementById('nombre'))?.value || '';
+        const email = /** @type {HTMLInputElement|null} */(document.getElementById('email'))?.value || '';
+        const message = /** @type {HTMLTextAreaElement|null} */(document.getElementById('motivo'))?.value || '';
+        const encoded = encodeURIComponent(
+          '¡Hola, Fundación SinfoCarabobo!\n' +
+          `Mi nombre es ${name}\n` +
+          `${message}\n\n` +
+          `Si requieren contactarme, mi dirección de correo electrónico es: ${email}\n` +
+          '¡Saludos cordiales!'
+        );
+        window.open(`https://api.whatsapp.com/send?phone=584143410642&text=${encoded}`, '_blank', 'noopener,noreferrer');
+      });
+    })();
+</script>

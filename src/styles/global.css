@@ -84,6 +84,18 @@ body {
   animation: slideFromBottom 0.8s ease-out forwards;
 }
 
+/* Delayed slide animation helper used in hero-section.astro */
+.animate-fade-slide {
+  opacity: 0;
+  transform: translateY(100%);
+  will-change: transform, opacity;
+}
+
+/* Start animations only when the container is marked as animated */
+[data-animate] .animate-fade-slide {
+  animation: slideFromBottom 0.8s ease-out forwards;
+}
+
 @keyframes slideFromBottom {
   0% {
     transform: translateY(100%);

@@ -1,0 +1,193 @@
+---
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+import aboutImg1 from "/src/assets/about/image1.png";
+import aboutImg2 from "/src/assets/about/image2.png";
+import aboutImg3 from "/src/assets/about/image3.png";
+
+import grid1 from "@assets/about/grid1.JPG";
+import grid2 from "/src/assets/about/grid2.JPG";
+import grid3 from "/src/assets/about/grid3.JPG";
+import grid7 from "/src/assets/about/grid7.JPG";
+import grid4 from "/src/assets/about/grid4.JPG";
+import grid6 from "/src/assets/about/grid6.JPG";
+import grid5 from "/src/assets/about/grid5.JPG";
+
+const gridImages: { src: ImageMetadata; id: string }[] = [
+  { src: grid1, id: "grid1" },
+  { src: grid2, id: "grid2" },
+  { src: grid3, id: "grid3" },
+  { src: grid7, id: "grid7" },
+  { src: grid4, id: "grid4" },
+  { src: grid6, id: "grid6" },
+  { src: grid5, id: "grid5" },
+];
+---
+
+<section id="nosotros" class="flex flex-col w-full">
+  <!-- Top stats section -->
+  <section data-animate-top data-counter-container class="relative w-full min-h-110 py-12 md:py-36">
+    <div class="absolute inset-0 z-0 w-full bg-gradient-to-b from-[#4B0C0C] to-[#7A1F1F] border-y-6 border-white"></div>
+
+    <div data-animate-top-target class="relative inset-0 z-10 flex flex-col w-[85vw] gap-8 mx-auto opacity-0">
+      <div class="flex flex-col gap-4">
+        <h2 class="text-4xl md:text-5xl font-montserrat text-white font-bold text-center">Nuestra trayectoria</h2>
+        <p class="text-lg md:text-xl font-montserrat text-white font-light text-center"><i>Un legado de cultura, tradición y pasión por la música sinfónica</i></p>
+      </div>
+
+      <div class="grid md:grid-cols-3 items-center justify-center gap-y-8">
+        <div class="flex flex-col items-center bg-transparent gap-2 md:gap-4">
+          <Picture src={aboutImg1} formats={["avif","webp"]} alt="Academia Internacional de Música - Maestro José Calabrese" class="w-35 md:w-60 h-35 md:h-60 object-cover" />
+          <div class="flex flex-col justify-center items-center md:gap-1">
+            <span class="text-4xl md:text-5xl font-montserrat text-white font-bold" data-counter-target="300" data-counter-suffix="+">0</span>
+            <p class="text-xl md:text-2xl font-montserrat text-white font-normal">Estudiantes</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-center bg-transparent gap-2 md:gap-4">
+          <Picture src={aboutImg2} formats={["avif","webp"]} alt="Academia Internacional de Música - Maestro José Calabrese" class="w-35 md:w-60 h-35 md:h-60 object-cover" />
+          <div class="flex flex-col justify-center items-center md:gap-1">
+            <span class="text-4xl md:text-5xl font-montserrat text-white font-bold" data-counter-target="30" data-counter-suffix="+">0</span>
+            <p class="text-xl md:text-2xl font-montserrat text-white font-normal">Cátedras</p>
+          </div>
+        </div>
+        <div class="flex flex-col items-center bg-transparent gap-2 md:gap-4">
+          <Picture src={aboutImg3} formats={["avif","webp"]} alt="Academia Internacional de Música - Maestro José Calabrese" class="w-35 md:w-60 h-35 md:h-60 object-cover" />
+          <div class="flex flex-col justify-center items-center md:gap-1">
+            <span class="text-4xl md:text-5xl font-montserrat text-white font-bold" data-counter-target="49" data-counter-suffix="+">0</span>
+            <p class="text-xl md:text-2xl font-montserrat text-white font-normal">Años de historia</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Middle grid/text section -->
+  <section class="relative w-full min-h-300 md:min-h-screen">
+    <div class="absolute inset-0 z-0 w-full grid md:grid-cols-2">
+      <div data-animate-left class="flex w-full bg-gradient-to-b from-[#7A5C20] to-[#BFA75A] px-12 md:px-28 border-b-6 md:border-b-0 md:border-r-6 border-white items-center opacity-0">
+        <h2 class="text-5xl md:text-7xl font-montserrat text-white text-center md:text-left">El <b>hogar</b> de los <b>músicos</b> del <b>mañana</b></h2>
+      </div>
+
+      <div data-animate-right class="w-full grid grid-cols-3 gap-1 opacity-0">
+        {gridImages.map(({ src, id }) => (
+          <div class={`relative w-full h-full md:h-[33.3vh] ${id === 'grid1' || id === 'grid5' ? 'col-span-2' : ''}`}>
+            <Picture src={src} formats={["avif","webp"]} alt="Academia Internacional de Música - Maestro José Calabrese" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black opacity-30 z-10 pointer-events-none"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom mission/values section -->
+  <section data-animate-values class="relative w-full min-h-110 py-24 md:py-42">
+    <div class="absolute inset-0 z-0 w-full bg-gradient-to-b from-[#4B0C0C] to-[#7A1F1F] border-y-6 border-white"></div>
+
+    <div data-animate-values-target class="relative inset-0 z-10 flex flex-col w-[85vw] gap-12 mx-auto opacity-0">
+      <div class="flex flex-col gap-8">
+        <h2 class="text-4xl md:text-5xl font-montserrat text-white font-bold text-center">Nuestra misión</h2>
+        <p class="md:text-xl font-montserrat text-white font-light text-center">
+          Ejecutar una propuesta educativa integral en el campo de la formación musical dentro de la OSC, que contemple los niveles inicial, medio y avanzado,
+          impartida con altos niveles de calidad y creatividad dentro de un clima de enseñanza-aprendizaje que permita potenciar de manera gradual las actitudes
+          y aptitudes de niños(as) y adolescentes ante la música y su ejecución instrumental, con vistas a prepararlos para su incorporación a los estudios del
+          nivel profesional o universitario.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 md:gap-18">
+        <div class="w-full p-6 border-4 border-[#BFA760] rounded-3xl hover:scale-110 duration-400">
+          <p class="font-montserrat text-white font-medium text-center">Formar a niños(as) para ser los futuros miembros de la OSC, desde un enfoque de la educación musical integral que enfatiza la iniciación en la práctica instrumental individual y grupal desde edades muy tempranas.</p>
+        </div>
+        <div class="w-full p-6 border-4 border-[#BFA760] rounded-3xl hover:scale-110 duration-400">
+          <p class="font-montserrat text-white font-medium text-center">Proporcionar a los miembros de la Academia, la oportunidad de descubrir sus capacidades interpretativas en una formación orquestal, permitiéndoles desarrollarse como músicos profesionales potencialmente exitosos.</p>
+        </div>
+        <div class="w-full p-6 border-4 border-[#BFA760] rounded-3xl hover:scale-110 duration-400">
+          <p class="font-montserrat text-white font-medium text-center">Desarrollar un programa educativo musical que contemple contenidos complementarios y en valores que contribuyan a la formación integral de los niños, niñas y adolescentes participantes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Helper: start a numeric count-up animation on an element
+    function startCounter(el, target, duration = 2000, suffix = "") {
+      const start = 0;
+      const startTime = performance.now();
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = Math.floor(start + (target - start) * progress);
+        el.textContent = value.toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // Top section: slide from bottom + counters when visible
+    (function(){
+      const top = document.querySelector('[data-animate-top]');
+      const target = document.querySelector('[data-animate-top-target]');
+      if (top && target) {
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            target.classList.remove('opacity-0');
+            target.classList.add('slide-from-bottom');
+            // counters
+            const counters = top.querySelectorAll('[data-counter-target]');
+            counters.forEach((el) => {
+              const t = Number(el.getAttribute('data-counter-target') || '0');
+              const s = el.getAttribute('data-counter-suffix') || '';
+              startCounter(el, t, 2000, s);
+            });
+            obs.disconnect();
+          }
+        }, { threshold: 0.1 });
+        obs.observe(top);
+      }
+    })();
+
+    // Middle section: left and right panels slide in independently
+    (function(){
+      const left = document.querySelector('[data-animate-left]');
+      if (left) {
+        const obsLeft = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            left.classList.remove('opacity-0');
+            left.classList.add('slide-from-left');
+            obsLeft.disconnect();
+          }
+        }, { threshold: 0.1 });
+        obsLeft.observe(left);
+      }
+
+      const right = document.querySelector('[data-animate-right]');
+      if (right) {
+        const obsRight = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            right.classList.remove('opacity-0');
+            right.classList.add('slide-from-right');
+            obsRight.disconnect();
+          }
+        }, { threshold: 0.1 });
+        obsRight.observe(right);
+      }
+    })();
+
+    // Bottom section: slide from bottom for content container
+    (function(){
+      const root = document.querySelector('[data-animate-values]');
+      const container = document.querySelector('[data-animate-values-target]');
+      if (root && container) {
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            container.classList.remove('opacity-0');
+            container.classList.add('slide-from-bottom');
+            obs.disconnect();
+          }
+        }, { threshold: 0.2 });
+        obs.observe(root);
+      }
+    })();
+  </script>
+</section>
