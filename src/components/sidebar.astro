@@ -1,0 +1,68 @@
+---
+interface Route { href: string; label: string }
+export interface Props { routes: Route[] }
+const { routes } = Astro.props as Props;
+import { Image } from "astro:assets";
+---
+
+<div class="ml-auto lg:hidden" data-sidebar-root>
+  <button type="button" aria-controls="mobile-sidebar" aria-expanded="false" data-mobile-open class="flex items-center justify-end">
+    <span class="sr-only">Abrir menú</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+  </button>
+</div>
+<!-- <div id="mobile-backdrop" class="fixed inset-0 z-[9998] bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300"></div> -->
+<div id="mobile-sidebar" class="fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto transition-transform duration-300 ease-out translate-x-full">
+  <div class="flex items-center justify-between p-6 border-b border-gray-200">
+    <Image src="/logo.png" width="120" height="40" alt="Academia Internacional de Música - Maestro José Calabrese" class="w-28" />
+    <button type="button" aria-controls="mobile-sidebar" aria-expanded="true" data-mobile-close class="p-2 rounded-md text-gray-700 hover:bg-gray-100">
+      <span class="sr-only">Cerrar menú</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+  </div>
+  <nav class="flex flex-col gap-6 p-6" data-sidebar-nav>
+    {routes.map((route) => (
+      <a href={route.href} class="text-lg font-montserrat text-gray-800 font-medium hover:font-semibold">{route.label}</a>
+    ))}
+    <a href="/registro" class="text-lg font-montserrat text-gray-800 font-semibold hover:font-bold">Inscripción</a>
+    <a href="/login" class="text-lg font-montserrat text-gray-800 font-semibold hover:font-bold">Iniciar sesión</a>
+  </nav>
+</div>
+
+<script>
+  const openBtn = document.querySelector('[data-mobile-open]');
+  const closeBtn = document.querySelector('[data-mobile-close]');
+  const sidebar = document.getElementById('mobile-sidebar');
+  const backdrop = document.getElementById('mobile-backdrop');
+
+  const open = () => {
+    sidebar?.classList.remove('translate-x-full');
+    sidebar?.classList.add('translate-x-0');
+    backdrop?.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop?.classList.add('opacity-100');
+    document.body.classList.add('overflow-hidden');
+    openBtn?.setAttribute('aria-expanded', 'true');
+  };
+
+  const close = () => {
+    sidebar?.classList.add('translate-x-full');
+    sidebar?.classList.remove('translate-x-0');
+    backdrop?.classList.add('opacity-0');
+    // wait for transition end to disable pointer events
+    setTimeout(() => backdrop?.classList.add('pointer-events-none'), 300);
+    document.body.classList.remove('overflow-hidden');
+    openBtn?.setAttribute('aria-expanded', 'false');
+  };
+
+  openBtn?.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+  backdrop?.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  // Close when a nav link is clicked (delegated)
+  const nav = sidebar?.querySelector('[data-sidebar-nav]');
+  nav?.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A') close();
+  });
+</script>
