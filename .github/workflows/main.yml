@@ -24,6 +24,16 @@ jobs:
       - name: Install NPM dependencies
         run: npm install
 
+      - name: Cache Astro Assets
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules/.astro
+            .astro
+          key: ${{ runner.os }}-astro-assets-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-astro-assets-
+
       - name: Build NPM assets
         run: npm run build
 
