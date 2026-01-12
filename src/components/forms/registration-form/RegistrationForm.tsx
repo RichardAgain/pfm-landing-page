@@ -130,8 +130,8 @@ const RegistrationForm = ({ instrumentOptions, theoreticalOptions, otherOptions,
         const shouldAppend =
             currentLength > 2
                 ? confirmAppend(
-                      `¿Desea añadir otro instrumento? Cantidad de instrumentos seleccionados: ${currentLength}`
-                  )
+                    `¿Desea añadir otro instrumento? Cantidad de instrumentos seleccionados: ${currentLength}`
+                )
                 : true;
 
         if (!shouldAppend) return;
@@ -146,8 +146,8 @@ const RegistrationForm = ({ instrumentOptions, theoreticalOptions, otherOptions,
         const shouldAppend =
             currentLength > 2
                 ? confirmAppend(
-                      `¿Desea añadir otra cátedra teórica? Cantidad de cátedras teóricas seleccionadas: ${currentLength}`
-                  )
+                    `¿Desea añadir otra cátedra teórica? Cantidad de cátedras teóricas seleccionadas: ${currentLength}`
+                )
                 : true;
 
         if (!shouldAppend) return;
@@ -162,8 +162,8 @@ const RegistrationForm = ({ instrumentOptions, theoreticalOptions, otherOptions,
         const shouldAppend =
             currentLength > 2
                 ? confirmAppend(
-                      `¿Desea añadir otra cátedra complementaria? Cantidad de cátedras complementarias seleccionadas: ${currentLength}`
-                  )
+                    `¿Desea añadir otra cátedra complementaria? Cantidad de cátedras complementarias seleccionadas: ${currentLength}`
+                )
                 : true;
 
         if (!shouldAppend) return;
@@ -542,11 +542,11 @@ const RegistrationForm = ({ instrumentOptions, theoreticalOptions, otherOptions,
                 />
             </div>
 
-            <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200">
+            {/* <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200">
                 Cátedras a Inscribir
-            </h3>
+            </h3> */}
 
-            {instrumentSelections.map((selection, index) => {
+            {/* {instrumentSelections.map((selection, index) => {
                 const fieldRegistration = register(`instrumentos.${index}` as const);
                 return (
                     <div key={`instrumento-${index}`} className="flex flex-col gap-1 w-full">
@@ -719,7 +719,7 @@ const RegistrationForm = ({ instrumentOptions, theoreticalOptions, otherOptions,
                         </div>
                     </div>
                 );
-            })}
+            })} */}
 
             <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200">
                 Autorización
