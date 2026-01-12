@@ -52,6 +52,8 @@ export default function Student() {
                 // Use the student ID from the user data (assuming it's linked via id_estudiante)
                 const response = await studentApi.getProfile();
 
+                console.log(response.data.notas)
+
                 if (response.data) {
                     setStudent(response.data);
                     setGrades(response.data.notas ?? EMPTY_GRADES);
