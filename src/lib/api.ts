@@ -93,6 +93,7 @@ export interface NotaCatedra {
     catedra: string;
     profesor_nombre: string | null;
     profesor_cedula: string | null;
+    periodo_nombre: string | null;
     estudiante?: string | null;
     cedula?: string | null;
 }

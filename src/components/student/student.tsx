@@ -81,11 +81,8 @@ export default function Student() {
     const catedraEntries = Object.entries(grades?.catedras ?? {}) as [string, NotaCatedra[]][];
     const grupalEntries = Object.entries(grades?.grupales ?? {}) as [string, NotaGrupal[]][];
 
-    const formatProfessor = (nombre?: string | null, cedula?: string | null): string => {
-        if (!nombre && !cedula) return "No registrado";
-        if (!nombre) return cedula ?? "No registrado";
-        if (!cedula) return nombre;
-        return `${nombre} (${cedula})`;
+    const formatProfessor = (nombre?: string | null, cedula = " "): string => {
+        return nombre || "";
     };
 
     const getObrasWithNotas = (registro: NotaGrupal): Array<{ nombre: string; nota: number | string }> => {
@@ -151,6 +148,7 @@ export default function Student() {
                 <img src="/background.png" className="w-full h-full fixed" />
             </div>
 
+
             <div className="flex flex-col md:w-[75%] py-8 md:py-16 mx-auto gap-8 md:gap-12 relative z-10">
                 <div className="flex flex-col w-full items-center py-8 gap-6 md:border border-gray-200 rounded-lg bg-zinc-50">
                     <h2 className="text-2xl font-montserrat text-gray-800 font-bold text-center w-[85%] md:w-[80%] pb-4 border-b border-gray-200">
@@ -192,28 +190,11 @@ export default function Student() {
                                 <div className="text-sm font-montserrat text-gray-700">
                                     <b>Correo electrónico:</b> {student?.correo_electronico || "No registrado"}
                                 </div>
+                                <div className="text-sm font-montserrat text-gray-700">
+                                    <b>Fecha de nacimiento:</b> {student?.fecha_nacimiento || "No registrado"}
+                                </div>
                             </div>
                         </div>
-                        {/* <div className="flex flex-col gap-2">
-                            <div className="text-sm font-montserrat text-gray-700">
-                                <b>Instrumento principal:</b>{" "}
-                                {student?.instrumentos ? student?.instrumentos : "No registrado"}
-                            </div>
-                            <div className="text-sm font-montserrat text-gray-700">
-                                <b>Teóricas:</b> {student?.teoricas ? student?.teoricas : "No registrado"}{" "}
-                            </div>
-                            <div className="text-sm font-montserrat text-gray-700">
-                                <b>Otros:</b> {student?.otros ? student?.otros : "No registrado"}
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="text-sm font-montserrat text-gray-700">
-                                <b>Estatus Administrativo:</b> N/A
-                            </div>
-                            <div className="text-sm font-montserrat text-gray-700">
-                                <b>Estatus Académico:</b> {student?.activo === 1 ? "Activo" : "Inactivo"}
-                            </div>
-                        </div> */}
                     </div>
                 </div>
 
@@ -238,16 +219,10 @@ export default function Student() {
                                             <thead className="bg-gray-100">
                                                 <tr className="hover:bg-gray-50">
                                                     <th className="px-4 py-2 text-left text-xs font-montserrat text-gray-700 font-medium uppercase tracking-wider">
+                                                        Periodo
+                                                    </th>
+                                                    <th className="px-4 py-2 text-left text-xs font-montserrat text-gray-700 font-medium uppercase tracking-wider">
                                                         Nivel cursado
-                                                    </th>
-                                                    <th className="px-4 py-2 text-left text-xs font-montserrat text-gray-700 font-medium uppercase tracking-wider">
-                                                        Previa
-                                                    </th>
-                                                    <th className="px-4 py-2 text-left text-xs font-montserrat text-gray-700 font-medium uppercase tracking-wider">
-                                                        Técnico
-                                                    </th>
-                                                    <th className="px-4 py-2 text-left text-xs font-montserrat text-gray-700 font-medium uppercase tracking-wider">
-                                                        Final
                                                     </th>
                                                     <th className="px-4 py-2 text-left text-xs font-montserrat text-gray-700 font-medium uppercase tracking-wider">
                                                         Definitiva
@@ -265,16 +240,10 @@ export default function Student() {
                                                     registros.map((registro) => (
                                                         <tr key={registro.id} className="hover:bg-gray-50">
                                                             <td className="px-4 py-2 text-xs font-montserrat">
+                                                                {registro.periodo_nombre ?? "No Registrado"}
+                                                            </td>
+                                                            <td className="px-4 py-2 text-xs font-montserrat">
                                                                 {registro.nivel ?? "No registrado"}
-                                                            </td>
-                                                            <td className="px-4 py-2 text-xs font-montserrat">
-                                                                {registro.previa ?? "N/A"}
-                                                            </td>
-                                                            <td className="px-4 py-2 text-xs font-montserrat">
-                                                                {registro.tecnico ?? "N/A"}
-                                                            </td>
-                                                            <td className="px-4 py-2 text-xs font-montserrat">
-                                                                {registro.final ?? "N/A"}
                                                             </td>
                                                             <td className="px-4 py-2 text-xs font-montserrat">
                                                                 {registro.definitiva ?? "N/A"}
@@ -285,9 +254,9 @@ export default function Student() {
                                                             <td className="px-4 py-2 text-xs font-montserrat">
                                                                 {formatProfessor(
                                                                     registro.profesor_nombre,
-                                                                    registro.profesor_cedula
                                                                 )}
                                                             </td>
+
                                                         </tr>
                                                     ))
                                                 ) : (
