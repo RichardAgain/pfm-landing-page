@@ -11,30 +11,49 @@ import grid6 from "@assets/history/grid6.JPG";
 import grid7 from "@assets/history/grid7.JPG";
 
 const topGrid: { src: ImageMetadata; id: string }[] = [
-  { src: grid1, id: "grid1" },
-  { src: grid2, id: "grid2" },
-  { src: grid3, id: "grid3" },
-  { src: grid4, id: "grid4" },
-  { src: grid5, id: "grid5" },
-  { src: grid6, id: "grid6" },
-  { src: grid7, id: "grid7" },
+    { src: grid1, id: "grid1" },
+    { src: grid2, id: "grid2" },
+    { src: grid3, id: "grid3" },
+    { src: grid4, id: "grid4" },
+    { src: grid5, id: "grid5" },
+    { src: grid6, id: "grid6" },
+    { src: grid7, id: "grid7" },
 ];
 ---
 
 <!-- Top: left image grid, right headline -->
 <section data-animate-top class="relative w-full min-h-300 md:min-h-screen">
-  <div class="absolute inset-0 z-0 w-full grid md:grid-cols-2">
-    <div data-animate-top-left class="w-full grid grid-cols-3 gap-1 opacity-0">
-      {topGrid.map(({ src, id }) => (
-        <div class={`relative w-full h-full md:h-[33.3vh] ${id === 'grid1' || id === 'grid7' ? 'col-span-2' : ''}`}>
-          <Picture src={src} formats={["avif","webp"]} alt="Academia Internacional de Música - Maestro José Calabrese" class="w-full h-full object-cover" />
-          <div class="absolute inset-0 bg-black opacity-30 z-10 pointer-events-none"></div>
+    <div class="absolute inset-0 z-0 w-full grid md:grid-cols-2">
+        <div
+            data-animate-top-left
+            class="w-full grid grid-cols-3 gap-1 opacity-0"
+        >
+            {
+                topGrid.map(({ src, id }) => (
+                    <div
+                        class={`relative w-full h-full md:h-[33.3vh] ${id === "grid1" || id === "grid7" ? "col-span-2" : ""}`}
+                    >
+                        <Picture
+                            src={src}
+                            formats={["webp"]}
+                            alt="Academia Internacional de Música - Maestro José Calabrese"
+                            class="w-full h-full object-cover"
+                        />
+                        <div class="absolute inset-0 bg-black opacity-30 z-10 pointer-events-none" />
+                    </div>
+                ))
+            }
         </div>
-      ))}
-    </div>
 
-    <div data-animate-top-right class="flex w-full bg-gradient-to-b from-[#7A5C20] to-[#BFA75A] px-8 md:px-24 border-t-6 md:border-t-0 md:border-l-6 border-white items-center opacity-0">
-      <h2 class="text-5xl md:text-7xl font-montserrat text-white text-center md:text-right">El <b>semillero</b> de la <b>Orquesta Sinfónica de Carabobo</b></h2>
+        <div
+            data-animate-top-right
+            class="flex w-full bg-gradient-to-b from-[#7A5C20] to-[#BFA75A] px-8 md:px-24 border-t-6 md:border-t-0 md:border-l-6 border-white items-center opacity-0"
+        >
+            <h2
+                class="text-5xl md:text-7xl font-montserrat text-white text-center md:text-right"
+            >
+                El <b>semillero</b> de la <b>Orquesta Sinfónica de Carabobo</b>
+            </h2>
+        </div>
     </div>
-  </div>
 </section>
