@@ -36,7 +36,6 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
       instrumentos: [""],
       teoricas: [""],
       otros: [""],
-      tiene_estudios: "No",
     },
   });
 
