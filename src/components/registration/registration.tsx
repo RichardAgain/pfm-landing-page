@@ -126,6 +126,14 @@ export default function Registration() {
       formData.append("rif_representante", values.representanteRIF ?? "");
       formData.append("email_representante", values.representanteEmail ?? "");
 
+      formData.append(
+        "tiene_estudios",
+        values.tiene_estudios === "Sí" ? "1" : "0",
+      );
+      formData.append("institucion", values.institucion ?? "");
+      formData.append("catedras_estudiadas", values.catedras_estudiadas ?? "");
+      formData.append("duracion", values.duracion ?? "");
+
       formData.append("autorizacion", values.autorizacion === "Sí" ? "1" : "0");
 
       instrumentosIds.forEach((id) =>
