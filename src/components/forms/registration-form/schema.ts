@@ -132,11 +132,9 @@ export const registrationSchema = z
 
     tiene_estudios: z
       .string({ required_error: "Seleccione una opción" })
-      .refine((val) => val === "Sí" || val === "No", {
-        message: "Seleccione una opción",
-      }),
-    institucion: z.string(),
-    catedras_estudiadas: z.string(),
+      .refine((val) => val === "Sí" || val === "No", {}),
+    institucion: z.string().optional(),
+    catedras_estudiadas: z.string().optional(),
     duracion: z
       .string()
       .optional()
