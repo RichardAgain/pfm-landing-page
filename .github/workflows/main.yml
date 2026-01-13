@@ -40,7 +40,7 @@ jobs:
           key: Images-${{ runner.os }}
 
       - name: Install NPM dependencies
-        run: npm ci --fund=false --progress=false
+        run: npm install
 
       - name: Build prod
         run: npm run build
