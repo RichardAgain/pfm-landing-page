@@ -533,8 +533,8 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
       </div>
 
       <p className="text-xs md:text-sm font-montserrat text-justify pt-8 pb-2 mt-4 border-t border-gray-200">
-        Documentos a consignar: RIF actualizado, copia de la cedula de de
-        identidad vigente, y foto tipo carnet.
+        Documentos a consignar: RIF actualizado, copia de la cedula de identidad
+        vigente, y foto tipo carnet.
       </p>
 
       <button
