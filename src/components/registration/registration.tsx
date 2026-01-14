@@ -1,94 +1,40 @@
-import { useEffect, useRef, useState } from "react";
-import { aspiranteApi, catedraApi, type Catedra } from "../../lib/api";
-import { downloadRegistrationPdf, formatPhone } from "./pdfHandler";
+import { useRef, useState } from "react";
+import { aspiranteApi } from "../../lib/api";
 import type { RegistrationFormValues } from "../forms/registration-form";
 import RegistrationForm from "../forms/registration-form/RegistrationForm";
+import { formatPhone } from "../../utils/format-phone";
 
 export default function Registration() {
   const [showModal, setShowModal] = useState(false);
   const [pendingValues, setPendingValues] =
     useState<RegistrationFormValues | null>(null);
 
-  const hasFetched = useRef(false);
-  const [listadoInstrumentos, setListadoInstrumentos] = useState<Catedra[]>([]);
-  const [listadoTeoricas, setListadoTeoricas] = useState<Catedra[]>([]);
-  const [listadoOtros, setListadoOtros] = useState<Catedra[]>([]);
-
-  useEffect(() => {
-    if (hasFetched.current) return;
-
-    const fetchSubjects = async () => {
-      try {
-        const response = await catedraApi.getAll();
-
-        setListadoInstrumentos(response.Instrumento || []);
-        setListadoTeoricas(response.Teoricas || []);
-        setListadoOtros(response.Otros || []);
-      } catch (error) {
-        console.error("Error al obtener cátedras:", error);
-      }
-    };
-
-    fetchSubjects();
-    hasFetched.current = true;
-  }, []);
-
-  const toNumericArray = (list: Array<string | number | null | undefined>) =>
-    list
-      .map((value) => {
-        if (typeof value === "number") return value;
-        if (typeof value === "string" && value.trim() !== "") {
-          const parsed = Number(value);
-          return Number.isNaN(parsed) ? null : parsed;
-        }
-        return null;
-      })
-      .filter((value): value is number => value !== null);
-
   const handleRegistration = async (values: RegistrationFormValues) => {
     try {
-      const instrumentosIds = toNumericArray(values.instrumentos);
-      const teoricasIds = toNumericArray(values.teoricas);
-      const otrosIds = toNumericArray(values.otros);
-
-      if (!(values.imagen instanceof File)) {
-        alert("Debe adjuntar una imagen válida antes de continuar.");
-        return;
-      }
-
       const formData = new FormData();
 
       formData.append("nombre", values.estudianteNombre);
       formData.append("genero", values.estudianteGenero);
-      formData.append("cedula", values.estudianteCI ?? "");
-      formData.append(
-        "fecha_nacimiento",
-        values.estudianteFechaNacimiento ?? "",
-      );
+      formData.append("cedula", values.estudianteCI);
+      formData.append("fecha_nacimiento", values.estudianteFechaNacimiento);
       formData.append("correo_electronico", values.estudianteEmail);
-      formData.append("direccion", values.estudianteDireccion ?? "");
+      formData.append("direccion", values.estudianteDireccion);
       formData.append(
         "telefono_estudiantes",
         formatPhone(values.estudianteCodigoTelefono, values.estudianteTelefono),
       );
-      formData.append("rif", values.estudianteRIF ?? "");
-      formData.append(
-        "institucion_educacional",
-        values.estudianteInstitucion ?? "",
-      );
-      formData.append("ocupacion", values.estudianteOcupacion ?? "");
-      formData.append("profesion", values.estudianteProfesion ?? "");
-      formData.append("lugar_trabajo", values.estudianteLugarTrabajo ?? "");
-      formData.append("alergico_a", values.estudianteAlergias ?? "");
-      formData.append("antecedentes", values.estudianteAntecedentes ?? "");
+      formData.append("rif", values.estudianteRIF);
+      formData.append("institucion_educacional", values.estudianteInstitucion);
+      formData.append("ocupacion", values.estudianteOcupacion);
+      formData.append("profesion", values.estudianteProfesion);
+      formData.append("lugar_trabajo", values.estudianteLugarTrabajo);
+      formData.append("alergico_a", values.estudianteAlergias);
+      formData.append("antecedentes", values.estudianteAntecedentes);
       formData.append(
         "especificacion_antecedentes",
-        values.estudianteAlergiasEspecificadas ?? "",
+        values.estudianteAlergiasEspecificadas,
       );
-      formData.append(
-        "nombre_emergencia",
-        values.estudianteContactoEmergencia ?? "",
-      );
+      formData.append("nombre_emergencia", values.estudianteContactoEmergencia);
       formData.append(
         "numero_emergencia",
         formatPhone(
@@ -97,9 +43,9 @@ export default function Registration() {
         ),
       );
 
-      formData.append("nombre_representante", values.representanteNombre ?? "");
-      formData.append("cedula_representante", values.representanteCI ?? "");
-      formData.append("parentesco", values.representanteParentesco ?? "");
+      formData.append("nombre_representante", values.representanteNombre);
+      formData.append("cedula_representante", values.representanteCI);
+      formData.append("parentesco", values.representanteParentesco);
       formData.append(
         "telefono_representante",
         formatPhone(
@@ -107,44 +53,24 @@ export default function Registration() {
           values.representanteTelefono,
         ),
       );
-      formData.append(
-        "ocupacion_representante",
-        values.representanteOcupacion ?? "",
-      );
-      formData.append(
-        "profesion_representante",
-        values.representanteProfesion ?? "",
-      );
+      formData.append("ocupacion_representante", values.representanteOcupacion);
+      formData.append("profesion_representante", values.representanteProfesion);
       formData.append(
         "lugar_trabajo_representante",
-        values.representanteLugarTrabajo ?? "",
+        values.representanteLugarTrabajo,
       );
-      formData.append(
-        "direccion_representante",
-        values.representanteDireccion ?? "",
-      );
-      formData.append("rif_representante", values.representanteRIF ?? "");
-      formData.append("email_representante", values.representanteEmail ?? "");
-
+      formData.append("direccion_representante", values.representanteDireccion);
+      formData.append("rif_representante", values.representanteRIF);
+      formData.append("email_representante", values.representanteEmail);
       formData.append(
         "tiene_estudios",
         values.tiene_estudios === "Sí" ? "1" : "0",
       );
-      formData.append("institucion", values.institucion ?? "");
-      formData.append("catedras_estudiadas", values.catedras_estudiadas ?? "");
-      formData.append("duracion", values.duracion ?? "");
+      formData.append("institucion", values.institucion);
+      formData.append("catedras_estudiadas", values.catedras_estudiadas);
+      formData.append("duracion", values.duracion);
 
       formData.append("autorizacion", values.autorizacion === "Sí" ? "1" : "0");
-
-      instrumentosIds.forEach((id) =>
-        formData.append("catedra_instrumento[]", id.toString()),
-      );
-      teoricasIds.forEach((id) =>
-        formData.append("catedra_teoricas[]", id.toString()),
-      );
-      otrosIds.forEach((id) =>
-        formData.append("catedra_otros[]", id.toString()),
-      );
 
       formData.append("imagen", values.imagen, values.imagen.name);
 
@@ -208,12 +134,7 @@ export default function Registration() {
           </p>
         </div>
 
-        <RegistrationForm
-          instrumentOptions={listadoInstrumentos}
-          theoreticalOptions={listadoTeoricas}
-          otherOptions={listadoOtros}
-          onSubmit={handleRegistration}
-        />
+        <RegistrationForm onSubmit={handleRegistration} />
 
         {showModal && pendingValues && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">

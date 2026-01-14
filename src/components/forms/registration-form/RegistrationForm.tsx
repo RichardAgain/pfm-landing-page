@@ -7,9 +7,6 @@ import PhotoInput from "./components/PhotoInput";
 import { ageFromBirthDate, type Catedra } from "../../../lib";
 
 interface RegistrationFormProps {
-  instrumentOptions: Catedra[];
-  theoreticalOptions: Catedra[];
-  otherOptions: Catedra[];
   onSubmit: SubmitHandler<RegistrationFormValues>;
 }
 

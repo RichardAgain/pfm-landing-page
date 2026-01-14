@@ -42,14 +42,16 @@ export const registrationSchema = z
       .optional()
       .refine((val) => !val || ciRegex.test(val), {
         message: "Debe tener entre 7 y 8 dígitos",
-      }),
+      })
+      .default(""),
     estudianteRIF: z
       .string()
       .optional()
       .refine((val) => !val || rifRegex.test(val.trim().toUpperCase()), {
         message:
           "Formato de RIF inválido. Debe utilizar J o V, seguido de 9 dígitos.",
-      }),
+      })
+      .default(""),
     estudianteCodigoTelefono: z
       .string({ required_error: "Seleccione una opción" })
       .min(1, "Seleccione una opción"),
@@ -71,10 +73,12 @@ export const registrationSchema = z
       .string({ required_error: "Este campo es obligatorio" })
       .email("Ingrese un correo válido"),
     estudianteAlergias: z
-      .string({ required_error: "Este campo es obligatorio" })
+      .string({
+        required_error: "Este campo es obligatorio",
+      })
       .min(1, "Este campo es obligatorio"),
     estudianteAntecedentes: z
-      .string({ required_error: "Seleccione una opción" })
+      .string({ invalid_type_error: "Seleccione una opción" })
       .refine((val) => val === "Sí" || val === "No", {
         message: "Seleccione una opción",
       }),
@@ -131,7 +135,7 @@ export const registrationSchema = z
     otros: z.array(z.string()).default([""]),
 
     tiene_estudios: z
-      .string({ required_error: "Seleccione una opción" })
+      .string({ invalid_type_error: "Seleccione una opción" })
       .refine((val) => val === "Sí" || val === "No", {}),
     institucion: z.string().optional(),
     catedras_estudiadas: z.string().optional(),
@@ -267,5 +271,5 @@ export const registrationSchema = z
 type RegistrationSchema = z.infer<typeof registrationSchema>;
 
 export type RegistrationFormValues = Omit<RegistrationSchema, "imagen"> & {
-  imagen: File | null;
+  imagen: File;
 };
