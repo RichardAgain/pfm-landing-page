@@ -28,7 +28,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
     ) as Resolver<RegistrationFormValues>,
     mode: "onBlur",
     defaultValues: {
-      imagen: null,
+      imagen: undefined,
       photo64: "",
       instrumentos: [""],
       teoricas: [""],
@@ -88,6 +88,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         label="Nombres y Apellidos *"
         error={errors.estudianteNombre}
         wrapperClassName="w-full"
+        placeholder="Nombres completos"
       />
 
       <div className="flex flex-col md:flex-row gap-6 w-full">
@@ -138,7 +139,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
           name="estudianteCI"
           control={control}
           label="Cédula de Identidad"
-          placeholder="eg. 12345678"
+          placeholder="ej. 12345678"
           maxLength={8}
           error={errors.estudianteCI}
           wrapperClassName="w-full"
@@ -172,6 +173,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
               wrapperClassName="w-full"
               className="w-full"
               inputMode="numeric"
+              placeholder="ej. 1234567"
             />
           </div>
           {errors.estudianteCodigoTelefono && (
@@ -318,6 +320,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
             wrapperClassName="w-full"
             className="w-full"
             inputMode="numeric"
+            placeholder="ej. 1234567"
           />
         </div>
         {errors.estudianteCodigoTelefonoEmergencia && (
@@ -344,7 +347,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
           name="representanteCI"
           control={control}
           label={`Cédula de Identidad ${isMinor ? "*" : ""}`.trim()}
-          placeholder="eg. 12345678"
+          placeholder="ej. 12345678"
           maxLength={8}
           error={errors.representanteCI}
           wrapperClassName="w-full"
@@ -426,6 +429,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         name="representanteDireccion"
         control={control}
         label={`Dirección Residencial ${isMinor ? "*" : ""}`.trim()}
+        placeholder="Dirección completa"
         error={errors.representanteDireccion}
         wrapperClassName="w-full"
       />
@@ -435,7 +439,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
           name="representanteRIF"
           control={control}
           label={`Registro de Información Fiscal (RIF) ${isMinor ? "*" : ""}`.trim()}
-          placeholder="eg. V-123456789"
+          placeholder="ej. V-123456789"
           maxLength={11}
           error={errors.representanteRIF}
           wrapperClassName="w-full"

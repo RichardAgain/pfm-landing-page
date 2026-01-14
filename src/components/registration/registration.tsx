@@ -24,15 +24,18 @@ export default function Registration() {
         formatPhone(values.estudianteCodigoTelefono, values.estudianteTelefono),
       );
       formData.append("rif", values.estudianteRIF);
-      formData.append("institucion_educacional", values.estudianteInstitucion);
-      formData.append("ocupacion", values.estudianteOcupacion);
-      formData.append("profesion", values.estudianteProfesion);
-      formData.append("lugar_trabajo", values.estudianteLugarTrabajo);
+      formData.append(
+        "institucion_educacional",
+        values.estudianteInstitucion || "",
+      );
+      formData.append("ocupacion", values.estudianteOcupacion || "");
+      formData.append("profesion", values.estudianteProfesion || "");
+      formData.append("lugar_trabajo", values.estudianteLugarTrabajo || "");
       formData.append("alergico_a", values.estudianteAlergias);
       formData.append("antecedentes", values.estudianteAntecedentes);
       formData.append(
         "especificacion_antecedentes",
-        values.estudianteAlergiasEspecificadas,
+        values.estudianteAlergiasEspecificadas || "",
       );
       formData.append("nombre_emergencia", values.estudianteContactoEmergencia);
       formData.append(
@@ -43,9 +46,9 @@ export default function Registration() {
         ),
       );
 
-      formData.append("nombre_representante", values.representanteNombre);
-      formData.append("cedula_representante", values.representanteCI);
-      formData.append("parentesco", values.representanteParentesco);
+      formData.append("nombre_representante", values.representanteNombre || "");
+      formData.append("cedula_representante", values.representanteCI || "");
+      formData.append("parentesco", values.representanteParentesco || "");
       formData.append(
         "telefono_representante",
         formatPhone(
@@ -53,22 +56,31 @@ export default function Registration() {
           values.representanteTelefono,
         ),
       );
-      formData.append("ocupacion_representante", values.representanteOcupacion);
-      formData.append("profesion_representante", values.representanteProfesion);
+      formData.append(
+        "ocupacion_representante",
+        values.representanteOcupacion || "",
+      );
+      formData.append(
+        "profesion_representante",
+        values.representanteProfesion || "",
+      );
       formData.append(
         "lugar_trabajo_representante",
-        values.representanteLugarTrabajo,
+        values.representanteLugarTrabajo || "",
       );
-      formData.append("direccion_representante", values.representanteDireccion);
-      formData.append("rif_representante", values.representanteRIF);
-      formData.append("email_representante", values.representanteEmail);
+      formData.append(
+        "direccion_representante",
+        values.representanteDireccion || "",
+      );
+      formData.append("rif_representante", values.representanteRIF || "");
+      formData.append("email_representante", values.representanteEmail || "");
       formData.append(
         "tiene_estudios",
         values.tiene_estudios === "Sí" ? "1" : "0",
       );
-      formData.append("institucion", values.institucion);
-      formData.append("catedras_estudiadas", values.catedras_estudiadas);
-      formData.append("duracion", values.duracion);
+      formData.append("institucion", values.institucion || "");
+      formData.append("catedras_estudiadas", values.catedras_estudiadas || "");
+      formData.append("duracion", values.duracion || "");
 
       formData.append("autorizacion", values.autorizacion === "Sí" ? "1" : "0");
 
@@ -85,7 +97,12 @@ export default function Registration() {
         link.click();
         document.body.removeChild(link);
 
-        alert("Inscripción enviada exitosamente. Será contactado pronto.");
+        alert(
+          `Inscripción enviada exitosamente.
+          Por favor, realice una revisión detallada del documento.
+          Si todos los datos proporcionados son correctos, proceda a culminar su inscripción.
+          Si existe algún error, por favor, realice el proceso nuevamente.`,
+        );
         window.location.href = "/";
       } else {
         alert("Ha ocurrido un error. Por favor, intente nuevamente más tarde.");
