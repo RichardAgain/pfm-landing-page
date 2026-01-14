@@ -31,7 +31,7 @@ export default function Registration() {
       formData.append("ocupacion", values.estudianteOcupacion || "");
       formData.append("profesion", values.estudianteProfesion || "");
       formData.append("lugar_trabajo", values.estudianteLugarTrabajo || "");
-      formData.append("alergico_a", values.estudianteAlergias);
+      formData.append("alergias", values.estudianteAlergias);
       formData.append("antecedentes", values.estudianteAntecedentes);
       formData.append(
         "especificacion_antecedentes",
