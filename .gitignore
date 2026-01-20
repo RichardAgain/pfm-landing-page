@@ -24,6 +24,10 @@ pnpm-debug.log*
 .idea/
 
 .vscode/
+.zed/
 
 pnpm-lock.yaml
 yarn.lock
+
+# caching folder
+cache
