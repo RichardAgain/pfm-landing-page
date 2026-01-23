@@ -3,6 +3,7 @@ import { authApi, type LoginRequest } from "../../lib/api";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { actions } from "astro:actions";
 
 const schema = z.object({
     credential: z
@@ -33,48 +34,18 @@ export default function LogIn() {
 
     // --------------------------------------------------
 
-    // Login form submission handler
     const onSubmit = async (values: LoginFormValues) => {
         setError("");
 
-        const credentials: LoginRequest = {
-            credential: values.credential,
-            password: values.password,
-        };
+        const { data, error } = await actions.auth.login(values)
 
-        try {
-            const response = await authApi.login(credentials);
-
-            if (response.user) {
-                // Store user data in localStorage for later use
-                localStorage.setItem("user_data", JSON.stringify(response.user));
-
-                // Check user role - assuming the UserResource includes role information
-                // You may need to adjust this based on your UserResource structure
-                const userRole = response.user.role;
-
-                // Redirect based on role
-                switch (userRole) {
-                    case "admin":
-                        window.location.href = "/administrador";
-                        break;
-                    case "estudiante":
-                        window.location.href = "/estudiante";
-                        break;
-                    default:
-                        setError("Rol de usuario no reconocido.");
-                        setShowModal(true);
-                        break;
-                }
-            } else {
-                setError("Respuesta del servidor incompleta. Faltan datos de sesión.");
-                setShowModal(true);
-            }
-        } catch (error) {
-            console.error("Login error:", error);
-            setError("Credenciales inválidas o error del servidor.");
-            setShowModal(true);
+        if (error) {
+            setError(error.message)
+            setShowModal(true)
+            return
         }
+
+        window.location.href = data.redirect_url
     };
 
     return (
