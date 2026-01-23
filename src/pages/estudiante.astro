@@ -1,13 +1,12 @@
 ---
+export const prerender = false;
+
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/ui/header";
 import Student from "../components/student/student";
-import AuthGuard from "../components/auth/AuthGuard";
 ---
 
 <Layout>
-    <Header client:load />
-    <!-- <AuthGuard client:load requiredRole="estudiante"> -->
-        <Student client:load />
-    <!-- </AuthGuard> -->
+    <Header client:only />
+    <Student client:only />
 </Layout>

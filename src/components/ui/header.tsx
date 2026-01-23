@@ -1,6 +1,5 @@
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
-import { authApi } from "../../lib/api";
 import { actions } from "astro:actions";
 // import { sessionManager } from "../../lib/session";
 
