@@ -1,7 +1,8 @@
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { authApi } from "../../lib/api";
-import { sessionManager } from "../../lib/session";
+import { actions } from "astro:actions";
+// import { sessionManager } from "../../lib/session";
 
 export default function Header() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -9,30 +10,11 @@ export default function Header() {
   const handleLogout = async () => {
     if (isLoggingOut) return;
 
-    try {
-      setIsLoggingOut(true);
+    const { error } = await actions.auth.logout()
 
-      // Call logout API to invalidate token on server
-      try {
-        await authApi.logout();
-      } catch (error) {
-        // Even if server logout fails, we should clear local session
-        console.warn("Server logout failed, but clearing local session:", error);
-      }
+    window.location.href = "/login";
 
-      // Clear local session data
-      sessionManager.clearSession();
-
-      // Redirect to login
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Logout error:", error);
-      // Force clear session and redirect anyway
-      sessionManager.clearSession();
-      window.location.href = "/login";
-    } finally {
-      setIsLoggingOut(false);
-    }
+    setIsLoggingOut(false);
   };
 
   return (

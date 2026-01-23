@@ -30,17 +30,22 @@ export const auth = {
     logout: defineAction({
         handler: async (_input, context) => {
             const token = context.cookies.get('session_token')?.value;
+
             try {
-                await api.post('/logout', {}, {
+                const data = await api.post('/logout', {}, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
 
+                return data;
+            } catch (error: any) {
+                throw new ActionError({
+                    code: errorCodeMapper(error.status),
+                    message: error.response.data.message
+                })
+            } finally {
                 context.cookies.delete('session_token', { path: '/' });
-                return { success: true, message: "Logged out successfully" };
-            } catch (error) {
-                return { success: false, message: "Logout failed" };
             }
         }
     })
