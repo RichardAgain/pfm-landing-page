@@ -1,38 +1,47 @@
 import { z } from "astro:schema";
-import { defineAction } from "astro:actions";
-
-import { API_BASE_URL } from "../config/api";
+import { ActionError, defineAction } from "astro:actions";
+import api from "@lib/axios";
+import { errorCodeMapper } from "../utils/error-codes";
 
 export const auth = {
     login: defineAction({
         input: z.object({ credential: z.string(), password: z.string() }),
-        handler: async (input, context): Promise<{ success: boolean; redirect_url: string }> => {
-            const response = await fetch(`${API_BASE_URL}/login`, {
-                method: 'POST',
-                body: JSON.stringify(input),
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-            });
+        handler: async (input, context): Promise<{ redirect_url: string }> => {
+            try {
+                const data: any = await api.post('/login', input);
 
-            if (!response.ok) {
-                return {
-                    success: false,
-                    redirect_url: "",
+                if (data.session_token) {
+                    context.cookies.set('session_token', data.session_token, {
+                        httpOnly: true,
+                        path: '/'
+                    });
                 }
+
+                return data;
+            } catch (error: any) {
+                throw new ActionError({
+                    code: errorCodeMapper(error.status),
+                    message: error.response.data.message
+                })
             }
+        }
+    }),
 
-            const data = await response.json();
-
-            if (data.session_token) {
-                context.cookies.set('session_token', data.session_token, {
-                    httpOnly: true,
-                    path: '/'
+    logout: defineAction({
+        handler: async (_input, context) => {
+            const token = context.cookies.get('session_token')?.value;
+            try {
+                await api.post('/logout', {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 });
-            }
 
-            return { success: true, redirect_url: data.redirect_url };
+                context.cookies.delete('session_token', { path: '/' });
+                return { success: true, message: "Logged out successfully" };
+            } catch (error) {
+                return { success: false, message: "Logout failed" };
+            }
         }
     })
 }
