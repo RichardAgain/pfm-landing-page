@@ -13,9 +13,7 @@ export const authMiddleware = defineMiddleware((context, next) => {
 
     if (!isProtectedRoute(pathName)) return next();
 
-    // const session = sessionManager.getAuthToken()
-
-    const token = context.cookies.get('session_token')
+    const token = context.cookies.get('session_token')?.value
 
     if (!token) {
         return Response.redirect(`${baseUrl}/login`, 302)

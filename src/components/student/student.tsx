@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
-import {
-  studentApi,
-  type Estudiante,
-  type StudentNotas,
-  type NotaCatedra,
-  type NotaGrupal,
-} from "../../lib/api";
-import { API_BASE_URL } from "../../config/api";
 
-const EMPTY_GRADES: StudentNotas = { catedras: {}, grupales: {} };
+import { actions } from "astro:actions";
+import type { Estudiante, EstudianteWithNotas, NotaCatedra, NotaGrupal } from "../../types/models";
+
+const EMPTY_GRADES: EstudianteWithNotas["notas"] = { catedras: {}, grupales: {} };
 
 export default function Student() {
   // State variable for student data
   const [student, setStudent] = useState<Estudiante | null>(null);
 
   // State variable for student's grades (grouped by subject)
-  const [grades, setGrades] = useState<StudentNotas | null>(null);
+  const [grades, setGrades] = useState<EstudianteWithNotas["notas"] | null>(null);
 
   // State variables for loading views management
   const [loadingStudent, setLoadingStudent] = useState(true);
@@ -42,42 +37,24 @@ export default function Student() {
   // Get student's data using fetch
   useEffect(() => {
     const fetchStudentData = async () => {
-      try {
-        setLoadingStudent(true);
-        setGradesError(null);
+      setLoadingStudent(true);
+      setGradesError(null);
 
-        // Get user data from localStorage (set during login)
-        const userData = localStorage.getItem("user_data");
-        if (!userData) {
-          setStudentError(
-            "No se encontraron datos de usuario. Por favor, inicie sesión nuevamente.",
-          );
-          setGrades(EMPTY_GRADES);
-          setLoadingStudent(false);
-          return;
-        }
+      const { data, error } = await actions.students.getProfile();
 
-        // Use the student ID from the user data (assuming it's linked via id_estudiante)
-        const response = await studentApi.getProfile();
-
-        console.log(response.data.notas);
-
-        if (response.data) {
-          setStudent(response.data);
-          setGrades(response.data.notas ?? EMPTY_GRADES);
-        } else {
-          setStudentError("No se encontraron datos del estudiante.");
-          setGrades(EMPTY_GRADES);
-          setGradesError("No se encontraron notas del estudiante.");
-        }
-      } catch (error) {
-        console.error("Error al cargar los datos del estudiante:", error);
-        setStudentError("Error al cargar los datos del estudiante.");
+      if (error) {
+        setStudentError(
+          "No se encontraron datos de usuario. Por favor, inicie sesión nuevamente.",
+        );
         setGrades(EMPTY_GRADES);
-        setGradesError("Error al cargar las notas del estudiante.");
-      } finally {
         setLoadingStudent(false);
+        return;
       }
+
+      setStudent(data.data);
+      setGrades(data.data.notas ?? EMPTY_GRADES);
+
+      setLoadingStudent(false);
     };
 
     fetchStudentData();
