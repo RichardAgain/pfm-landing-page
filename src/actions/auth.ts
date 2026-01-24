@@ -6,9 +6,9 @@ import { errorCodeMapper } from "../utils/error-codes";
 export const auth = {
     login: defineAction({
         input: z.object({ credential: z.string(), password: z.string() }),
-        handler: async (input, context): Promise<{ redirect_url: string }> => {
+        handler: async (input, context) => {
             try {
-                const data: any = await api.post('/login', input);
+                const data: { session_token: string, redirect_url: string } = await api.post('/login', input);
 
                 if (data.session_token) {
                     context.cookies.set('session_token', data.session_token, {

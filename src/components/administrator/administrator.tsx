@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Eye, Check, X } from "lucide-react";
-import { aspiranteApi, listaEsperaApi, type ListaEsperaItem } from "../../lib/api";
+import { actions } from "astro:actions";
+import type { ListaEsperaItem } from "../../types/waitlist";
 
 // ------------------------------------------------------------------
 
@@ -47,22 +48,25 @@ export default function Administrator() {
     // Get applicants data using fetch (wait-list)
     useEffect(() => {
         const fetchWaitList = async () => {
-            try {
-                setLoading(true);
-                const response = await listaEsperaApi.getAll();
+            setLoading(true);
 
-                if (response.data) {
-                    // Your Laravel controller already filters by estado = 1
-                    setStudents(response.data);
-                } else {
-                    setStudents([]);
-                }
-            } catch (error) {
+            const { data, error } = await actions.applicants.getWaitList();
+
+            if (error) {
                 console.error("Error al cargar la lista de espera:", error);
                 setError("Error al cargar la lista de espera.");
-            } finally {
                 setLoading(false);
+                return;
             }
+
+            if (data && data.data) {
+                // Your Laravel controller already filters by estado = 1
+                setStudents(data.data);
+            } else {
+                setStudents([]);
+            }
+
+            setLoading(false);
         };
 
         fetchWaitList();
@@ -71,48 +75,51 @@ export default function Administrator() {
     // ------------------------------------------------------------------
 
     const handleDownloadPDF = async (id: number) => {
-        try {
-            const response = await aspiranteApi.downloadPdf(id);
+        const { data, error } = await actions.applicants.downloadPdf({ id });
 
-            if (!response || !response.message) {
-                throw new Error("Network response was not ok");
-            }
-
-            const link = document.createElement("a");
-            link.href = response.download_url;
-            link.download = `planilla_inscripcion.pdf`;
-
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } catch (error) {
+        if (error) {
             console.error("Error downloading PDF:", error);
             alert("Error al descargar la planilla.");
+            return;
         }
+
+        if (!data || !data.download_url) {
+            alert("Error: No se recibió la URL de descarga.");
+            return;
+        }
+
+        const link = document.createElement("a");
+        link.href = data.download_url;
+        link.download = `planilla_inscripcion.pdf`;
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     // ------------------------------------------------------------------
 
     // Applicant acceptation handler
     const handleAcceptation = async (id: number) => {
-        try {
-            const student = students.find((s) => s.id === id) ?? null;
+        const student = students.find((s) => s.id === id) ?? null;
 
-            if (student) {
-                const response = await listaEsperaApi.accept(id);
+        if (student) {
+            const { data, error } = await actions.applicants.accept({ id });
 
-                if (response.message) {
-                    setStudents((prev) => prev.filter((s) => s.id !== id));
-                    alert(`Aplicante aceptado con éxito${student.nombre ? `: ${student.nombre}` : ""}.`);
-                } else {
-                    alert("Error al aceptar al aplicante.");
-                }
-            } else {
-                alert("Error. No se ha encontrado al aplicante.");
+            if (error) {
+                console.error("Acceptation error:", error);
+                alert("Error al procesar la aceptación.");
+                return;
             }
-        } catch (error) {
-            console.error("Acceptation error:", error);
-            alert("Error al procesar la aceptación.");
+
+            if (data && data.message) {
+                setStudents((prev) => prev.filter((s) => s.id !== id));
+                alert(`Aplicante aceptado con éxito${student.nombre ? `: ${student.nombre}` : ""}.`);
+            } else {
+                alert("Error al aceptar al aplicante.");
+            }
+        } else {
+            alert("Error. No se ha encontrado al aplicante.");
         }
     };
 
@@ -120,25 +127,26 @@ export default function Administrator() {
 
     // Applicant rejection handler
     const handleRejection = async (id: number) => {
-        try {
-            const student = students.find((s) => s.id === id) ?? null;
+        const student = students.find((s) => s.id === id) ?? null;
 
-            if (student) {
-                const response = await listaEsperaApi.reject(id);
+        if (student) {
+            const { data, error } = await actions.applicants.reject({ id });
 
-                if (response.message) {
-                    // Remove from local state
-                    setStudents((prev) => prev.filter((s) => s.id !== id));
-                    alert(`Aplicante rechazado con éxito${student.nombre ? `: ${student.nombre}` : ""}.`);
-                } else {
-                    alert("Error al rechazar al aplicante.");
-                }
-            } else {
-                alert("Error. No se ha encontrado al aplicante.");
+            if (error) {
+                console.error("Rejection error:", error);
+                alert("Error al procesar el rechazo.");
+                return;
             }
-        } catch (error) {
-            console.error("Rejection error:", error);
-            alert("Error al procesar el rechazo.");
+
+            if (data && data.message) {
+                // Remove from local state
+                setStudents((prev) => prev.filter((s) => s.id !== id));
+                alert(`Aplicante rechazado con éxito${student.nombre ? `: ${student.nombre}` : ""}.`);
+            } else {
+                alert("Error al rechazar al aplicante.");
+            }
+        } else {
+            alert("Error. No se ha encontrado al aplicante.");
         }
     };
 
