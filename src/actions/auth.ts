@@ -27,6 +27,27 @@ export const auth = {
         }
     }),
 
+    getUser: defineAction({
+        handler: async (_input, context) => {
+            const token = context.cookies.get('session_token')?.value;
+
+            try {
+                const data = await api.post('/user', {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                return data;
+            } catch (error: any) {
+                throw new ActionError({
+                    code: errorCodeMapper(error.status),
+                    message: error.response.data.message,
+                })
+            }
+        }
+    }),
+
     logout: defineAction({
         handler: async (_input, context) => {
             const token = context.cookies.get('session_token')?.value;
