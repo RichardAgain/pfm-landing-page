@@ -7,6 +7,7 @@ export interface User {
 }
 
 export interface Estudiante {
+    id: number;
     nombre: string;
     genero: string;
     cedula?: string;
@@ -32,11 +33,11 @@ export interface Estudiante {
     parentesco?: string;
     telefono_representante?: string;
     ocupacion_representante?: string;
-    profesion_representante?: string;
-    lugar_trabajo_representante?: string;
-    direccion_representante?: string;
-    rif_representante?: string;
-    email_representante?: string;
+    representante_profesion?: string;
+    representante_lugar_trabajo?: string;
+    representante_direccion?: string;
+    representante_rif?: string;
+    representante_email?: string;
 
     autorizacion?: boolean;
     activo?: number;
