@@ -55,8 +55,7 @@ export const registrationSchema = z
     correo_electronico: z
       .string({ required_error: "Este campo es obligatorio" })
       .email("Ingrese un correo válido"),
-    alergias: z
-      .string().optional(),
+    alergias: z.string().optional(),
     antecedentes: z
       .string({ invalid_type_error: "Seleccione una opción" })
       .refine((val) => val === "Sí" || val === "No", {
@@ -107,8 +106,8 @@ export const registrationSchema = z
       }),
 
     tiene_estudios: z
-      .string({ invalid_type_error: "Seleccione una opción" })
-      .refine((val) => val === "Sí" || val === "No", {}),
+      .enum(["Sí", "No"])
+      .transform((val) => val === "Sí"),
     institucion_estudios: z.string().optional(),
     catedras_estudios: z.string().optional(),
     duracion_estudios: z
@@ -119,13 +118,12 @@ export const registrationSchema = z
       }),
 
     autorizacion: z
-      .string({
-        required_error: "Seleccione una opción",
-        invalid_type_error: "Seleccione una opción",
-      })
-      .refine((val) => val === "Sí" || val === "No", {
-        message: "Seleccione una opción",
-      }),
+      .enum(["Sí", "No"])
+      .transform((val) => val === "Sí"),
+
+    instrumento: z
+      .enum(["si", "no"])
+      .transform((val) => val === "si"),
   })
   .superRefine((data, ctx) => {
     const age = ageFromBirthDate(data.fecha_nacimiento);
@@ -214,7 +212,7 @@ export const registrationSchema = z
       }
     }
 
-    if (data.tiene_estudios === "Sí") {
+    if (data.tiene_estudios === true) {
       if (!data.institucion_estudios || data.institucion_estudios.trim() === "") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -239,6 +237,5 @@ export const registrationSchema = z
     }
   });
 
-type RegistrationSchema = z.infer<typeof registrationSchema>;
-
-export type RegistrationFormValues = RegistrationSchema
+export type RegistrationFormInputValues = z.input<typeof registrationSchema>;
+export type RegistrationFormValues = z.output<typeof registrationSchema>;
