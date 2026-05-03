@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema, type RegistrationFormValues, type RegistrationFormInputValues } from ".";
 import { useFillRegistrationForm } from "./registrationFormDefaults";
 import InputForm from "../components/Input";
-import { ageFromBirthDate, aspiranteApi, type Catedra } from "@src/lib";
+import { ageFromBirthDate, aspiranteApi } from "@src/lib";
 
 
 const RegistrationForm = () => {
@@ -13,15 +13,17 @@ const RegistrationForm = () => {
     mode: "onBlur",
   });
 
-  useFillRegistrationForm(form);
+  useFillRegistrationForm(form as any);
 
   const {
     register,
-    control,
+    control: rawControl,
     handleSubmit,
     watch,
     formState: { errors },
   } = form;
+
+  const control = rawControl as any;
 
   const fechaNacimiento = watch("fecha_nacimiento");
   const tieneEstudios = watch("tiene_estudios");
