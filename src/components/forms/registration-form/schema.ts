@@ -3,7 +3,7 @@ import { ageFromBirthDate } from "@src/lib";
 
 const ciRegex = /^\d{7,8}$/;
 const rifRegex = /^[JV]-\d{9}$/i;
-const phoneRegex = /^\d{7}$/;
+const phoneRegex = /^\d{4}-\d{7}$/;
 
 export const registrationSchema = z
   .object({
@@ -39,15 +39,11 @@ export const registrationSchema = z
           "Formato de RIF inválido. Debe utilizar J o V, seguido de 9 dígitos.",
       })
       .default(""),
-    estudianteCodigoTelefono: z
-      .string({ required_error: "Seleccione una opción" })
-      .min(1, "Seleccione una opción"),
     telefono: z
-      .string({ required_error: "Debe ingresar 7 dígitos" })
-      .min(7, "Debe ingresar 7 dígitos")
-      .max(7, "Debe ingresar 7 dígitos")
-      .refine((val) => phoneRegex.test(val), {
-        message: "Solo números, 7 dígitos",
+      .string()
+      .optional()
+      .refine((val) => !val || phoneRegex.test(val), {
+        message: "Formato inválido. Use código-número, ej: 0414-1234567",
       }),
     institucion_educacional: z.string().optional(),
     ocupacion: z.string().optional(),
@@ -60,10 +56,7 @@ export const registrationSchema = z
       .string({ required_error: "Este campo es obligatorio" })
       .email("Ingrese un correo válido"),
     alergias: z
-      .string({
-        required_error: "Este campo es obligatorio",
-      })
-      .min(1, "Este campo es obligatorio"),
+      .string().optional(),
     antecedentes: z
       .string({ invalid_type_error: "Seleccione una opción" })
       .refine((val) => val === "Sí" || val === "No", {
@@ -73,15 +66,11 @@ export const registrationSchema = z
     nombre_emergencia: z
       .string({ required_error: "Este campo es obligatorio" })
       .min(1, "Este campo es obligatorio"),
-    estudianteCodigoTelefonoEmergencia: z
-      .string({ required_error: "Seleccione una opción" })
-      .min(1, "Seleccione una opción"),
     numero_emergencia: z
-      .string({ required_error: "Debe ingresar 7 dígitos" })
-      .min(7, "Debe ingresar 7 dígitos")
-      .max(7, "Debe ingresar 7 dígitos")
-      .refine((val) => phoneRegex.test(val), {
-        message: "Solo números, 7 dígitos",
+      .string()
+      .optional()
+      .refine((val) => !val || phoneRegex.test(val), {
+        message: "Formato inválido. Use código-número, ej: 0414-1234567",
       }),
     parentesco_emergencia: z.string().optional(),
 
@@ -100,12 +89,11 @@ export const registrationSchema = z
           "Formato de RIF inválido. Debe utilizar J o V, seguido de 9 dígitos.",
       }),
     representante_parentesco: z.string().optional(),
-    representanteCodigoTelefono: z.string().optional(),
     representante_telefono: z
       .string()
       .optional()
       .refine((val) => !val || phoneRegex.test(val), {
-        message: "Solo números, 7 dígitos",
+        message: "Formato inválido. Use código-número, ej: 0414-1234567",
       }),
     representante_ocupacion: z.string().optional(),
     representante_profesion: z.string().optional(),
@@ -162,7 +150,6 @@ export const registrationSchema = z
           "representante_nombre",
           "representante_cedula",
           "representante_parentesco",
-          "representanteCodigoTelefono",
           "representante_telefono",
           "representante_ocupacion",
           "representante_profesion",
@@ -197,7 +184,7 @@ export const registrationSchema = z
         ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "Solo números, 7 dígitos",
+            message: "Formato inválido. Use código-número, ej: 0414-1234567",
             path: ["representante_telefono"],
           });
         }

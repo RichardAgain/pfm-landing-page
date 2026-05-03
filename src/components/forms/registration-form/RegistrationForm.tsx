@@ -52,19 +52,26 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
       onSubmit={handleSubmit(submitHandler)}
       className="grid grid-cols-1 md:grid-cols-2 w-[90%] md:w-[80%] items-center justify-center gap-6 md:gap-4 mx-auto"
     >
+      <p className="text-sm col-span-2 text-zinc-500 mt-4">
+        Los campos marcados con (<span className="text-red-500">*</span>) son obligatorios.
+        Los campos que no apliquen, por favor, dejar EN BLANCO.
+      </p>
+
       <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-6 md:pt-8 pb-2 mt-0 md:mt-4 border-t border-gray-200 md:col-span-2">
         Datos del Estudiante
       </h3>
 
-      <InputForm
-        name="nombre"
-        control={control}
-        label="Nombres y Apellidos"
-        required
-        error={errors.nombre}
-        wrapperClassName="w-full"
-        placeholder="Nombres completos"
-      />
+      <div className="md:col-span-2">
+        <InputForm
+          name="nombre"
+          control={control}
+          label="Nombres y Apellidos"
+          required
+          error={errors.nombre}
+          wrapperClassName="w-full"
+          placeholder="Nombres completos"
+        />
+      </div>
 
       <InputForm
         name="fecha_nacimiento"
@@ -84,7 +91,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
       />
 
       <div className="flex flex-col gap-1 w-full">
-        <label className="font-montserrat text-sm">Género *</label>
+        <label className="font-montserrat text-sm">Género</label>
         <select className="h-9" {...register("genero")}>
           <option value="" disabled>
             Seleccione una opción
@@ -108,44 +115,6 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         error={errors.cedula}
         wrapperClassName="w-full"
       />
-
-      <div className="flex flex-col gap-1 w-full">
-        <label className="font-montserrat text-sm">Teléfono Celular *</label>
-        <div className="flex gap-2">
-          <select
-            className="w-[60%]"
-            {...register("estudianteCodigoTelefono")}
-          >
-            <option value="" disabled>
-              Seleccione una opción
-            </option>
-            {phoneCodes.map((code) => (
-              <option key={code} value={code}>
-                {code}
-              </option>
-            ))}
-          </select>
-          <InputForm
-            name="telefono"
-            control={control}
-            label="Número de teléfono"
-            required
-            labelClassName="sr-only"
-            maxLength={7}
-            error={errors.telefono}
-            wrapperClassName="w-full"
-            className="w-full"
-            inputMode="numeric"
-            placeholder="ej. 1234567"
-          />
-        </div>
-        {errors.estudianteCodigoTelefono && (
-          <p className="text-red-500 text-xs">
-            {errors.estudianteCodigoTelefono.message}
-          </p>
-        )}
-      </div>
-
       <InputForm
         name="rif"
         control={control}
@@ -153,6 +122,27 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         placeholder="ej. J-123456789"
         maxLength={11}
         error={errors.rif}
+        wrapperClassName="w-full"
+      />
+
+      <InputForm
+        name="telefono"
+        control={control}
+        label="Teléfono"
+        error={errors.telefono}
+        wrapperClassName="w-full"
+        inputMode="numeric"
+        placeholder="0414-1234567"
+      />
+
+      <InputForm
+        name="correo_electronico"
+        control={control}
+        label="Correo Electrónico"
+        required
+        type="email"
+        placeholder="usuario@gmail.com"
+        error={errors.correo_electronico}
         wrapperClassName="w-full"
       />
 
@@ -184,38 +174,73 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         wrapperClassName="w-full"
       />
 
-      <InputForm
-        name="direccion"
-        control={control}
-        label="Dirección Residencial"
-        required
-        error={errors.direccion}
-        wrapperClassName="w-full"
-      />
+      <div className="md:col-span-2">
+        <InputForm
+          name="direccion"
+          control={control}
+          label="Dirección Residencial"
+          required
+          error={errors.direccion}
+          wrapperClassName="w-full"
+        />
+      </div>
 
-      <InputForm
-        name="correo_electronico"
-        control={control}
-        label="Correo Electrónico"
-        required
-        type="email"
-        placeholder="usuario@gmail.com"
-        error={errors.correo_electronico}
-        wrapperClassName="w-full"
-      />
+      <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
+        Estudios Realizados
+      </h3>
 
-      <InputForm
-        name="alergias"
-        control={control}
-        label="Alérgico(a) a"
-        required
-        error={errors.alergias}
-        wrapperClassName="w-full"
-      />
+      <div className="flex flex-col gap-2 w-full md:col-span-2">
+        <label className="font-montserrat text-sm font-semibold">
+          ¿Tiene conocimientos previos?
+        </label>
+        <div className="flex flex-row gap-8">
+          <label className="flex items-center gap-[0.2rem] font-montserrat text-[0.8rem] font-semibold">
+            <input type="radio" value="Sí" {...register("tiene_estudios")} />
+            <span>Sí</span>
+          </label>
+          <label className="flex items-center gap-[0.1rem] font-montserrat text-[0.8rem] font-semibold">
+            <input type="radio" value="No" {...register("tiene_estudios")} />
+            <span>No</span>
+          </label>
+        </div>
+        {errors.tiene_estudios && (
+          <p className="text-red-500 text-xs">
+            {errors.tiene_estudios.message}
+          </p>
+        )}
+      </div>
+
+      {tieneEstudios === "Sí" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:col-span-2">
+          <InputForm
+            name="institucion_estudios"
+            control={control}
+            label="Institución"
+            error={errors.institucion_estudios}
+          />
+          <InputForm
+            name="catedras_estudios"
+            control={control}
+            label="Cátedras Estudiadas"
+            error={errors.catedras_estudios}
+          />
+          <InputForm
+            name="duracion_estudios"
+            control={control}
+            type="number"
+            label="Duración (en años)"
+            error={errors.duracion_estudios}
+          />
+        </div>
+      )}
+
+      <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-6 md:pt-8 pb-2 mt-0 md:mt-4 border-t border-gray-200 md:col-span-2">
+        Antecedentes Médicos
+      </h3>
 
       <div className="flex flex-col gap-2 h-12 w-full md:col-span-2">
         <label className="font-montserrat text-sm">
-          Antecedentes (médicos, psicológicos) *
+          Antecedentes (médicos, psicológicos)
         </label>
         <div className="flex flex-row gap-8">
           <label className="flex items-center gap-[0.2rem] font-montserrat text-[0.8rem] font-semibold">
@@ -249,6 +274,20 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         wrapperClassName="w-full"
       />
 
+      <div></div>
+
+      <InputForm
+        name="alergias"
+        control={control}
+        label="Alérgico(a) a"
+        error={errors.alergias}
+        wrapperClassName="w-full"
+      />
+
+      <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-6 md:pt-8 pb-2 mt-0 md:mt-4 border-t border-gray-200 md:col-span-2">
+        Datos de Emergencia
+      </h3>
+
       <InputForm
         name="nombre_emergencia"
         control={control}
@@ -265,41 +304,16 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         wrapperClassName="w-full"
       />
 
-      <div className="flex flex-col gap-1 w-full">
-        <label className="font-montserrat text-sm">
-          Teléfono de emergencia *
-        </label>
-        <div className="flex gap-2">
-          <select {...register("estudianteCodigoTelefonoEmergencia")}>
-            <option value="" disabled>
-              Seleccione una opción
-            </option>
-            {phoneCodes.map((code) => (
-              <option key={code} value={code}>
-                {code}
-              </option>
-            ))}
-          </select>
-          <InputForm
-            name="numero_emergencia"
-            control={control}
-            label="Teléfono de emergencia"
-            required
-            labelClassName="sr-only"
-            maxLength={7}
-            error={errors.numero_emergencia}
-            wrapperClassName="w-full"
-            className="w-full"
-            inputMode="numeric"
-            placeholder="ej. 1234567"
-          />
-        </div>
-        {errors.estudianteCodigoTelefonoEmergencia && (
-          <p className="text-red-500 text-xs">
-            {errors.estudianteCodigoTelefonoEmergencia.message}
-          </p>
-        )}
-      </div>
+      <InputForm
+        name="numero_emergencia"
+        control={control}
+        label="Teléfono de emergencia"
+        required
+        error={errors.numero_emergencia}
+        wrapperClassName="w-full"
+        inputMode="numeric"
+        placeholder="0414-1234567"
+      />
 
       <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
         Datos del Representante Legal
@@ -334,43 +348,16 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         wrapperClassName="w-full"
       />
 
-      <div className="flex flex-col gap-1 w-full">
-        <label className="font-montserrat text-sm">
-          Teléfono Celular {isMinor ? "*" : ""}
-        </label>
-        <div className="flex gap-2">
-          <select
-            {...register("representanteCodigoTelefono")}
-            className="w-[60%]"
-          >
-            <option value="" disabled>
-              Seleccione una opción
-            </option>
-            {phoneCodes.map((code) => (
-              <option key={code} value={code}>
-                {code}
-              </option>
-            ))}
-          </select>
-          <InputForm
-            name="representante_telefono"
-            control={control}
-            label="Teléfono del representante"
-            required={isMinor}
-            labelClassName="sr-only"
-            maxLength={7}
-            error={errors.representante_telefono}
-            wrapperClassName="w-full"
-            className="w-full"
-            inputMode="numeric"
-          />
-        </div>
-        {errors.representanteCodigoTelefono && (
-          <p className="text-red-500 text-xs">
-            {errors.representanteCodigoTelefono.message}
-          </p>
-        )}
-      </div>
+      <InputForm
+        name="representante_telefono"
+        control={control}
+        label="Teléfono Celular"
+        required={isMinor}
+        error={errors.representante_telefono}
+        wrapperClassName="w-full"
+        inputMode="numeric"
+        placeholder="0414-1234567"
+      />
 
       <InputForm
         name="representante_ocupacion"
@@ -431,54 +418,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         wrapperClassName="w-full"
       />
 
-      <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
-        Estudios Realizados
-      </h3>
 
-      <div className="flex flex-col gap-2 w-full md:col-span-2">
-        <label className="font-montserrat text-sm font-semibold">
-          ¿Tiene conocimientos previos?
-        </label>
-        <div className="flex flex-row gap-8">
-          <label className="flex items-center gap-[0.2rem] font-montserrat text-[0.8rem] font-semibold">
-            <input type="radio" value="Sí" {...register("tiene_estudios")} />
-            <span>Sí</span>
-          </label>
-          <label className="flex items-center gap-[0.1rem] font-montserrat text-[0.8rem] font-semibold">
-            <input type="radio" value="No" {...register("tiene_estudios")} />
-            <span>No</span>
-          </label>
-        </div>
-        {errors.tiene_estudios && (
-          <p className="text-red-500 text-xs">
-            {errors.tiene_estudios.message}
-          </p>
-        )}
-      </div>
-
-      {tieneEstudios === "Sí" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:col-span-2">
-          <InputForm
-            name="institucion_estudios"
-            control={control}
-            label="Institución"
-            error={errors.institucion_estudios}
-          />
-          <InputForm
-            name="catedras_estudios"
-            control={control}
-            label="Cátedras Estudiadas"
-            error={errors.catedras_estudios}
-          />
-          <InputForm
-            name="duracion_estudios"
-            control={control}
-            type="number"
-            label="Duración (en años)"
-            error={errors.duracion_estudios}
-          />
-        </div>
-      )}
 
       <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
         Autorización
