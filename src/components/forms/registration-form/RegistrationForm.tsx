@@ -32,6 +32,7 @@ const RegistrationForm = () => {
 
   const fechaNacimiento = watch("fecha_nacimiento");
   const tieneEstudios = watch("tiene_estudios");
+  const tieneAntecedentes = watch("antecedentes");
   const isMinor = useMemo(() => {
     const age = ageFromBirthDate(fechaNacimiento);
     return age !== null && age < 18;
@@ -297,14 +298,15 @@ const RegistrationForm = () => {
         )}
       </div>
 
-      <InputForm
-        name="alergias_especificadas"
-        control={control}
-        label="Especifique (anexar informe correspondiente)"
-        wrapperClassName="w-full"
-      />
+      {tieneAntecedentes === "Sí" && (
 
-      <div></div>
+        <InputForm
+          name="alergias_especificadas"
+          control={control}
+          label="Especifique (anexar informe correspondiente)"
+          wrapperClassName="w-full col-span-2"
+        />
+      )}
 
       <InputForm
         name="alergias"
@@ -347,6 +349,9 @@ const RegistrationForm = () => {
 
       <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
         Datos del Representante Legal
+        <span className="text-zinc-400">
+          {" "} (si aplica)
+        </span>
       </h3>
 
       <InputForm
@@ -355,6 +360,15 @@ const RegistrationForm = () => {
         label="Nombres y Apellidos"
         required={isMinor}
         error={errors.representante_nombre}
+        wrapperClassName="w-full col-span-2"
+      />
+
+      <InputForm
+        name="representante_parentesco"
+        control={control}
+        label="Parentesco"
+        required={isMinor}
+        error={errors.representante_parentesco}
         wrapperClassName="w-full"
       />
 
@@ -370,15 +384,6 @@ const RegistrationForm = () => {
       />
 
       <InputForm
-        name="representante_parentesco"
-        control={control}
-        label="Parentesco"
-        required={isMinor}
-        error={errors.representante_parentesco}
-        wrapperClassName="w-full"
-      />
-
-      <InputForm
         name="representante_telefono"
         control={control}
         label="Teléfono Celular"
@@ -389,11 +394,22 @@ const RegistrationForm = () => {
         placeholder="0414-1234567"
       />
 
+
+      <InputForm
+        name="representante_email"
+        control={control}
+        label="Correo Electrónico"
+        required={isMinor}
+        type="email"
+        placeholder="usuario@gmail.com"
+        error={errors.representante_email}
+        wrapperClassName="w-full"
+      />
+
       <InputForm
         name="representante_ocupacion"
         control={control}
         label="Ocupación"
-        required={isMinor}
         error={errors.representante_ocupacion}
         wrapperClassName="w-full"
       />
@@ -402,7 +418,6 @@ const RegistrationForm = () => {
         name="representante_profesion"
         control={control}
         label="Profesión"
-        required={isMinor}
         error={errors.representante_profesion}
         wrapperClassName="w-full"
       />
@@ -411,7 +426,6 @@ const RegistrationForm = () => {
         name="representante_lugar_trabajo"
         control={control}
         label="Lugar de Trabajo"
-        required={isMinor}
         error={errors.representante_lugar_trabajo}
         wrapperClassName="w-full"
       />
@@ -423,28 +437,16 @@ const RegistrationForm = () => {
         required={isMinor}
         placeholder="Dirección completa"
         error={errors.representante_direccion}
-        wrapperClassName="w-full"
+        wrapperClassName="w-full col-span-2"
       />
 
       <InputForm
         name="representante_rif"
         control={control}
         label="Registro de Información Fiscal (RIF)"
-        required={isMinor}
         placeholder="ej. V-123456789"
         maxLength={11}
         error={errors.representante_rif}
-        wrapperClassName="w-full"
-      />
-
-      <InputForm
-        name="representante_email"
-        control={control}
-        label="Correo Electrónico"
-        required={isMinor}
-        type="email"
-        placeholder="usuario@gmail.com"
-        error={errors.representante_email}
         wrapperClassName="w-full"
       />
 

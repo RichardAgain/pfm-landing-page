@@ -119,11 +119,11 @@ export const registrationSchema = z
       .enum(["Sí", "No"])
       .transform((val) => val === "Sí"),
 
-     instrumento: z
-       .enum(["si", "no"])
-       .transform((val) => val === "si"),
-     turnstile_token: z.string({ required_error: "Por favor, complete el CAPTCHA" }),
-   })
+    instrumento: z
+      .enum(["si", "no"])
+      .transform((val) => val === "si"),
+    turnstile_token: z.string({ required_error: "Por favor, complete el CAPTCHA" }),
+  })
   .superRefine((data, ctx) => {
     const age = ageFromBirthDate(data.fecha_nacimiento);
 
@@ -148,12 +148,8 @@ export const registrationSchema = z
           "representante_cedula",
           "representante_parentesco",
           "representante_telefono",
-          "representante_ocupacion",
-          "representante_profesion",
-          "representante_lugar_trabajo",
           "representante_direccion",
           "representante_email",
-          "representante_rif",
         ];
 
         requiredRepresentativeFields.forEach((field) => {
