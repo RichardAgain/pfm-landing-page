@@ -1,16 +1,17 @@
 import type { InputHTMLAttributes } from "react";
-import { Controller, type Control, type FieldError } from "react-hook-form";
+import { Controller, type Control, type FieldError, type FieldPath, type FieldValues } from "react-hook-form";
 
-interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "name" | "defaultValue" | "value"> {
-    name: string;
-    control: Control<any>;
+interface Props<T extends FieldValues> extends Omit<InputHTMLAttributes<HTMLInputElement>, "name" | "defaultValue" | "value"> {
+    name: FieldPath<T>;
+    control: Control<T>;
     label?: string;
     error?: FieldError;
     wrapperClassName?: string;
     labelClassName?: string;
+    required?: boolean;
 }
 
-const InputForm = ({
+const InputForm = <T extends FieldValues,>({
     name,
     control,
     label,
@@ -19,18 +20,19 @@ const InputForm = ({
     className,
     wrapperClassName,
     labelClassName,
+    required,
     ...rest
-}: Props) => {
+}: Props<T>) => {
     return (
         <div className={`flex flex-col gap-1 ${wrapperClassName ?? ""}`}>
-            <label htmlFor={name} className={labelClassName ?? "font-montserrat text-sm"}>
-                {label}
-            </label>
+<label htmlFor={name} className={labelClassName ?? "font-montserrat text-sm"}>
+    {label}{required && <span className="text-red-500"> *</span>}
+</label>
 
             <Controller
                 name={name}
                 control={control}
-                defaultValue={""}
+                defaultValue={"" as any}
                 render={({ field }) => (
                     <input
                         {...field}
