@@ -1,13 +1,15 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema, type RegistrationFormValues, type RegistrationFormInputValues } from ".";
 import { useFillRegistrationForm } from "./registrationFormDefaults";
 import InputForm from "../components/Input";
 import { ageFromBirthDate, aspiranteApi } from "@src/lib";
-
+import { Turnstile, useTurnstile } from "react-turnstile"
+import { TURNSTILE_KEY } from "@src/config/api";
 
 const RegistrationForm = () => {
+  const turnstile = useTurnstile()
   const form = useForm<RegistrationFormInputValues, any, RegistrationFormValues>({
     resolver: zodResolver(registrationSchema) as any,
     mode: "onBlur",
@@ -20,10 +22,13 @@ const RegistrationForm = () => {
     control: rawControl,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = form;
 
   const control = rawControl as any;
+
+  const turnstileToken = watch("turnstile_token")
 
   const fechaNacimiento = watch("fecha_nacimiento");
   const tieneEstudios = watch("tiene_estudios");
@@ -39,9 +44,12 @@ const RegistrationForm = () => {
     const response = await aspiranteApi.create(values);
 
     if (response.message) {
+      turnstile.reset()
       alert(response.message);
       window.location.href = "/";
     } else {
+      turnstile.reset()
+      setValue('turnstile_token', '')
       alert("Ha ocurrido un error. Por favor, intente nuevamente más tarde.");
     }
   };
@@ -476,9 +484,20 @@ const RegistrationForm = () => {
           vigente, y foto tipo carnet.</b>
       </p>
 
+      <div className="w-full flex justify-center">
+        <Turnstile
+          sitekey={TURNSTILE_KEY}
+          onVerify={(token) => setValue('turnstile_token', token)}
+          onError={() => setValue('turnstile_token', '')}
+          onExpire={() => setValue('turnstile_token', '')}
+          className="mx-auto"
+        />
+      </div>
+
       <button
         type="submit"
-        className="flex items-center justify-center bg-[#C19310] hover:bg-[#a57f0d] px-6 py-1 mt-4 rounded-full text-sm font-montserrat text-white font-medium tracking-wide transition-all duration-300 shadow-md hover:shadow-lg mx-auto md:col-span-2"
+        disabled={!turnstileToken}
+        className="flex items-center justify-center bg-[#C19310] hover:bg-[#a57f0d] px-6 py-1 mt-4 rounded-full text-sm font-montserrat text-white font-medium tracking-wide transition-all duration-300 shadow-md hover:shadow-lg mx-auto md:col-span-2 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Enviar
       </button>

@@ -119,10 +119,11 @@ export const registrationSchema = z
       .enum(["Sí", "No"])
       .transform((val) => val === "Sí"),
 
-    instrumento: z
-      .enum(["si", "no"])
-      .transform((val) => val === "si"),
-  })
+     instrumento: z
+       .enum(["si", "no"])
+       .transform((val) => val === "si"),
+     turnstile_token: z.string({ required_error: "Por favor, complete el CAPTCHA" }),
+   })
   .superRefine((data, ctx) => {
     const age = ageFromBirthDate(data.fecha_nacimiento);
 
