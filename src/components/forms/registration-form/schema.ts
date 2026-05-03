@@ -19,11 +19,9 @@ export const registrationSchema = z
         const today = new Date();
         return date <= today;
       }, "Seleccione una fecha válida"),
-    genero: z
-      .string({ required_error: "Seleccione una opción" })
-      .refine((val) => val === "Masculino" || val === "Femenino", {
-        message: "Seleccione una opción",
-      }),
+    genero: z.enum(["Masculino", "Femenino"], {
+      required_error: "Seleccione una opción",
+    }),
     cedula: z
       .string()
       .optional()

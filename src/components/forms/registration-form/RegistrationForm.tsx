@@ -1,30 +1,27 @@
-import { useEffect, useMemo, useState } from "react";
-import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
+import { useMemo, useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registrationSchema, type RegistrationFormValues } from ".";
+import { registrationSchema, type RegistrationFormValues, type RegistrationFormInputValues } from ".";
+import { useFillRegistrationForm } from "./registrationFormDefaults";
 import InputForm from "../components/Input";
-import PhotoInput from "./components/PhotoInput";
-import { ageFromBirthDate, type Catedra } from "../../../lib";
+import { ageFromBirthDate, aspiranteApi, type Catedra } from "@src/lib";
 
-interface RegistrationFormProps {
-  onSubmit: SubmitHandler<RegistrationFormValues>;
-}
 
-const phoneCodes = ["0412", "0422", "0414", "0424", "0416", "0426"];
+const RegistrationForm = () => {
+  const form = useForm<RegistrationFormInputValues, any, RegistrationFormValues>({
+    resolver: zodResolver(registrationSchema) as any,
+    mode: "onBlur",
+  });
 
-const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
+  useFillRegistrationForm(form);
+
   const {
     register,
     control,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<RegistrationFormValues>({
-    resolver: zodResolver(
-      registrationSchema,
-    ) as Resolver<RegistrationFormValues>,
-    mode: "onBlur",
-  });
+  } = form;
 
   const fechaNacimiento = watch("fecha_nacimiento");
   const tieneEstudios = watch("tiene_estudios");
@@ -37,16 +34,16 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
     values,
     event,
   ) => {
-    try {
-      await onSubmit(values, event);
-    } catch (error: any) {
-      if (error?.data) {
-        alert(error.data.message);
-      }
-      throw error;
+    const response = await aspiranteApi.create(values);
+
+    if (response.message) {
+      alert(response.message);
+      window.location.href = "/";
+    } else {
+      alert("Ha ocurrido un error. Por favor, intente nuevamente más tarde.");
     }
   };
-  /*  */
+
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
@@ -188,6 +185,29 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
       <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
         Estudios Realizados
       </h3>
+
+      <div className="flex flex-col gap-2 w-full md:col-span-2">
+        <label className="font-montserrat text-sm font-semibold">
+          ¿Posee Instrumento?
+        </label>
+        <div className="flex flex-row gap-8">
+          <label className="flex items-center gap-[0.2rem] font-montserrat text-[0.8rem] font-semibold">
+            <input type="radio" value="si" {...register("instrumento")} />
+            <span>Si</span>
+          </label>
+          <label className="flex items-center gap-[0.1rem] font-montserrat text-[0.8rem] font-semibold">
+            <input type="radio" value="no" {...register("instrumento")} />
+            <span>No</span>
+          </label>
+        </div>
+        {errors.instrumento && (
+          <p className="text-red-500 text-xs">
+            {errors.instrumento.message}
+          </p>
+        )}
+      </div>
+
+      <div></div>
 
       <div className="flex flex-col gap-2 w-full md:col-span-2">
         <label className="font-montserrat text-sm font-semibold">
@@ -418,10 +438,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         wrapperClassName="w-full"
       />
 
-
-
-      <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
-        Autorización
+      <h3 className="font-montserrat font-medium text-center md:text-left w-full pt-3 mt-6 border-t border-gray-200 md:col-span-2">
       </h3>
 
       <p className="text-xs md:text-sm font-montserrat font-medium text-justify md:col-span-2">
@@ -448,9 +465,13 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
         )}
       </div>
 
+
+
       <p className="text-xs md:text-sm font-montserrat text-justify pt-8 pb-2 mt-4 border-t border-gray-200 md:col-span-2">
-        Documentos a consignar: RIF actualizado, copia de la cedula de identidad
-        vigente, y foto tipo carnet.
+        Una vez enviado el formulario, debera dirigirse al plantel para terminar el proceso de inscripción.<br />
+
+        Documentos a consignar: <b>RIF actualizado, copia de la cedula de identidad
+          vigente, y foto tipo carnet.</b>
       </p>
 
       <button
