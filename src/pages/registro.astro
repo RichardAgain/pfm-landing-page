@@ -1,10 +1,9 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/ui/alt-header";
-import Registration from "../components/registration/registration";
+import Layout from "@src/layouts/Layout.astro";
+import Registration from "@components/registration/registration";
 ---
 
 <Layout>
-    <Header />
+    <!-- <Header /> -->
     <Registration client:only="react" />
 </Layout>

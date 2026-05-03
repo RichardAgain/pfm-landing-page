@@ -1,28 +1,16 @@
 import { z } from "zod";
-import { ageFromBirthDate } from "../../../lib";
+import { ageFromBirthDate } from "@src/lib";
 
 const ciRegex = /^\d{7,8}$/;
 const rifRegex = /^[JV]-\d{9}$/i;
 const phoneRegex = /^\d{7}$/;
 
-const imageField = z
-  .any({ required_error: "La foto es obligatoria" })
-  .refine((file) => file !== null && file !== undefined, {
-    message: "La foto es obligatoria",
-  })
-  .refine((file) => typeof File === "undefined" || file instanceof File, {
-    message: "Seleccione una imagen válida",
-  });
-
 export const registrationSchema = z
   .object({
-    imagen: imageField,
-    photo64: z.string().optional(),
-
-    estudianteNombre: z
+    nombre: z
       .string({ required_error: "Este campo es obligatorio" })
       .min(4, "Este campo es obligatorio"),
-    estudianteFechaNacimiento: z
+    fecha_nacimiento: z
       .string({ required_error: "Este campo es obligatorio" })
       .min(1, "Seleccione una fecha válida")
       .refine((val) => {
@@ -31,20 +19,19 @@ export const registrationSchema = z
         const today = new Date();
         return date <= today;
       }, "Seleccione una fecha válida"),
-    estudianteEdad: z.string().optional(),
-    estudianteGenero: z
+    genero: z
       .string({ required_error: "Seleccione una opción" })
       .refine((val) => val === "Masculino" || val === "Femenino", {
         message: "Seleccione una opción",
       }),
-    estudianteCI: z
+    cedula: z
       .string()
       .optional()
       .refine((val) => !val || ciRegex.test(val), {
         message: "Debe tener entre 7 y 8 dígitos",
       })
       .default(""),
-    estudianteRIF: z
+    rif: z
       .string()
       .optional()
       .refine((val) => !val || rifRegex.test(val.trim().toUpperCase()), {
@@ -55,91 +42,88 @@ export const registrationSchema = z
     estudianteCodigoTelefono: z
       .string({ required_error: "Seleccione una opción" })
       .min(1, "Seleccione una opción"),
-    estudianteTelefono: z
+    telefono: z
       .string({ required_error: "Debe ingresar 7 dígitos" })
       .min(7, "Debe ingresar 7 dígitos")
       .max(7, "Debe ingresar 7 dígitos")
       .refine((val) => phoneRegex.test(val), {
         message: "Solo números, 7 dígitos",
       }),
-    estudianteInstitucion: z.string().optional(),
-    estudianteOcupacion: z.string().optional(),
-    estudianteProfesion: z.string().optional(),
-    estudianteLugarTrabajo: z.string().optional(),
-    estudianteDireccion: z
+    institucion_educacional: z.string().optional(),
+    ocupacion: z.string().optional(),
+    profesion: z.string().optional(),
+    lugar_trabajo: z.string().optional(),
+    direccion: z
       .string({ required_error: "Este campo es obligatorio" })
       .min(1, "Este campo es obligatorio"),
-    estudianteEmail: z
+    correo_electronico: z
       .string({ required_error: "Este campo es obligatorio" })
       .email("Ingrese un correo válido"),
-    estudianteAlergias: z
+    alergias: z
       .string({
         required_error: "Este campo es obligatorio",
       })
       .min(1, "Este campo es obligatorio"),
-    estudianteAntecedentes: z
+    antecedentes: z
       .string({ invalid_type_error: "Seleccione una opción" })
       .refine((val) => val === "Sí" || val === "No", {
         message: "Seleccione una opción",
       }),
-    estudianteAlergiasEspecificadas: z.string().optional(),
-    estudianteContactoEmergencia: z
+    alergias_especificadas: z.string().optional(),
+    nombre_emergencia: z
       .string({ required_error: "Este campo es obligatorio" })
       .min(1, "Este campo es obligatorio"),
     estudianteCodigoTelefonoEmergencia: z
       .string({ required_error: "Seleccione una opción" })
       .min(1, "Seleccione una opción"),
-    estudianteTelefonoEmergencia: z
+    numero_emergencia: z
       .string({ required_error: "Debe ingresar 7 dígitos" })
       .min(7, "Debe ingresar 7 dígitos")
       .max(7, "Debe ingresar 7 dígitos")
       .refine((val) => phoneRegex.test(val), {
         message: "Solo números, 7 dígitos",
       }),
+    parentesco_emergencia: z.string().optional(),
 
-    representanteNombre: z.string().optional(),
-    representanteCI: z
+    representante_nombre: z.string().optional(),
+    representante_cedula: z
       .string()
       .optional()
       .refine((val) => !val || ciRegex.test(val), {
         message: "Debe tener entre 7 y 8 dígitos",
       }),
-    representanteRIF: z
+    representante_rif: z
       .string()
       .optional()
       .refine((val) => !val || rifRegex.test(val.trim().toUpperCase()), {
         message:
           "Formato de RIF inválido. Debe utilizar J o V, seguido de 9 dígitos.",
       }),
-    representanteParentesco: z.string().optional(),
+    representante_parentesco: z.string().optional(),
     representanteCodigoTelefono: z.string().optional(),
-    representanteTelefono: z
+    representante_telefono: z
       .string()
       .optional()
       .refine((val) => !val || phoneRegex.test(val), {
         message: "Solo números, 7 dígitos",
       }),
-    representanteOcupacion: z.string().optional(),
-    representanteProfesion: z.string().optional(),
-    representanteLugarTrabajo: z.string().optional(),
-    representanteDireccion: z.string().optional(),
-    representanteEmail: z
+    representante_ocupacion: z.string().optional(),
+    representante_profesion: z.string().optional(),
+    representante_lugar_trabajo: z.string().optional(),
+    representante_direccion: z.string().optional(),
+    representante_email: z
       .string()
       .optional()
       .refine((val) => !val || z.string().email().safeParse(val).success, {
         message: "Ingrese un correo válido",
       }),
 
-    instrumentos: z.array(z.string()).default([""]),
-    teoricas: z.array(z.string()).default([""]),
-    otros: z.array(z.string()).default([""]),
-
     tiene_estudios: z
       .string({ invalid_type_error: "Seleccione una opción" })
       .refine((val) => val === "Sí" || val === "No", {}),
-    institucion: z.string().optional(),
-    catedras_estudiadas: z.string().optional(),
-    duracion: z
+    institucion_estudios: z.string().optional(),
+    catedras_estudios: z.string().optional(),
+    duracion_estudios: z
       .string()
       .optional()
       .refine((val) => !val || /^\d+$/.test(val), {
@@ -156,36 +140,36 @@ export const registrationSchema = z
       }),
   })
   .superRefine((data, ctx) => {
-    const age = ageFromBirthDate(data.estudianteFechaNacimiento);
+    const age = ageFromBirthDate(data.fecha_nacimiento);
 
     if (age === null) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Seleccione una fecha válida",
-        path: ["estudianteFechaNacimiento"],
+        path: ["fecha_nacimiento"],
       });
     } else if (age <= 3 || age >= 99) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Seleccione una fecha válida",
-        path: ["estudianteFechaNacimiento"],
+        path: ["fecha_nacimiento"],
       });
     }
 
     if (age !== null) {
       if (age < 18) {
         const requiredRepresentativeFields: Array<keyof typeof data> = [
-          "representanteNombre",
-          "representanteCI",
-          "representanteParentesco",
+          "representante_nombre",
+          "representante_cedula",
+          "representante_parentesco",
           "representanteCodigoTelefono",
-          "representanteTelefono",
-          "representanteOcupacion",
-          "representanteProfesion",
-          "representanteLugarTrabajo",
-          "representanteDireccion",
-          "representanteEmail",
-          "representanteRIF",
+          "representante_telefono",
+          "representante_ocupacion",
+          "representante_profesion",
+          "representante_lugar_trabajo",
+          "representante_direccion",
+          "representante_email",
+          "representante_rif",
         ];
 
         requiredRepresentativeFields.forEach((field) => {
@@ -199,70 +183,70 @@ export const registrationSchema = z
           }
         });
 
-        if (data.representanteCI && !ciRegex.test(data.representanteCI)) {
+        if (data.representante_cedula && !ciRegex.test(data.representante_cedula)) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: "Debe tener entre 6 y 8 dígitos",
-            path: ["representanteCI"],
+            path: ["representante_cedula"],
           });
         }
 
         if (
-          data.representanteTelefono &&
-          !phoneRegex.test(data.representanteTelefono)
+          data.representante_telefono &&
+          !phoneRegex.test(data.representante_telefono)
         ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: "Solo números, 7 dígitos",
-            path: ["representanteTelefono"],
+            path: ["representante_telefono"],
           });
         }
 
         if (
-          data.representanteRIF &&
-          !rifRegex.test(data.representanteRIF.trim().toUpperCase())
+          data.representante_rif &&
+          !rifRegex.test(data.representante_rif.trim().toUpperCase())
         ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message:
               "Formato de RIF inválido. Debe utilizar J o V, seguido de 9 dígitos.",
-            path: ["representanteRIF"],
+            path: ["representante_rif"],
           });
         }
 
         if (
-          data.representanteEmail &&
-          !z.string().email().safeParse(data.representanteEmail).success
+          data.representante_email &&
+          !z.string().email().safeParse(data.representante_email).success
         ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: "Ingrese un correo válido",
-            path: ["representanteEmail"],
+            path: ["representante_email"],
           });
         }
       }
     }
 
     if (data.tiene_estudios === "Sí") {
-      if (!data.institucion || data.institucion.trim() === "") {
+      if (!data.institucion_estudios || data.institucion_estudios.trim() === "") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "Este campo es obligatorio",
-          path: ["institucion"],
+          path: ["institucion_estudios"],
         });
       }
-      if (!data.catedras_estudiadas || data.catedras_estudiadas.trim() === "") {
+      if (!data.catedras_estudios || data.catedras_estudios.trim() === "") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "Este campo es obligatorio",
-          path: ["catedras_estudiadas"],
+          path: ["catedras_estudios"],
         });
       }
-      if (!data.duracion || data.duracion.trim() === "") {
+      if (!data.duracion_estudios || data.duracion_estudios.trim() === "") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "Este campo es obligatorio",
-          path: ["duracion"],
+          path: ["duracion_estudios"],
         });
       }
     }
@@ -270,6 +254,4 @@ export const registrationSchema = z
 
 type RegistrationSchema = z.infer<typeof registrationSchema>;
 
-export type RegistrationFormValues = Omit<RegistrationSchema, "imagen"> & {
-  imagen: File;
-};
+export type RegistrationFormValues = RegistrationSchema
