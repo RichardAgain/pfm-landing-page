@@ -2,10 +2,12 @@
 export const API_CONFIG = {
     development: {
         baseUrl: import.meta.env.PUBLIC_DEVELOPMENT_API_URL || "http://localhost:8000/api",
+        turnstile_public_key: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY
     },
 
     production: {
         baseUrl: import.meta.env.PUBLIC_PRODUCTION_API_URL || "https://notas.sinfocarabobo.com/api",
+        turnstile_public_key: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY
     },
 } as const;
 
@@ -36,3 +38,4 @@ const getEnvironment = (): "development" | "production" => {
 
 // Export the current API base URL
 export const API_BASE_URL = normalizeBaseUrl(API_CONFIG[getEnvironment()].baseUrl);
+export const TURNSTILE_KEY = API_CONFIG[getEnvironment()].turnstile_public_key;
