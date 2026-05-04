@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PUBLIC_PRODUCTION_API_URL: ${{ secrets.API_DOMAIN }}
+      PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
 
     steps:
       - name: Checkout code
