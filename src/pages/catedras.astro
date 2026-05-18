@@ -28,28 +28,65 @@ const catedras = [
         title: "Cátedras Teóricas",
         description:
             "Base conceptual para desarrollar lectura, audición, comprensión musical y fundamentos técnicos.",
-        items: [ "Iniciación Musical", "Lenguaje Musical", "Historia de la Música"],
+        items: [
+            "Iniciación Musical",
+            "Lenguaje Musical",
+            "Armonía",
+            "Contrapunto",
+            "Historia de la Música",
+            "Estética",
+        ],
     },
     {
         title: "Cátedras Prácticas",
         description:
             "Formación instrumental y vocal con acompañamiento docente y trabajo individual o por ensambles.",
-        items: [
-            "Piano", "Guitarra", "Violín", "Viola", "Violoncello", "Contrabajo", "Percusión", "Flauta", "Clarinete", "Fagot", "Oboe",
-            "Trompeta", "Trombón", "Saxofón", "Corno Francés", "Práctica Vocal", "Práctica Coral"
+        subcategories: [
+            {
+                category: "Cuerdas",
+                items: [
+                    "Guitarra",
+                    "Violín",
+                    "Viola",
+                    "Violoncello",
+                    "Contrabajo",
+                ],
+            },
+            {
+                category: "Vientos Madera",
+                items: ["Flauta", "Clarinete", "Fagot", "Oboe", "Saxofón"],
+            },
+            {
+                category: "Vientos Metales",
+                items: ["Trompeta", "Trombón", "Corno Francés"],
+            },
+            {
+                category: "Otros",
+                items: ["Piano", "Percusión"],
+            },
+            {
+                category: "Voz",
+                items: ["Técnica Vocal"],
+            },
         ],
     },
     {
-        title: "Prácticas Orquestales",
+        title: "Prácticas Grupales",
         description:
             "Espacios de integración para aplicar lo aprendido en ensayos colectivos y repertorio de conjunto.",
-        items: ["Joven Orquesta", "Orquesta Academica", "Música de Venezuela"],
+        items: [
+            "Práctica Coral",
+            "Joven Orquesta",
+            "Orquesta Academica",
+            "Música Venezolana",
+            "Música de Cámara",
+        ],
     },
     {
         title: "Electivas",
         description:
             "Complementos formativos para ampliar recursos interpretativos, creativos y de apoyo musical.",
-        items: ["Producción Musical", "Dirección Musical" ],
+        items: ["Producción Musical", "Dirección Musical"],
     },
 ];
 ---
@@ -59,55 +96,56 @@ const catedras = [
 
     <section id="catedras" class="min-h-screen py-12 md:py-24">
         <div class="flex flex-col w-[80%] mx-auto gap-8 md:gap-10">
-            <!-- <div class="flex flex-col gap-1">
-                <hr
-                    class="w-[85%] md:w-[75%] border-2 border-[#F4B400] rounded-full mx-auto"
-                />
-                <hr
-                    class="w-[85%] md:w-[75%] border-2 border-[#7A1F1F] rounded-full mx-auto"
-                />
-                <hr
-                    class="w-[85%] md:w-[75%] border-2 border-[#F4B400] rounded-full mx-auto"
-                />
-            </div> -->
-
             <div class="flex flex-col gap-4 text-center">
                 <h2 class="text-4xl font-montserrat text-[#7A1F1F] font-bold">
                     Programa Académico
                 </h2>
-                <!-- <p class="text-sm font-montserrat leading-[4vh] md:leading-[3vh] md:w-[85%] mx-auto">
-                    Areas de formación disponibles en la
-                    academia, organizado por bloques teóricos, prácticos,
-                    orquestales y electivos. La oferta puede ajustarse según el
-                    nivel, la sede y la disponibilidad de cupos.
-                </p> -->
             </div>
 
-
-
             <div class="flex flex-col gap-4">
-                {catedras.map((section) => (
-                    <details class="group rounded-xl border-2 border-[#F4B400] bg-white shadow-sm overflow-hidden">
-                        <summary class="list-none cursor-pointer px-5 py-4 flex items-center justify-between gap-4 font-montserrat text-lg md:text-xl font-semibold text-[#7A1F1F]">
-                            <span>{section.title}</span>
-                            <span class="text-[#F4B400] text-2xl leading-none transition-transform duration-300 group-open:rotate-180">
-                                ▾
-                            </span>
-                        </summary>
-                        <div class="border-t border-[#F4B400]/30 px-5 pb-5">
-                            {/* <p class="text-sm font-montserrat leading-[4vh] md:leading-[3vh] text-center md:text-left">
+                {
+                    catedras.map((section) => (
+                        <details class="group rounded-xl border-2 border-[#F4B400] bg-white shadow-sm overflow-hidden">
+                            <summary class="list-none cursor-pointer px-5 py-4 flex items-center justify-between gap-4 font-montserrat text-lg md:text-xl font-semibold text-[#7A1F1F]">
+                                <span>{section.title}</span>
+                                <span class="text-[#F4B400] text-2xl leading-none transition-transform duration-300 group-open:rotate-180">
+                                    ▾
+                                </span>
+                            </summary>
+                            <div class="border-t border-[#F4B400]/30 px-5 pb-5">
+                                {/* <p class="text-sm font-montserrat leading-[4vh] md:leading-[3vh] text-center md:text-left">
                                 {section.description}
                             </p> */}
-                            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                                {section.items.map((item) => (
-                                    <div class="rounded-lg border border-[#7A1F1F]/15 bg-[#ffffff] px-4 py-3 text-sm font-montserrat text-center text-zinc-850 shadow-sm">
-                                        {item}
-                                    </div>
-                                ))}
+                                <div class="mt-4">
+                                    {section.subcategories ? (
+                                        section.subcategories.map((sub) => (
+                                            <div class="mb-5 last:mb-0">
+                                                <h3 class="text-xs font-montserrat font-semibold text-[#7A1F1F]/90 uppercase tracking mb-2 ml-1">
+                                                    {sub.category}
+                                                </h3>
+                                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                                    {sub.items.map((item) => (
+                                                        <div class="rounded-lg border border-[#7A1F1F]/15 bg-[#ffffff] px-4 py-3 text-sm font-montserrat text-center text-zinc-850 shadow-sm">
+                                                            {item}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                            {section.items.map((item) => (
+                                                <div class="rounded-lg border border-[#7A1F1F]/15 bg-[#ffffff] px-4 py-3 text-sm font-montserrat text-center text-zinc-850 shadow-sm">
+                                                    {item}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </details>
-                ))}
+                        </details>
+                    ))
+                }
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
