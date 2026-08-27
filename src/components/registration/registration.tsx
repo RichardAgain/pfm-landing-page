@@ -32,7 +32,7 @@ export default function Registration() {
             </h2>
           </div>
           <p className="md:text-lg font-montserrat font-semibold text-center">
-            Planilla de Inscripción
+            Planilla de Preinscripción
           </p>
         </div>
 
