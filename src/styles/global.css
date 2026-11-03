@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* Design tokens (see DESIGN.md) ------------------------------------------------------------- */
+
+@theme {
+  --color-wine-deep: #4b0c0c;
+  --color-wine: #7a1f1f;
+  --color-gold: #c19310;
+  --color-gold-deep: #a57f0d;
+  --color-gold-trim: #bfa760;
+  --color-bronze: #7a5c20;
+  --color-bronze-deep: #5c4518;
+}
+
 /* General styles ---------------------------------------------------------------------------- */
 
 html {

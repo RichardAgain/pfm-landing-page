@@ -88,6 +88,20 @@
           "#F4F1EB"
         ]
       },
+      "bronze-deep": {
+        "role": "tertiary",
+        "displayName": "Deep Bronze",
+        "tonalRamp": [
+          "#241C0C",
+          "#463616",
+          "#6A521F",
+          "#8F6E28",
+          "#B08B3A",
+          "#C9AA6A",
+          "#DECBA3",
+          "#F2EBDD"
+        ]
+      },
       "white": {
         "role": "neutral",
         "displayName": "White"
@@ -241,7 +255,7 @@
       "refersTo": "button-feature",
       "description": "Large bronze pill for a standalone call to action; borderless like every button.",
       "html": "<a class=\"ds-btn-feature\" href=\"#\">Conoce nuestras cátedras</a>",
-      "css": ".ds-btn-feature { display:inline-block; font-family: Montserrat, sans-serif; font-weight:700; font-size:1.25rem; color:#FFFFFF; background:#7A5C20; padding:16px 32px; border:none; border-radius:9999px; text-decoration:none; transition:background-color 300ms; } .ds-btn-feature:hover { background:#BFA760; } .ds-btn-feature:focus-visible { outline:2px solid #FFFFFF; outline-offset:2px; }"
+      "css": ".ds-btn-feature { display:inline-block; font-family: Montserrat, sans-serif; font-weight:700; font-size:1.25rem; color:#FFFFFF; background:#7A5C20; padding:16px 32px; border:none; border-radius:9999px; text-decoration:none; transition:background-color 300ms; } .ds-btn-feature:hover { background:#5C4518; } .ds-btn-feature:focus-visible { outline:2px solid #FFFFFF; outline-offset:2px; }"
     },
     {
       "name": "Text Input",

@@ -8,6 +8,7 @@ colors:
   gold-deep: "#A57F0D"
   gold-trim: "#BFA760"
   bronze: "#7A5C20"
+  bronze-deep: "#5C4518"
   white: "#FFFFFF"
   paper: "#F3F4F6"
   line: "#E5E7EB"
@@ -92,7 +93,7 @@ components:
     rounded: "{rounded.pill}"
     padding: "16px 32px"
   button-feature-hover:
-    backgroundColor: "{colors.gold-trim}"
+    backgroundColor: "{colors.bronze-deep}"
   input:
     backgroundColor: "{colors.white}"
     textColor: "{colors.ink}"
@@ -141,10 +142,11 @@ A two-color world of wine and old gold, set on white and supported by cool neutr
 ### Secondary
 - **Old Gold** (gold): secondary pill buttons (Preinscripción in the nav, Cerrar sesión), social icon circles, and the focus color for form fields.
 - **Burnished Gold** (gold-deep): hover state for Old Gold.
-- **Gilt Trim** (gold-trim): the end of the bronze gradient and the hover fill of the feature button. Not used for card borders (see Shapes).
+- **Gilt Trim** (gold-trim): the end of the bronze gradient, and short 48px × 2px trim marks above grouped text on burgundy. Never a fill behind white text: white on Gilt Trim is about 2.2:1.
 
 ### Tertiary
 - **Bronze** (bronze): the warm brown-gold gradient panel ("El hogar de los músicos del mañana", running bronze to gilt trim) and the feature button.
+- **Deep Bronze** (bronze-deep): hover state for the feature button.
 
 ### Neutral
 - **White** (white): text on burgundy and photography, the separating lines between bands, card and input backgrounds.
@@ -215,7 +217,7 @@ Ceremonial pills. Buttons are the only interactive surface that changes on hover
 - **Shape:** full pill (pill).
 - **Primary (Concert Wine):** white Montserrat medium text, padded 8px × 32px on desktop (4px × 16px on mobile). For enrollment and data actions (Preinscripción, Reintentar, Cargar más). Hover turns Deep Wine over 300ms. In the hero, "Preinscripción" carries a trailing ➔.
 - **Gold:** Old Gold fill, white text, compact padding (6px × 16px), Body Small. Used for the header Preinscripción, Cerrar sesión, and the circular social icons (40px). Hover turns Burnished Gold.
-- **Feature:** Bronze fill, Title-size bold text, padded 16px × 32px, no border. For a large standalone call to action such as "Conoce nuestras cátedras"; hover fills Gilt Trim.
+- **Feature:** Bronze fill, Title-size bold text, padded 16px × 32px, no border. For a large standalone call to action such as "Conoce nuestras cátedras"; hover turns Deep Bronze.
 - **Focus:** the incumbent buttons have no visible focus style. Use a 2px white ring on burgundy or photography, and a 2px Concert Wine ring on light surfaces, with a 2px offset.
 
 ### Cards / Containers
