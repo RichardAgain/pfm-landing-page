@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T02:35:14.635347+00:00",
+  "title": "Design System: Academia Internacional de Música \"Maestro José Calabrese\"",
+  "extensions": {
+    "colorMeta": {
+      "wine-deep": {
+        "role": "primary",
+        "displayName": "Deep Wine",
+        "tonalRamp": [
+          "#2B1212",
+          "#541C1C",
+          "#812222",
+          "#BC2424",
+          "#DB4343",
+          "#DE8787",
+          "#E8C0C0",
+          "#F5EAEA"
+        ]
+      },
+      "wine": {
+        "role": "primary",
+        "displayName": "Concert Wine",
+        "tonalRamp": [
+          "#291414",
+          "#4F2121",
+          "#792B2B",
+          "#AF3232",
+          "#CD5050",
+          "#D68F8F",
+          "#E4C3C3",
+          "#F4EBEB"
+        ]
+      },
+      "gold": {
+        "role": "secondary",
+        "displayName": "Old Gold",
+        "tonalRamp": [
+          "#2E2610",
+          "#594817",
+          "#896C1A",
+          "#C99B17",
+          "#E8B936",
+          "#E5CB80",
+          "#EBDFBC",
+          "#F6F3E9"
+        ]
+      },
+      "gold-deep": {
+        "role": "secondary",
+        "displayName": "Burnished Gold",
+        "tonalRamp": [
+          "#2E260F",
+          "#594917",
+          "#896E1A",
+          "#CA9D17",
+          "#E8BC35",
+          "#E5CC80",
+          "#EBDFBC",
+          "#F6F3E9"
+        ]
+      },
+      "gold-trim": {
+        "role": "secondary",
+        "displayName": "Gilt Trim",
+        "tonalRamp": [
+          "#262217",
+          "#494028",
+          "#6D5F36",
+          "#9D8644",
+          "#BBA562",
+          "#CCBF99",
+          "#DFD9C8",
+          "#F3F1EC"
+        ]
+      },
+      "bronze": {
+        "role": "tertiary",
+        "displayName": "Bronze",
+        "tonalRamp": [
+          "#292214",
+          "#4F4021",
+          "#785E2B",
+          "#AD8533",
+          "#CCA352",
+          "#D5BE90",
+          "#E4D9C4",
+          "#F4F1EB"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(96.7% 0.003 264.542)",
+        "tonalRamp": [
+          "#1C1E21",
+          "#33363E",
+          "#484E5B",
+          "#616B7F",
+          "#808A9E",
+          "#AAB0BB",
+          "#D0D2D8",
+          "#EFEFF1"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(92.8% 0.006 264.531)"
+      },
+      "field-line": {
+        "role": "neutral",
+        "displayName": "Field Line"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(27.8% 0.033 256.848)",
+        "tonalRamp": [
+          "#1A1E24",
+          "#2D3643",
+          "#3F4F64",
+          "#536B8D",
+          "#728AAC",
+          "#A2B0C3",
+          "#CCD2DB",
+          "#EDEFF2"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(44.6% 0.03 256.802)"
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Error",
+        "canonical": "oklch(63.7% 0.237 25.331)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Academy name in the hero."
+      },
+      "display-statement": {
+        "displayName": "Display Statement",
+        "purpose": "One-off statement panels with bold keywords."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Centered section titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles, accordion summaries, feature button."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Italic taglines and mission text on burgundy."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, 65–75ch."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Nav links, metadata, standard buttons."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Form labels and input text."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "enter-slide",
+        "value": "0.8s ease-out",
+        "purpose": "Scroll-triggered fade/slide from bottom, left or right."
+      },
+      {
+        "name": "enter-stagger",
+        "value": "750ms",
+        "purpose": "Delay between staggered hero elements."
+      },
+      {
+        "name": "hover-color",
+        "value": "300ms",
+        "purpose": "Button background color change on hover."
+      },
+      {
+        "name": "counter",
+        "value": "2000ms",
+        "purpose": "Stat count-up duration."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Concert Wine pill for enrollment and data actions.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Preinscripción <span aria-hidden=\"true\">➔</span></a>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; gap:4px; font-family: Montserrat, sans-serif; font-weight:500; font-size:1rem; color:#FFFFFF; background:#7A1F1F; padding:8px 32px; border:none; border-radius:9999px; text-decoration:none; cursor:pointer; transition:background-color 300ms; } .ds-btn-primary:hover { background:#4B0C0C; } .ds-btn-primary:focus-visible { outline:2px solid #7A1F1F; outline-offset:2px; }"
+    },
+    {
+      "name": "Gold Button",
+      "kind": "button",
+      "refersTo": "button-gold",
+      "description": "Compact Old Gold pill for header and secondary actions.",
+      "html": "<a class=\"ds-btn-gold\" href=\"#\">Preinscripción</a>",
+      "css": ".ds-btn-gold { display:inline-flex; align-items:center; font-family: Montserrat, sans-serif; font-weight:500; font-size:0.875rem; color:#FFFFFF; background:#C19310; padding:6px 16px; border-radius:9999px; text-decoration:none; transition:background-color 300ms; } .ds-btn-gold:hover { background:#A57F0D; } .ds-btn-gold:focus-visible { outline:2px solid #7A1F1F; outline-offset:2px; }"
+    },
+    {
+      "name": "Feature Button",
+      "kind": "button",
+      "refersTo": "button-feature",
+      "description": "Large bronze pill for a standalone call to action; borderless like every button.",
+      "html": "<a class=\"ds-btn-feature\" href=\"#\">Conoce nuestras cátedras</a>",
+      "css": ".ds-btn-feature { display:inline-block; font-family: Montserrat, sans-serif; font-weight:700; font-size:1.25rem; color:#FFFFFF; background:#7A5C20; padding:16px 32px; border:none; border-radius:9999px; text-decoration:none; transition:background-color 300ms; } .ds-btn-feature:hover { background:#BFA760; } .ds-btn-feature:focus-visible { outline:2px solid #FFFFFF; outline-offset:2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White field with hairline border and Old Gold focus.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Nombre <span class=\"ds-req\">*</span></span><input class=\"ds-input\" placeholder=\"Nombre del estudiante\"></label>",
+      "css": ".ds-field { display:flex; flex-direction:column; gap:4px; width:280px; } .ds-field-label { font-family: Montserrat, sans-serif; font-size:0.8rem; font-weight:600; color:#1F2937; } .ds-req { color:#EF4444; } .ds-input { font-family: Montserrat, sans-serif; font-size:0.8rem; padding:0.6em 1em; border:1px solid #D0CFCF; border-radius:0.5rem; background:#FFFFFF; color:#1F2937; outline:none; transition:box-shadow 200ms, border-color 200ms; } .ds-input:focus-visible { border-color:#C19310; box-shadow:0 0 0 2px #C19310; }"
+    },
+    {
+      "name": "Inner-page Header",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky wine-gradient header for inner pages.",
+      "html": "<header class=\"ds-header\"><span class=\"ds-logo\">AIM</span><a class=\"ds-header-btn\" href=\"#\">Preinscripción</a></header>",
+      "css": ".ds-header { display:flex; align-items:center; justify-content:space-between; height:64px; padding:0 5vw; background:linear-gradient(to bottom,#4B0C0C,#7A1F1F); } .ds-logo { width:40px; height:40px; border-radius:9999px; background:#FFFFFF; color:#7A1F1F; font-family: Montserrat, sans-serif; font-weight:700; font-size:0.7rem; display:flex; align-items:center; justify-content:center; } .ds-header-btn { font-family: Montserrat, sans-serif; font-weight:500; font-size:0.75rem; color:#FFFFFF; background:#C19310; padding:4px 16px; border-radius:9999px; text-decoration:none; transition:background-color 300ms; } .ds-header-btn:hover { background:#A57F0D; } .ds-header-btn:focus-visible { outline:2px solid #FFFFFF; outline-offset:2px; }"
+    },
+    {
+      "name": "Event Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat, borderless white card; only its link responds.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-img\"></div><div class=\"ds-card-body\"><h3 class=\"ds-card-title\">Concierto de fin de curso</h3><p class=\"ds-card-meta\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#7A1F1F\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M16 2v4M8 2v4M3 10h18\"/></svg>15 de diciembre</p><a class=\"ds-card-link\" href=\"#\">Más información</a></div></article>",
+      "css": ".ds-card { display:flex; flex-direction:column; width:300px; background:#FFFFFF; border-radius:0.5rem; overflow:hidden; font-family: Montserrat, sans-serif; } .ds-card-img { aspect-ratio:16/10; background:#E5E7EB; } .ds-card-body { display:flex; flex-direction:column; gap:8px; padding:16px; } .ds-card-title { margin:0; font-size:1.125rem; font-weight:600; line-height:1.25; color:#1F2937; } .ds-card-meta { margin:0; display:flex; align-items:center; gap:8px; font-size:0.875rem; color:#4B5563; } .ds-card-link { padding-top:8px; font-size:0.875rem; font-weight:600; color:#7A1F1F; text-decoration:none; } .ds-card-link:hover { text-decoration:underline; } .ds-card-link:focus-visible { outline:2px solid #7A1F1F; outline-offset:2px; }"
+    },
+    {
+      "name": "Stat Counter Band",
+      "kind": "custom",
+      "description": "Signature proof band: wine gradient, white rule, bold white figures.",
+      "html": "<section class=\"ds-band\"><h2 class=\"ds-band-h\">Nuestra trayectoria</h2><div class=\"ds-stats\"><div><b>500+</b><span>Estudiantes</span></div><div><b>30+</b><span>Cátedras</span></div><div><b>50+</b><span>Años de historia</span></div></div></section>",
+      "css": ".ds-band { background:linear-gradient(to bottom,#4B0C0C,#7A1F1F); border-top:6px solid #FFFFFF; border-bottom:6px solid #FFFFFF; padding:48px 24px; color:#FFFFFF; font-family: Montserrat, sans-serif; text-align:center; } .ds-band-h { margin:0 0 32px; font-size:2.25rem; font-weight:700; } .ds-stats { display:flex; justify-content:center; gap:48px; flex-wrap:wrap; } .ds-stats div { display:flex; flex-direction:column; gap:4px; } .ds-stats b { font-size:2.25rem; font-weight:700; } .ds-stats span { font-size:1.25rem; font-weight:400; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Concert Hall",
+    "overview": "The site should feel like walking into the hall where the Orquesta Sinfónica de Carabobo plays. Deep wine fills the space like velvet curtains, old gold is the gilded trim, and photographs of students playing are the stage. The atmosphere is formal but warm: a place with fifty years of history that still welcomes children on their first day.\n\nComposition comes in full-width bands. Burgundy sections run from deep wine to wine, separated by crisp white lines, and alternate with photography under a dark overlay and with plain white content areas. Headings are large and centered, set in Montserrat. Everything is flat: the hall's depth comes from color, photography and contrast, never from shadows. Buttons are the only things that respond to the pointer.\n\nThe hall is dignified. It is never childish, even when it speaks to young children or to the T21 Down program. It never looks like a corporate or tech product, and its gold never turns flashy.",
+    "keyCharacteristics": [
+      "Full-width burgundy bands (deep wine to wine, top to bottom) separated by white lines.",
+      "Old gold as trim and as a secondary action color; never a large fill.",
+      "Full-bleed photography of real students and ensembles under a black overlay at 30–50%.",
+      "Montserrat throughout; large, centered, bold section headings.",
+      "Completely flat: no shadows, and no borders on cards or buttons.",
+      "Pill-shaped buttons are the only interactive surface that reacts on hover."
+    ],
+    "rules": [
+      {
+        "name": "The Old Gold Rule",
+        "body": "Old Gold and its siblings are the only yellows. The bright saffron (#F4B400) on Cátedras, Eventos, Galería and T21 Down is drift: replace it with Old Gold on light surfaces, or with Concert Wine where the yellow is too weak for text on white.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Wine Rule",
+        "body": "All burgundy actions use Concert Wine, with Deep Wine on hover. The hero's #56070C/#7A1A1F, the login and reset pages' #700303, and their hover variants (#6E0A11, #942026) are drift to consolidate.",
+        "section": "colors"
+      },
+      {
+        "name": "The Trim Rule",
+        "body": "Gold accents things; it never fills a section. No gold-background bands and no gold gradients over large areas, except the single bronze-to-gilt statement panel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Single Voice Rule",
+        "body": "Montserrat only. Hierarchy comes from weight (300 to 700), size and italic, never from a second display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Italic Tagline Rule",
+        "body": "Taglines and mottos (\"Desde el corazón de Carabobo, resonando con historia y pasión\") are set italic at Lede weight, directly under the heading they support.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Shadow Rule",
+        "body": "No `box-shadow` anywhere, at rest or on hover. If something needs to stand apart, change its background color or put a white line between it and its neighbor.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Borderless Rule",
+        "body": "Cards, logo tiles, content boxes and buttons have no decorative border. The incumbent 4px gilt-trim borders on mission cards and ally logos, the saffron borders on inner-page cards, and the 2px gilt-trim outline on the \"Conoce nuestras cátedras\" button are drift. A card is separated from its surroundings by its white fill against burgundy or gray; a button by its solid fill.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** build sections as full-width bands: burgundy gradients (wine-deep to wine, top to bottom), photography under a 30–50% black overlay, or plain white.",
+      "**Do** separate adjacent burgundy and photo bands with a 6px white line.",
+      "**Do** use Concert Wine for every primary action and Old Gold for secondary pills, both as full pills.",
+      "**Do** set everything in Montserrat, with emphasis from weight and italic.",
+      "**Do** use real photographs of students, classes and ensembles from `src/assets/`.",
+      "**Do** respect `prefers-reduced-motion` for the entrance slides and counters (the incumbent code does not yet)."
+    ],
+    "donts": [
+      "**Don't** use shadows: no `box-shadow`, at rest or on hover.",
+      "**Don't** put borders on cards, logo tiles, content boxes or buttons.",
+      "**Don't** animate cards on hover (no scaling, no lifting). Only buttons respond.",
+      "**Don't** use the saffron yellow #F4B400 or any burgundy other than wine-deep and wine.",
+      "**Don't** look childish: no cartoon illustrations, rainbow palettes or playful display fonts, including on T21 Down and children's content.",
+      "**Don't** look like a corporate or tech product: no glassmorphism, neon or purple-blue gradients, or dashboard-style cards.",
+      "**Don't** make gold flashy: no glitter, glow, metallic gradients or large gold fills."
+    ]
+  }
+}
