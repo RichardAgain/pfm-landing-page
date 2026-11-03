@@ -1,11 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import * as Dialog from "@radix-ui/react-dialog";
-import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
-import {
-    formatEventDate,
-    publicacionesApi,
-    type Publicacion,
-} from "../../lib/publicaciones";
+import { useEffect, useState } from "react";
+import { Calendar, Images, MapPin } from "lucide-react";
+import { formatLongDate, publicacionesApi, type Publicacion } from "../../lib/publicaciones";
 
 const PER_PAGE = 12;
 
@@ -19,16 +14,13 @@ function Divider() {
     );
 }
 
-function AlbumCard({ album, onOpen }: { album: Publicacion; onOpen: () => void }) {
-    const fecha = formatEventDate(album.fecha_evento);
-
+function AlbumCard({ album }: { album: Publicacion }) {
     return (
-        <button
-            type="button"
-            onClick={onOpen}
+        <a
+            href={`/album?slug=${encodeURIComponent(album.slug)}`}
             className="bg-white text-left transition duration-500 transform cursor-pointer hover:-translate-y-2 hover:shadow-lg"
         >
-            <div className="relative group h-48 md:h-[20rem] bg-gray-200">
+            <div className="relative group aspect-square bg-gray-200">
                 {album.portada_url && (
                     <img
                         src={album.portada_url}
@@ -40,178 +32,27 @@ function AlbumCard({ album, onOpen }: { album: Publicacion; onOpen: () => void }
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent group-hover:via-transparent duration-300 pointer-events-none" />
                 <div className="absolute inset-x-0 bottom-0 p-4 text-white">
                     <h3 className="text-lg font-semibold leading-tight">{album.titulo}</h3>
-                    <p className="flex items-center gap-2 text-sm opacity-90">
-                        {fecha && <span>{fecha}</span>}
+                    <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/80">
                         <span className="inline-flex items-center gap-1">
-                            <Images className="h-4 w-4" />
-                            {album.imagenes_count}
+                            <Calendar className="h-3.5 w-3.5" />
+                            <span className="first-letter:uppercase">
+                                {formatLongDate(album.fecha_evento ?? album.created_at)}
+                            </span>
+                        </span>
+                        {album.ubicacion && (
+                            <span className="inline-flex items-center gap-1">
+                                <MapPin className="h-3.5 w-3.5" />
+                                {album.ubicacion}
+                            </span>
+                        )}
+                        <span className="inline-flex items-center gap-1">
+                            <Images className="h-3.5 w-3.5" />
+                            {album.imagenes_count} {album.imagenes_count === 1 ? "foto" : "fotos"}
                         </span>
                     </p>
                 </div>
             </div>
-        </button>
-    );
-}
-
-function AlbumDialog({ slug, onClose }: { slug: string | null; onClose: () => void }) {
-    const cache = useRef(new Map<string, Publicacion>());
-    const [album, setAlbum] = useState<Publicacion | null>(null);
-    const [error, setError] = useState(false);
-    const [current, setCurrent] = useState<number | null>(null);
-
-    useEffect(() => {
-        setCurrent(null);
-        setError(false);
-        if (!slug) return;
-
-        const cached = cache.current.get(slug);
-        if (cached) {
-            setAlbum(cached);
-            return;
-        }
-
-        setAlbum(null);
-        const controller = new AbortController();
-        publicacionesApi
-            .get(slug, controller.signal)
-            .then((data) => {
-                cache.current.set(slug, data);
-                setAlbum(data);
-            })
-            .catch((err) => {
-                if (err.name !== "AbortError") setError(true);
-            });
-
-        return () => controller.abort();
-    }, [slug]);
-
-    const imagenes = album?.imagenes ?? [];
-    const step = useCallback(
-        (delta: number) =>
-            setCurrent((i) => (i === null ? i : (i + delta + imagenes.length) % imagenes.length)),
-        [imagenes.length],
-    );
-
-    useEffect(() => {
-        if (current === null) return;
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === "ArrowLeft") step(-1);
-            if (e.key === "ArrowRight") step(1);
-        };
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [current, step]);
-
-    const viewing = current !== null ? imagenes[current] : null;
-
-    return (
-        <Dialog.Root open={slug !== null} onOpenChange={(open) => !open && onClose()}>
-            <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 z-50 bg-black/90" />
-                <Dialog.Content
-                    className="fixed inset-0 z-50 overflow-y-auto text-white focus:outline-none"
-                    onEscapeKeyDown={(e) => {
-                        // Escape closes the single-image view first, then the album.
-                        if (current !== null) {
-                            e.preventDefault();
-                            setCurrent(null);
-                        }
-                    }}
-                >
-                    <Dialog.Close className="fixed right-5 top-5 z-10 rounded-full bg-black/50 p-2 hover:bg-black/80">
-                        <X className="h-6 w-6" />
-                        <span className="sr-only">Cerrar</span>
-                    </Dialog.Close>
-
-                    <div className="w-[90%] md:w-[80%] mx-auto py-16">
-                        <Dialog.Title className="text-2xl md:text-3xl font-semibold">
-                            {album?.titulo ?? ""}
-                        </Dialog.Title>
-                        <Dialog.Description className="mt-1 text-sm opacity-80">
-                            {[formatEventDate(album?.fecha_evento ?? null), album?.ubicacion]
-                                .filter(Boolean)
-                                .join(" · ")}
-                        </Dialog.Description>
-                        {album?.descripcion && (
-                            <p className="mt-4 max-w-3xl whitespace-pre-line opacity-90">{album.descripcion}</p>
-                        )}
-
-                        {error && <p className="mt-8">No se pudo cargar la galería. Intenta de nuevo más tarde.</p>}
-
-                        {!album && !error && (
-                            <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                                {Array.from({ length: 8 }, (_, i) => (
-                                    <div key={i} className="aspect-[4/3] bg-white/10 animate-pulse" />
-                                ))}
-                            </div>
-                        )}
-
-                        {album && (
-                            <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                                {imagenes.map((imagen, index) => (
-                                    <button
-                                        key={imagen.id}
-                                        type="button"
-                                        onClick={() => setCurrent(index)}
-                                        className="aspect-[4/3] overflow-hidden bg-white/10 cursor-zoom-in"
-                                    >
-                                        <img
-                                            src={imagen.url}
-                                            width={imagen.width ?? undefined}
-                                            height={imagen.height ?? undefined}
-                                            alt={imagen.caption ?? album.titulo}
-                                            loading="lazy"
-                                            className="w-full h-full object-cover hover:scale-105 duration-300"
-                                        />
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                    {viewing && (
-                        <div
-                            className="fixed inset-0 z-[5] flex items-center justify-center bg-black"
-                            onClick={() => setCurrent(null)}
-                        >
-                            <figure className="flex max-h-full max-w-full flex-col items-center p-4" onClick={(e) => e.stopPropagation()}>
-                                <img
-                                    src={viewing.url}
-                                    width={viewing.width ?? undefined}
-                                    height={viewing.height ?? undefined}
-                                    alt={viewing.caption ?? album?.titulo ?? ""}
-                                    className="max-h-[85vh] w-auto max-w-full object-contain"
-                                />
-                                <figcaption className="mt-3 text-sm opacity-80">
-                                    {viewing.caption && <span>{viewing.caption} · </span>}
-                                    {current! + 1} / {imagenes.length}
-                                </figcaption>
-                            </figure>
-                            {imagenes.length > 1 && (
-                                <>
-                                    <button
-                                        type="button"
-                                        onClick={(e) => { e.stopPropagation(); step(-1); }}
-                                        className="absolute left-2 md:left-6 rounded-full bg-black/50 p-2 hover:bg-black/80"
-                                    >
-                                        <ChevronLeft className="h-8 w-8" />
-                                        <span className="sr-only">Anterior</span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={(e) => { e.stopPropagation(); step(1); }}
-                                        className="absolute right-2 md:right-6 rounded-full bg-black/50 p-2 hover:bg-black/80"
-                                    >
-                                        <ChevronRight className="h-8 w-8" />
-                                        <span className="sr-only">Siguiente</span>
-                                    </button>
-                                </>
-                            )}
-                        </div>
-                    )}
-                </Dialog.Content>
-            </Dialog.Portal>
-        </Dialog.Root>
+        </a>
     );
 }
 
@@ -221,7 +62,6 @@ export default function Gallery() {
     const [lastPage, setLastPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [openSlug, setOpenSlug] = useState<string | null>(null);
     const [attempt, setAttempt] = useState(0);
 
     useEffect(() => {
@@ -257,12 +97,12 @@ export default function Gallery() {
 
                 <div className="w-[85%] md:w-[75%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
                     {albums.map((album) => (
-                        <AlbumCard key={album.id} album={album} onOpen={() => setOpenSlug(album.slug)} />
+                        <AlbumCard key={album.id} album={album} />
                     ))}
 
                     {loading &&
                         Array.from({ length: page === 1 ? 6 : 3 }, (_, i) => (
-                            <div key={`skeleton-${i}`} className="h-48 md:h-[20rem] bg-gray-200 animate-pulse" />
+                            <div key={`skeleton-${i}`} className="aspect-square bg-gray-200 animate-pulse" />
                         ))}
                 </div>
 
@@ -295,8 +135,6 @@ export default function Gallery() {
 
                 <Divider />
             </div>
-
-            <AlbumDialog slug={openSlug} onClose={() => setOpenSlug(null)} />
         </section>
     );
 }

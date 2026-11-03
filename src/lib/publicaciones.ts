@@ -79,3 +79,16 @@ export function formatEventDate(iso: string | null): string {
     day: "numeric",
   });
 }
+
+// Event times are local wall-clock values serialized with a +00:00 offset, so format in UTC.
+const formatUtc = (iso: string, options: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat("es-VE", { timeZone: "UTC", ...options }).format(new Date(iso));
+
+export const formatCardDate = (iso: string) =>
+  formatUtc(iso, { day: "2-digit", month: "2-digit", year: "numeric" });
+
+export const formatLongDate = (iso: string) =>
+  formatUtc(iso, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+export const formatHour = (iso: string) =>
+  `${formatUtc(iso, { hour: "2-digit", minute: "2-digit", hourCycle: "h23" })} hrs`;

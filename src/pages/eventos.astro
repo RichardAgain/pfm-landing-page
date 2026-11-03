@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/ui/alt-header";
+import Footer from "@components/sections/footer.astro";
+import Events from "@components/events/events";
+---
+
+<Layout>
+    <Header />
+
+    <Events client:load />
+
+    <Footer />
+</Layout>
