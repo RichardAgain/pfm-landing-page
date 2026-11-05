@@ -17,6 +17,24 @@
         ],
         "createdAt": "2026-11-03T02:43:37.857Z",
         "reason": "DESIGN.md: 6px white band divider between split panels (Layout/Shapes), not a card accent"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/components/sections/contact.astro"
+        ],
+        "createdAt": "2026-11-04T02:40:12.924Z",
+        "reason": "agent triage: line 26 is the white 6px divider between split panels, per DESIGN.md band separators; not a card accent"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/components/history.astro"
+        ],
+        "createdAt": "2026-11-05T02:05:18.825Z",
+        "reason": "model triage: white 6px panel divider between text column and photo collage (same pattern as contact.astro), requested by user as 'white borders'; not a colored accent tab"
       }
     ]
   }
