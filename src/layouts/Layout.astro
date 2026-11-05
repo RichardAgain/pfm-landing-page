@@ -6,7 +6,7 @@ import "../styles/global.css";
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 
 		<link rel="icon" type="image/png" href="/logo-icon.png">
@@ -15,9 +15,18 @@ import "../styles/global.css";
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
 		<title>Academia Internacional de Música - Maestro José Calabrese</title>
+
+		<!-- Entrance animations start hidden and need JS to reveal -->
+		<noscript>
+			<style>
+				[data-reveal],
+				.animate-fade-slide {
+					opacity: 1 !important;
+					transform: none !important;
+				}
+			</style>
+		</noscript>
 	</head>
 	
 	<body>

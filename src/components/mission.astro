@@ -1,0 +1,87 @@
+---
+import type { ImageMetadata } from "astro";
+import PhotoTile from "@components/grids/photo-tile.astro";
+
+import grid1 from "@assets/history/grid1.JPG";
+import grid2 from "@assets/history/grid2.JPG";
+import grid3 from "@assets/history/grid3.JPG";
+import grid4 from "@assets/history/grid4.JPG";
+import grid5 from "@assets/history/grid5.JPG";
+import grid6 from "@assets/history/grid6.JPG";
+import grid7 from "@assets/history/grid7.JPG";
+
+// One row from lg up, with wider tiles at both ends. Below lg: three over four.
+const frieze: { src: ImageMetadata; alt: string; class: string }[] = [
+	{ src: grid1, alt: "Foto de grupo de músicos de la academia, vestidos de negro, con sus instrumentos", class: "col-span-4 lg:col-span-3" },
+	{ src: grid2, alt: "Fila de estudiantes tocando violonchelo", class: "col-span-4 lg:col-span-2" },
+	{ src: grid3, alt: "Estudiante toca el violín frente a un fondo con el logo de la fundación", class: "col-span-4 lg:col-span-2" },
+	{ src: grid4, alt: "Integrantes del coro cantan ante los micrófonos", class: "col-span-3 lg:col-span-2" },
+	{ src: grid5, alt: "Estudiante toca el violonchelo en un concierto", class: "col-span-3 lg:col-span-2" },
+	{ src: grid6, alt: "Estudiante lee la partitura mientras toca el violín", class: "col-span-3 lg:col-span-2" },
+	{ src: grid7, alt: "Estudiante con el uniforme de la fundación toca el violín", class: "col-span-3 lg:col-span-3" },
+];
+
+const objectives = [
+	"Formar a niños(as) para ser los futuros miembros de la OSC, desde un enfoque de la educación musical integral que enfatiza la iniciación en la práctica instrumental individual y grupal desde edades muy tempranas.",
+	"Proporcionar a los miembros de la Academia, la oportunidad de descubrir sus capacidades interpretativas en una formación orquestal, permitiéndoles desarrollarse como músicos profesionales potencialmente exitosos.",
+	"Desarrollar un programa educativo musical que contemple contenidos complementarios y en valores que contribuyan a la formación integral de los niños, niñas y adolescentes participantes.",
+];
+---
+
+<section
+	class="w-full bg-gradient-to-b from-wine-deep to-wine border-t-6 border-white"
+>
+	<div
+		data-reveal="bottom"
+		class="grid grid-cols-12 lg:grid-cols-16 auto-rows-[6.5rem] md:auto-rows-[10rem] lg:auto-rows-[15rem] gap-0.5 bg-white border-b-2 border-white opacity-0"
+	>
+		{
+			frieze.map(({ src, alt, class: tileClass }) => (
+				<PhotoTile
+					src={src}
+					alt={alt}
+					class={tileClass}
+				/>
+			))
+		}
+	</div>
+
+	<div
+		data-reveal="bottom"
+		class="grid lg:grid-cols-2 gap-10 lg:gap-16 w-[85vw] mx-auto py-12 md:py-16 font-montserrat text-white opacity-0"
+	>
+		<div class="flex flex-col gap-5">
+			<h2 class="text-4xl lg:text-5xl font-bold text-balance">
+				Nuestra misión
+			</h2>
+			<p class="max-w-[65ch] lg:text-lg lg:leading-relaxed font-light text-pretty">
+				Ejecutar una propuesta educativa integral en el campo de la
+				formación musical dentro de la OSC, que contemple los niveles
+				inicial, medio y avanzado, impartida con altos niveles de calidad
+				y creatividad dentro de un clima de enseñanza-aprendizaje que
+				permita potenciar de manera gradual las actitudes y aptitudes de
+				niños(as) y adolescentes ante la música y su ejecución
+				instrumental, con vistas a prepararlos para su incorporación a los
+				estudios del nivel profesional o universitario.
+			</p>
+		</div>
+
+		<ul class="flex flex-col gap-6">
+			{
+				objectives.map((text) => (
+					<li class="flex flex-col gap-3">
+						<span
+							aria-hidden="true"
+							class="block w-12 h-0.5 bg-gold-trim"
+						/>
+						<p class="max-w-[65ch] font-medium leading-relaxed text-pretty">
+							{text}
+						</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<script src="../scripts/reveal.ts"></script>

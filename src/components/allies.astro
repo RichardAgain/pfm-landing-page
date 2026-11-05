@@ -1,7 +1,6 @@
 ---
 import { Picture } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import { Swiper, SwiperWrapper, SwiperSlide } from "astro-swiper";
 
 import nationalLogo1 from "@assets/allies/national/logo1.png";
 import nationalLogo2 from "@assets/allies/national/logo2.png";
@@ -22,15 +21,12 @@ import internationalLogo3 from "@assets/allies/international/logo3.png";
 import internationalLogo4 from "@assets/allies/international/logo4.png";
 import internationalLogo5 from "@assets/allies/international/logo5.png";
 
-const group1: { src: ImageMetadata; label: string }[] = [
+const allies: { src: ImageMetadata; label: string }[] = [
     { src: nationalLogo1, label: "UNESCO" },
     { src: nationalLogo2, label: "Hotel Hesperia - WTC Valencia" },
     { src: nationalLogo3, label: "Universidad José Antonio Páez" },
     { src: nationalLogo8, label: "Orquesta Sinfónica de Carabobo" },
     { src: nationalLogo5, label: "Conservatorio Vicente Emilio Sojo" },
-];
-
-const group2: { src: ImageMetadata; label: string }[] = [
     { src: nationalLogo4, label: "CLX Group" },
     { src: nationalLogo6, label: "Alcaldía de San Diego" },
     { src: nationalLogo7, label: "Multimax Store" },
@@ -40,9 +36,6 @@ const group2: { src: ImageMetadata; label: string }[] = [
     },
     { src: internationalLogo1, label: "MovSinfo" },
     { src: internationalLogo3, label: "Maestrocastro" },
-];
-
-const group3: { src: ImageMetadata; label: string }[] = [
     { src: internationalLogo2, label: "Corporación Rafael Pombo" },
     {
         src: internationalLogo4,
@@ -56,149 +49,40 @@ const group3: { src: ImageMetadata; label: string }[] = [
     { src: nationalLogo9, label: "Universidad Yacambú" },
     { src: nationalLogo10, label: "AK Producciones" },
 ];
-
-const swiperOptions = {
-    loop: true,
-    autoplay: { delay: 3000 },
-    breakpoints: {
-        480: { slidesPerView: 1, spaceBetween: 15 },
-        768: { slidesPerView: 1, spaceBetween: 20 },
-        1024: { slidesPerView: 4, spaceBetween: 24 },
-        1280: { slidesPerView: 4, spaceBetween: 24 },
-    },
-};
 ---
 
-<section class="flex flex-col w-full">
-    <!-- Allies carousels -->
-    <section
-        id="aliados"
-        class="relative w-full min-h-110 md:min-h-screen py-24 md:py-32"
+<section
+    id="aliados"
+    class="w-full bg-gradient-to-b from-wine-deep to-wine border-t-6 border-white"
+>
+    <div
+        data-reveal="bottom"
+        class="flex flex-col w-[85vw] gap-8 mx-auto py-12 md:py-16 opacity-0"
     >
-        <div
-            class="absolute inset-0 z-0 w-full bg-gradient-to-b from-[#4B0C0C] to-[#7A1F1F] border-t-6 border-white"
-        >
-        </div>
+        <h2 class="text-4xl lg:text-5xl font-montserrat text-white font-bold text-center">
+            Nuestros aliados
+        </h2>
 
-        <div
-            class="relative inset-0 z-10 flex flex-col w-[85vw] gap-12 mx-auto"
-            data-animate-container="allies"
-        >
-            <div class="flex flex-col gap-10">
-                <h2
-                    class="text-3xl md:text-5xl font-montserrat text-white font-bold text-center animate-fade-slide"
-                    style="animation-delay:750ms"
-                >
-                    Nuestros aliados
-                </h2>
-
-                <div class="flex flex-col w-[80%] md:w-[75%] gap-6 mx-auto">
-                    <!-- Group 1 -->
-                    <div
-                        class="w-full mx-auto animate-fade-slide"
-                        style="animation-delay:500ms"
-                    >
-                        <Swiper options={swiperOptions} class="w-full">
-                            <SwiperWrapper>
-                                {
-                                    group1.map((item) => (
-                                        <SwiperSlide>
-                                            <div class="flex bg-white items-center justify-center h-30 p-4 border-4 border-[#BFA760] rounded-xl">
-                                                <Picture
-                                                    src={item.src}
-                                                    formats={["webp"]}
-                                                    alt={item.label}
-                                                    height={100}
-                                                    class="max-h-full max-w-full object-contain"
-                                                    pictureAttributes={{
-                                                        class: "block mx-auto",
-                                                    }}
-                                                />
-                                            </div>
-                                        </SwiperSlide>
-                                    ))
-                                }
-                            </SwiperWrapper>
-                        </Swiper>
-                    </div>
-
-                    <!-- Group 2 -->
-                    <div
-                        class="w-full mx-auto animate-fade-slide"
-                        style="animation-delay:1250ms"
-                    >
-                        <Swiper options={swiperOptions} class="w-full">
-                            <SwiperWrapper>
-                                {
-                                    group2.map((item) => (
-                                        <SwiperSlide>
-                                            <div class="flex bg-white items-center justify-center h-30 p-6 border-4 border-[#BFA760] rounded-xl">
-                                                <Picture
-                                                    src={item.src}
-                                                    formats={["webp"]}
-                                                    alt={item.label}
-                                                    class="max-h-full w-auto object-contain"
-                                                    pictureAttributes={{
-                                                        class: "mx-auto",
-                                                    }}
-                                                />
-                                            </div>
-                                        </SwiperSlide>
-                                    ))
-                                }
-                            </SwiperWrapper>
-                        </Swiper>
-                    </div>
-
-                    <!-- Group 3 -->
-                    <div
-                        class="w-full mx-auto animate-fade-slide"
-                        style="animation-delay:2000ms"
-                    >
-                        <Swiper options={swiperOptions} class="w-full">
-                            <SwiperWrapper>
-                                {
-                                    group3.map((item) => (
-                                        <SwiperSlide>
-                                            <div class="flex bg-white items-center justify-center h-30 p-4 border-4 border-[#BFA760] rounded-xl">
-                                                <Picture
-                                                    src={item.src}
-                                                    formats={["webp"]}
-                                                    height={100}
-                                                    alt={item.label}
-                                                    class="max-h-full max-w-full object-contain"
-                                                    pictureAttributes={{
-                                                        class: "block mx-auto",
-                                                    }}
-                                                />
-                                            </div>
-                                        </SwiperSlide>
-                                    ))
-                                }
-                            </SwiperWrapper>
-                        </Swiper>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Trigger animations exactly like hero-section, scoped to this component
-        const root = document.querySelector(
-            '[data-animate-container="allies"]',
-        );
-        if (root) {
-            const obs = new IntersectionObserver(
-                ([entry]) => {
-                    if (entry.isIntersecting) {
-                        root.setAttribute("data-animate", "");
-                        obs.disconnect();
-                    }
-                },
-                { threshold: 0 },
-            );
-            obs.observe(root);
-        }
-    </script>
+        <!-- Centered wrap, so the last short row stays balanced -->
+        <ul class="flex flex-wrap justify-center gap-3">
+            {
+                allies.map(({ src, label }) => (
+                    <li class="flex items-center justify-center basis-[calc((100%-1.5rem)/3)] md:basis-[calc((100%-3.75rem)/6)] h-22 p-2 md:p-3 bg-white rounded-xl">
+                        <Picture
+                            src={src}
+                            formats={["webp"]}
+                            alt={label}
+                            height={100}
+                            class="max-h-full max-w-full object-contain"
+                            pictureAttributes={{
+                                class: "flex items-center justify-center w-full h-full min-h-0",
+                            }}
+                        />
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
 </section>
+
+<script src="../scripts/reveal.ts"></script>

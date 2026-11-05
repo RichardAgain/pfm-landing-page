@@ -1,0 +1,44 @@
+<!-- Takes over once the hero's own navigation has scrolled away. Inert until then, so it stays out of the tab order. -->
+<header
+  data-sticky-header
+  inert
+  class="fixed top-0 inset-x-0 z-40 flex items-center justify-between h-14 md:h-16 px-[5vw] bg-wine border-b border-gold-trim invisible -translate-y-full transition-[translate,visibility] duration-300 ease-out motion-reduce:transition-none"
+>
+  <a
+    href="#inicio"
+    class="rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+  >
+    <img
+      src="/logo-icon.png"
+      width="40"
+      height="40"
+      alt="Academia Internacional de Música - Maestro José Calabrese: ir al inicio"
+      class="w-10 h-10"
+    />
+  </a>
+  <a
+    href="/registro"
+    class="inline-flex items-center min-h-11 px-5 rounded-full text-sm font-montserrat font-semibold text-wine-deep bg-gold-trim hover:bg-white transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+  >
+    Preinscripción
+  </a>
+</header>
+
+<script>
+  const header = document.querySelector("[data-sticky-header]");
+  const hero = document.querySelector("#inicio");
+
+  if (header && hero) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const show = !entry.isIntersecting;
+        header.toggleAttribute("inert", !show);
+        header.classList.toggle("invisible", !show);
+        header.classList.toggle("-translate-y-full", !show);
+      },
+      // Past the 4rem scroll padding, so the header is up when an anchor lands on the first band
+      { rootMargin: "-72px 0px 0px 0px" },
+    );
+    observer.observe(hero);
+  }
+</script>

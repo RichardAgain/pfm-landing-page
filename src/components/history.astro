@@ -1,5 +1,5 @@
 ---
-import { Picture } from "astro:assets";
+import PhotoTile from "@components/grids/photo-tile.astro";
 
 import image1 from "@assets/history/image1.jpg";
 import image2 from "@assets/history/image2.jpg";
@@ -8,77 +8,62 @@ import image4 from "@assets/history/image4.jpg";
 import image5 from "@assets/history/image5.jpg";
 ---
 
-<section class="flex flex-col w-full">
-    <!-- Middle: history text block -->
+<section class="flex flex-col w-full font-montserrat text-white">
+    <!-- Historia -->
     <section
         id="historia"
-        data-animate-history
-        class="relative w-full min-h-110 py-24 md:py-40"
+        class="w-full bg-gradient-to-b from-wine-deep to-wine border-t-6 border-white"
     >
         <div
-            class="absolute inset-0 z-0 w-full bg-gradient-to-b from-[#4B0C0C] to-[#7A1F1F] border-t-6 border-white"
+            data-reveal="bottom"
+            class="flex flex-col w-[85vw] gap-8 mx-auto py-12 md:py-16 opacity-0"
         >
-        </div>
-
-        <div
-            data-animate-history-target
-            class="relative inset-0 z-10 flex flex-col w-[85vw] gap-12 mx-auto opacity-0"
-        >
-            <div class="flex flex-col gap-10">
-                <h2
-                    class="text-3xl md:text-5xl font-montserrat text-white font-bold text-center md:leading-[7vh]"
-                >
-                    Nuestra historia, <span class="text-[#BFA760]"
-                        >nuestro legado</span>
-                </h2>
-                <div
-                    class="grid md:grid-cols-2 gap-4 md:gap-16 px-4 md:px-8 mx-auto"
-                >
-                    <div class="flex flex-col gap-4">
-                        <p
-                            class="md:text-xl font-montserrat text-white text-center md:text-justify"
-                        >
-                            La <b
-                                >Academia Internacional de Música "Maestro José
-                                Calabrese"</b
-                            > nace un 7 de octubre de 2019. Fundada por el maestro
-                            <b>José Carmelo Calabrese</b>, esta academia tiene
-                            como objetivo la formación musical y artística
-                            integral de los nuevos músicos del Estado Carabobo y
-                            Venezuela, creando así, las generaciones de relevo
-                            de la <b>Orquesta Sinfónica de Carabobo</b>.
-                        </p>
-                        <p
-                            class="md:text-xl font-montserrat text-white text-center md:text-justify"
-                        >
-                            Esta institución lleva el nombre del Director
-                            Laureado de la <b>Orquesta Sinfónica de Carabobo</b
-                            >, maestro <b>José Calabrese</b> (padre). Actualmente
-                            cuenta con alianzas estratégicas y académicas con organizaciones
-                            en países como Venezuela, Estados Unidos, Colombia y Brasil,
-                            además de tener el aval internacional de la UNESCO.
-                        </p>
-                    </div>
-                    <div class="flex flex-col gap-5">
-                        <p
-                            class="md:text-xl font-montserrat text-white text-center md:text-justify"
-                        >
-                            La academia se sustenta en la experiencia de casi 50
-                            años en la enseñanza y práctica de la música
-                            sinfónica de la <b
-                                >Fundación Orquesta Sinfónica de Carabobo</b
-                            >, en cuyo seno han complementado y desarrollado su
-                            formación artística un importante número de músicos
-                            y agrupaciones con demostrado talento, algunos de
-                            los cuales en su papel de docentes artistas
-                            actualmente tienen la responsabilidad de formar a
-                            las nuevas generaciones de músicos de la <b>OSC</b>,
-                            en el marco de nuestros programas.
-                        </p>
-                        <p
-                            class="text-2xl md:text-4xl font-montserrat text-white font-bold text-center md:text-right py-4 md:py-0 px-0 md:px-6 mt-4 md:mt-0 border-t-3 md:border-t-0 border-r-0 md:border-r-5 border-[#BFA760]"
-                        >
-                            <i>Formando músicos profesionales</i>
+            <h2 class="text-4xl lg:text-5xl font-bold text-balance">
+                Nuestra historia, <span class="text-gold-trim"
+                    >nuestro legado</span>
+            </h2>
+            <div class="grid lg:grid-cols-2 gap-5 lg:gap-16">
+                <div class="flex flex-col gap-5">
+                    <p class="max-w-[65ch] leading-relaxed text-pretty">
+                        La <b
+                            >Academia Internacional de Música "Maestro José
+                            Calabrese"</b
+                        > nace un 7 de octubre de 2019. Fundada por el maestro
+                        <b>José Carmelo Calabrese</b>, esta academia tiene
+                        como objetivo la formación musical y artística
+                        integral de los nuevos músicos del Estado Carabobo y
+                        Venezuela, creando así, las generaciones de relevo
+                        de la <b>Orquesta Sinfónica de Carabobo</b>.
+                    </p>
+                    <p class="max-w-[65ch] leading-relaxed text-pretty">
+                        Esta institución lleva el nombre del Director
+                        Laureado de la <b>Orquesta Sinfónica de Carabobo</b
+                        >, maestro <b>José Calabrese</b> (padre). Actualmente
+                        cuenta con alianzas estratégicas y académicas con organizaciones
+                        en países como Venezuela, Estados Unidos, Colombia y Brasil,
+                        además de tener el aval internacional de la UNESCO.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-6">
+                    <p class="max-w-[65ch] leading-relaxed text-pretty">
+                        La academia se sustenta en la experiencia de casi 50
+                        años en la enseñanza y práctica de la música
+                        sinfónica de la <b
+                            >Fundación Orquesta Sinfónica de Carabobo</b
+                        >, en cuyo seno han complementado y desarrollado su
+                        formación artística un importante número de músicos
+                        y agrupaciones con demostrado talento, algunos de
+                        los cuales en su papel de docentes artistas
+                        actualmente tienen la responsabilidad de formar a
+                        las nuevas generaciones de músicos de la <b>OSC</b>,
+                        en el marco de nuestros programas.
+                    </p>
+                    <div class="flex flex-col gap-3">
+                        <span
+                            aria-hidden="true"
+                            class="block w-12 h-0.5 bg-gold-trim"></span>
+                        <p class="text-2xl lg:text-3xl font-bold italic text-balance">
+                            Formando músicos profesionales
                         </p>
                     </div>
                 </div>
@@ -86,193 +71,91 @@ import image5 from "@assets/history/image5.jpg";
         </div>
     </section>
 
-    <!-- Bottom: left text, right collage -->
+    <!-- El maestro: biography beside its collage -->
     <section
-        data-animate-bottom
-        class="relative w-full min-h-400 md:min-h-screen"
+        class="grid lg:grid-cols-[7fr_5fr] w-full bg-gradient-to-b from-wine-deep to-wine border-t-6 border-white"
     >
         <div
-            class="absolute inset-0 z-0 grid md:grid-cols-2 w-full border-t-6 border-white"
+            data-reveal="left"
+            class="flex flex-col justify-center gap-6 px-[7.5vw] lg:pl-[7.5vw] lg:pr-16 py-12 md:py-16 opacity-0"
         >
-            <div
-                data-animate-bottom-left
-                class="flex w-full bg-gradient-to-b from-[#7A5C20] to-[#BFA75A] px-10 md:px-24 items-center opacity-0"
-            >
-                <div class="flex flex-col gap-8 py-16 md:py-0">
-                    <h2
-                        class="text-3xl md:text-5xl font-montserrat text-white font-bold text-center md:text-left"
-                    >
-                        El maestro, <br /> José Calabrese
-                    </h2>
-                    <div class="flex flex-col gap-4 mx-auto">
-                        <p
-                            class="font-montserrat text-white text-center md:text-left"
-                        >
-                            El maestro <b
-                                >José Calabrese (Giuseppe Calabrese Di Stefano)</b
-                            >, nació en Italia (Módica-Sicilia), el 8 de febrero
-                            de 1948 y falleció en Caracas el 21 de diciembre de
-                            2018. Fue un Músico Multinstrumentista, Director de
-                            Orquesta, Compositor, Arreglista, Gerente Cultural y
-                            Educador, nacionalizado como venezolano.
-                        </p>
-                        <p
-                            class="font-montserrat text-white text-center md:text-left"
-                        >
-                            Llegó a Venezuela a la edad de 7 años, en el año
-                            1955. A los 8 años inició sus estudios musicales en
-                            Valencia con el maestro italiano Ángelo Inglese,
-                            posteriormente estudió en el <b
-                                >Conservatorio de Música del Estado Aragua</b
-                            > y en <b>Berklee College of Music</b> en la ciudad de
-                            Boston de Estados Unidos, donde recibió clases de composición,
-                            arreglos, saxofón con profesores como Joseph Viola y John
-                            La Porta.
-                        </p>
-                        <p
-                            class="font-montserrat text-white text-center md:text-left"
-                        >
-                            En Venezuela se resaltan sus estudios de Dirección
-                            Orquestal con el Maestro Gonzalo Castellanos. Fundó
-                            el <b>Conservatorio de Música de Carabobo </b>
-                            y la <b>
-                                Fundación Orquesta Sinfónica de Carabobo</b
-                            >, además de ser <b
-                                >Director Artístico y Musical de la Orquesta
-                                Sinfónica de Carabobo por un período de 33 años
-                                ininterrumpidos</b
-                            >. Desde el 2019 recibió conciertos homenajes en
-                            diferentes países como Venezuela, Argentina,
-                            Colombia y Brasil.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                data-animate-bottom-right
-                class="relative w-full h-96 md:h-full border-t-6 md:border-t-0 md:border-l-6 border-white opacity-0"
-            >
-                <div class="grid grid-cols-2 gap-1">
-                    <div class="flex flex-col gap-1">
-                        <div class="relative">
-                            <Picture
-                                src={image2}
-                                formats={["webp"]}
-                                alt="Maestro José Calabrese"
-                                class="w-full md:h-[60.5vh] object-cover"
-                            />
-                            <div class="absolute inset-0 bg-black/40"></div>
-                        </div>
-                        <div class="relative">
-                            <Picture
-                                src={image4}
-                                formats={["webp"]}
-                                alt="Maestro José Calabrese"
-                                class="w-full h-50 md:h-[39.5vh] object-cover"
-                            />
-                            <div class="absolute inset-0 bg-black/40"></div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-                        <div class="relative">
-                            <Picture
-                                src={image1}
-                                formats={["webp"]}
-                                alt="Maestro José Calabrese"
-                                class="w-full md:h-[30vh] object-cover"
-                            />
-                            <div class="absolute inset-0 bg-black/40"></div>
-                        </div>
-                        <div class="relative">
-                            <Picture
-                                src={image3}
-                                formats={["webp"]}
-                                alt="Maestro José Calabrese"
-                                class="w-full md:h-[30vh] object-cover"
-                            />
-                            <div class="absolute inset-0 bg-black/40"></div>
-                        </div>
-                        <div class="relative">
-                            <Picture
-                                src={image5}
-                                formats={["webp"]}
-                                alt="Maestro José Calabrese"
-                                class="w-full h-40 md:h-[40vh] object-cover"
-                            />
-                            <div class="absolute inset-0 bg-black/40"></div>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="text-4xl lg:text-5xl font-bold text-balance">
+                El maestro, José Calabrese
+            </h2>
+            <div class="flex flex-col gap-4">
+                <p class="max-w-[68ch] leading-relaxed text-pretty">
+                    El maestro <b
+                        >José Calabrese (Giuseppe Calabrese Di Stefano)</b
+                    >, nació en Italia (Módica-Sicilia), el 8 de febrero
+                    de 1948 y falleció en Caracas el 21 de diciembre de
+                    2018. Fue un Músico Multinstrumentista, Director de
+                    Orquesta, Compositor, Arreglista, Gerente Cultural y
+                    Educador, nacionalizado como venezolano.
+                </p>
+                <p class="max-w-[68ch] leading-relaxed text-pretty">
+                    Llegó a Venezuela a la edad de 7 años, en el año
+                    1955. A los 8 años inició sus estudios musicales en
+                    Valencia con el maestro italiano Ángelo Inglese,
+                    posteriormente estudió en el <b
+                        >Conservatorio de Música del Estado Aragua</b
+                    > y en <b>Berklee College of Music</b> en la ciudad de
+                    Boston de Estados Unidos, donde recibió clases de composición,
+                    arreglos, saxofón con profesores como Joseph Viola y John
+                    La Porta.
+                </p>
+                <p class="max-w-[68ch] leading-relaxed text-pretty">
+                    En Venezuela se resaltan sus estudios de Dirección
+                    Orquestal con el Maestro Gonzalo Castellanos. Fundó
+                    el <b>Conservatorio de Música de Carabobo</b>
+                    y la <b>Fundación Orquesta Sinfónica de Carabobo</b
+                    >, además de ser <b
+                        >Director Artístico y Musical de la Orquesta
+                        Sinfónica de Carabobo por un período de 33 años
+                        ininterrumpidos</b
+                    >. Desde el 2019 recibió conciertos homenajes en
+                    diferentes países como Venezuela, Argentina,
+                    Colombia y Brasil.
+                </p>
             </div>
         </div>
+
+        <div
+            data-reveal="right"
+            class="grid grid-cols-2 grid-rows-6 gap-0.5 bg-white border-t-2 lg:border-t-0 lg:border-l-2 border-white h-112 lg:h-auto lg:min-h-160 opacity-0"
+        >
+            <PhotoTile
+                src={image2}
+                alt="Retrato del maestro José Calabrese de frac, batuta en mano, dirigiendo"
+                overlay="bg-black/20"
+                class="row-span-4"
+                imageClass="object-top"
+            />
+            <PhotoTile
+                src={image1}
+                alt="El maestro José Calabrese dirige de perfil junto a un telón rojo"
+                overlay="bg-black/20"
+                class="row-span-2"
+            />
+            <PhotoTile
+                src={image3}
+                alt="El maestro José Calabrese sonríe mientras dirige al aire libre"
+                overlay="bg-black/20"
+                class="row-span-2"
+            />
+            <PhotoTile
+                src={image4}
+                alt="Fotografía en blanco y negro del maestro José Calabrese dirigiendo a la orquesta"
+                overlay="bg-black/20"
+                class="row-span-2"
+            />
+            <PhotoTile
+                src={image5}
+                alt="El maestro José Calabrese, con lentes, dirige en un escenario oscuro"
+                overlay="bg-black/20"
+                class="row-span-2"
+            />
+        </div>
     </section>
-
-    <script>
-        // Top: trigger left grid (slide-from-left) and right headline (slide-from-right)
-        (function () {
-            const root = document.querySelector("[data-animate-top]");
-            const left = document.querySelector("[data-animate-top-left]");
-            const right = document.querySelector("[data-animate-top-right]");
-            if (root && left && right) {
-                const obs = new IntersectionObserver(
-                    ([entry]) => {
-                        if (entry.isIntersecting) {
-                            left.classList.remove("opacity-0");
-                            left.classList.add("slide-from-left");
-                            right.classList.remove("opacity-0");
-                            right.classList.add("slide-from-right");
-                            obs.disconnect();
-                        }
-                    },
-                    { threshold: 0.1 },
-                );
-                obs.observe(root);
-            }
-        })();
-
-        // Middle: history block slides from bottom
-        (function () {
-            const root = document.querySelector("[data-animate-history]");
-            const target = document.querySelector(
-                "[data-animate-history-target]",
-            );
-            if (root && target) {
-                const obs = new IntersectionObserver(
-                    ([entry]) => {
-                        if (entry.isIntersecting) {
-                            target.classList.remove("opacity-0");
-                            target.classList.add("slide-from-bottom");
-                            obs.disconnect();
-                        }
-                    },
-                    { threshold: 0.2 },
-                );
-                obs.observe(root);
-            }
-        })();
-
-        // Bottom: trigger left text (slide-from-left) and right collage (slide-from-right)
-        (function () {
-            const root = document.querySelector("[data-animate-bottom]");
-            const left = document.querySelector("[data-animate-bottom-left]");
-            const right = document.querySelector("[data-animate-bottom-right]");
-            if (root && left && right) {
-                const obs = new IntersectionObserver(
-                    ([entry]) => {
-                        if (entry.isIntersecting) {
-                            left.classList.remove("opacity-0");
-                            left.classList.add("slide-from-left");
-                            right.classList.remove("opacity-0");
-                            right.classList.add("slide-from-right");
-                            obs.disconnect();
-                        }
-                    },
-                    { threshold: 0.1 },
-                );
-                obs.observe(root);
-            }
-        })();
-    </script>
 </section>
+
+<script src="../scripts/reveal.ts"></script>

@@ -1,0 +1,33 @@
+---
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// A square-cut photo that fills its grid cell, so the grid decides the size and
+// the photo never pushes the band taller.
+interface Props {
+	src: ImageMetadata;
+	alt?: string;
+	/** Tailwind overlay class; the photo stays dimmed unless a lighter one is passed. */
+	overlay?: string;
+	class?: string;
+	imageClass?: string;
+}
+
+const {
+	src,
+	alt = "",
+	overlay = "bg-black/30",
+	class: className,
+	imageClass,
+} = Astro.props;
+---
+
+<div class:list={["relative min-h-0", className]}>
+	<Picture
+		src={src}
+		formats={["webp"]}
+		alt={alt}
+		class:list={["absolute inset-0 w-full h-full object-cover", imageClass]}
+	/>
+	<div class:list={["absolute inset-0 pointer-events-none", overlay]}></div>
+</div>

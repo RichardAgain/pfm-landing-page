@@ -8,6 +8,7 @@
   --color-gold: #c19310;
   --color-gold-deep: #a57f0d;
   --color-gold-trim: #bfa760;
+  --color-gold-soft: #a38943;
   --color-bronze: #7a5c20;
   --color-bronze-deep: #5c4518;
 }
@@ -16,6 +17,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Anchor jumps land below the sticky headers */
+  scroll-padding-top: 4rem;
 }
 
 section {
@@ -32,15 +35,11 @@ section {
 /* Fonts ------------------------------------------------------------------------------------- */
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
-}
-
-.font-inter {
-  font-family: 'Inter', serif;
 }
 
 /* Fade in animation ------------------------------------------------------------------------- */
@@ -116,6 +115,52 @@ body {
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* Home events carousel: arrows sit over the cover image, never over card text --------------- */
+
+.events-carousel {
+  --swiper-navigation-color: var(--color-wine);
+  --swiper-navigation-size: 18px;
+  --swiper-navigation-top-offset: 6.5rem;
+  --swiper-navigation-sides-offset: 0.5rem;
+}
+
+.events-carousel .swiper-button-prev,
+.events-carousel .swiper-button-next {
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-top: -1.375rem;
+  border-radius: 9999px;
+  background-color: white;
+}
+
+.events-carousel .swiper-button-prev svg,
+.events-carousel .swiper-button-next svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Reduced motion ------------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-slide {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  [data-animate] .animate-fade-slide,
+  .fade-in,
+  .slide-from-left,
+  .slide-from-right,
+  .slide-from-bottom {
+    animation: none;
   }
 }
 

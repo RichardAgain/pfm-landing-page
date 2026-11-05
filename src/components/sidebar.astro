@@ -12,7 +12,7 @@ import { Image } from "astro:assets";
   </button>
 </div>
 <!-- <div id="mobile-backdrop" class="fixed inset-0 z-[9998] bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300"></div> -->
-<div id="mobile-sidebar" class="fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto transition-transform duration-300 ease-out translate-x-full">
+<div id="mobile-sidebar" inert class="fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto transition-transform duration-300 ease-out translate-x-full">
   <div class="flex items-center justify-between p-6 border-b border-gray-200">
     <Image src="/logo.png" width="120" height="40" alt="Academia Internacional de Música - Maestro José Calabrese" class="w-28" />
     <button type="button" aria-controls="mobile-sidebar" aria-expanded="true" data-mobile-close class="p-2 rounded-md text-gray-700 hover:bg-gray-100">
@@ -24,18 +24,21 @@ import { Image } from "astro:assets";
     {routes.map((route) => (
       <a href={route.href} class="text-lg font-montserrat text-gray-800 font-medium hover:font-semibold">{route.label}</a>
     ))}
-    <a href="/registro" class="text-lg font-montserrat text-gray-800 font-semibold hover:font-bold">Inscripción</a>
+    <a href="/registro" class="text-lg font-montserrat text-gray-800 font-semibold hover:font-bold">Preinscripción</a>
     <a href="/login" class="text-lg font-montserrat text-gray-800 font-semibold hover:font-bold">Iniciar sesión</a>
   </nav>
 </div>
 
 <script>
-  const openBtn = document.querySelector('[data-mobile-open]');
-  const closeBtn = document.querySelector('[data-mobile-close]');
+  const openBtn = document.querySelector<HTMLElement>('[data-mobile-open]');
+  const closeBtn = document.querySelector<HTMLElement>('[data-mobile-close]');
   const sidebar = document.getElementById('mobile-sidebar');
   const backdrop = document.getElementById('mobile-backdrop');
 
+  // While closed the drawer is inert, so its links stay out of the tab order.
   const open = () => {
+    sidebar?.removeAttribute('inert');
+    closeBtn?.focus();
     sidebar?.classList.remove('translate-x-full');
     sidebar?.classList.add('translate-x-0');
     backdrop?.classList.remove('opacity-0', 'pointer-events-none');
@@ -45,6 +48,9 @@ import { Image } from "astro:assets";
   };
 
   const close = () => {
+    if (sidebar?.hasAttribute('inert')) return;
+    sidebar?.setAttribute('inert', '');
+    openBtn?.focus();
     sidebar?.classList.add('translate-x-full');
     sidebar?.classList.remove('translate-x-0');
     backdrop?.classList.add('opacity-0');

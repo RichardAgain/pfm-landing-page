@@ -46,7 +46,7 @@ const images = Object.values(
                                 src={img}
                                 formats={["webp"]}
                                 priority
-                                alt="Academia Internacional de Música - Maestro José Calabrese"
+                                alt=""
                                 class="w-full h-130 md:h-screen object-cover"
                             />
                         </SwiperSlide>
@@ -154,6 +154,16 @@ const images = Object.values(
                 { threshold: 0 },
             );
             obs.observe(root);
+        }
+
+        // Respect reduced motion: the carousel stays on its first slide
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            window.addEventListener("load", () => {
+                const carousel = document.querySelector<
+                    HTMLElement & { swiper?: { autoplay?: { stop(): void } } }
+                >("#inicio .swiper");
+                carousel?.swiper?.autoplay?.stop();
+            });
         }
     </script>
 </section>
