@@ -6,34 +6,35 @@ const PER_PAGE = 9;
 
 export function EventCard({ evento }: { evento: Publicacion }) {
     return (
-        <article className="flex flex-col bg-white shadow transition duration-500 hover:-translate-y-2 hover:shadow-lg">
+        <article className="flex flex-col h-full rounded-lg overflow-hidden bg-gray-100">
             <div className="aspect-[16/10] bg-gray-200">
                 {evento.portada_url && (
                     <img
                         src={evento.portada_url}
-                        alt={evento.titulo}
+                        alt=""
                         loading="lazy"
                         className="w-full h-full object-cover"
                     />
                 )}
             </div>
             <div className="flex flex-1 flex-col gap-2 p-4">
-                <h3 className="text-lg font-semibold leading-tight text-gray-800">{evento.titulo}</h3>
+                <h3 className="text-lg font-montserrat font-semibold leading-tight text-gray-800 [overflow-wrap:anywhere]">{evento.titulo}</h3>
                 {evento.fecha_evento && (
                     <p className="flex items-center gap-2 text-sm text-gray-600">
-                        <Calendar className="h-4 w-4 shrink-0 text-[#7A1F1F]" />
+                        <Calendar className="h-4 w-4 shrink-0 text-wine" />
                         {formatCardDate(evento.fecha_evento)}
                     </p>
                 )}
                 {evento.ubicacion && (
                     <p className="flex items-center gap-2 text-sm text-gray-600">
-                        <MapPin className="h-4 w-4 shrink-0 text-[#7A1F1F]" />
-                        <span className="truncate">{evento.ubicacion}</span>
+                        <MapPin className="h-4 w-4 shrink-0 text-wine" />
+                        <span className="min-w-0 truncate">{evento.ubicacion}</span>
                     </p>
                 )}
                 <a
                     href={`/evento?slug=${encodeURIComponent(evento.slug)}`}
-                    className="mt-auto pt-2 text-sm font-semibold text-[#7A1F1F] hover:underline"
+                    aria-label={`Más información sobre ${evento.titulo}`}
+                    className="mt-auto pt-2 text-sm font-semibold text-wine hover:underline"
                 >
                     Más información
                 </a>

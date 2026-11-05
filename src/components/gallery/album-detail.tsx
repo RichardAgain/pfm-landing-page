@@ -6,7 +6,7 @@ function NotFound() {
     return (
         <section className="flex flex-col items-center justify-center gap-6 py-24 text-center">
             <h1 className="text-4xl font-montserrat font-bold text-gray-800">404</h1>
-            <p className="text-base font-inter text-gray-600 max-w-md">
+            <p className="text-base text-gray-600 max-w-md">
                 El álbum que buscas no existe o ya no está disponible.
             </p>
             <a
@@ -54,7 +54,7 @@ export default function AlbumDetail() {
             <h1 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900">{publicacion.titulo}</h1>
 
             {publicacion.descripcion && (
-                <p className="whitespace-pre-line font-inter text-gray-700">{publicacion.descripcion}</p>
+                <p className="whitespace-pre-line text-gray-700">{publicacion.descripcion}</p>
             )}
 
             {imagenes.length > 0 && <PhotoGrid imagenes={imagenes} titulo={publicacion.titulo} />}

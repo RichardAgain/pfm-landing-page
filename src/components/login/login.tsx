@@ -135,7 +135,7 @@ export default function LogIn() {
 
                         <a
                             href="/restablecer-credenciales"
-                            className="text-xs font-inter text-gray-600 hover:underline"
+                            className="text-xs text-gray-600 hover:underline"
                         >
                             Restablece tu contraseña
                         </a>
