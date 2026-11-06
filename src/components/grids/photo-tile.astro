@@ -11,6 +11,10 @@ interface Props {
 	overlay?: string;
 	class?: string;
 	imageClass?: string;
+	/** Responsive candidates; without them the browser gets the full-size file. */
+	widths?: number[];
+	sizes?: string;
+	loading?: "eager" | "lazy";
 }
 
 const {
@@ -19,6 +23,9 @@ const {
 	overlay = "bg-black/30",
 	class: className,
 	imageClass,
+	widths,
+	sizes,
+	loading,
 } = Astro.props;
 ---
 
@@ -27,6 +34,9 @@ const {
 		src={src}
 		formats={["webp"]}
 		alt={alt}
+		widths={widths}
+		sizes={sizes}
+		loading={loading}
 		class:list={["absolute inset-0 w-full h-full object-cover", imageClass]}
 	/>
 	<div class:list={["absolute inset-0 pointer-events-none", overlay]}></div>

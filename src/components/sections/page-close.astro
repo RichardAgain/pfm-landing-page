@@ -1,0 +1,60 @@
+---
+import { ArrowRight } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+
+// The closing band of an inner page: the next step, right before the footer.
+// With a whatsappMessage it invites a conversation; otherwise it leads to preinscripción.
+interface Props {
+	whatsappMessage?: string;
+}
+
+const { whatsappMessage } = Astro.props;
+const pill =
+	"inline-flex w-fit shrink-0 items-center gap-2 min-h-11 px-6 md:px-8 py-3 rounded-full text-base md:text-lg font-semibold text-wine-deep bg-gold-trim hover:bg-white transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+---
+
+<section class="w-full bg-gradient-to-b from-wine-deep to-wine border-t-6 border-white">
+	<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8 w-[85vw] mx-auto py-12 md:py-16 font-montserrat text-white">
+		{
+			whatsappMessage ? (
+				<>
+					<div class="flex flex-col gap-3">
+						<h2 class="text-3xl lg:text-4xl font-bold text-balance">¿Quieres saber más del programa?</h2>
+						<p class="text-lg font-light italic text-pretty">Escríbenos y te damos más información.</p>
+					</div>
+					<div class="flex flex-col gap-2 shrink-0">
+						<a
+							href={`https://api.whatsapp.com/send?phone=584143410642&text=${encodeURIComponent(whatsappMessage)}`}
+							target="_blank"
+							rel="noopener noreferrer"
+							class={pill}
+						>
+							<FaWhatsapp className="w-5 h-5 shrink-0" aria-hidden="true" />
+							Escríbenos por WhatsApp
+							<span class="sr-only">(se abre en una pestaña nueva)</span>
+						</a>
+						<a
+							href="tel:+584143410642"
+							class="inline-flex items-center w-fit min-h-11 font-medium tabular-nums underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+						>
+							+58 414 341 0642
+						</a>
+					</div>
+				</>
+			) : (
+				<>
+					<div class="flex flex-col gap-3">
+						<h2 class="text-3xl lg:text-5xl leading-tight text-balance">
+							El <b>hogar</b> de los <b>músicos</b> del <b>mañana</b>
+						</h2>
+						<p class="text-lg font-light italic text-pretty">¿Quieres formar parte de la academia?</p>
+					</div>
+					<a href="/registro" class={pill}>
+						Preinscripción
+						<ArrowRight className="w-5 h-5 shrink-0" aria-hidden="true" />
+					</a>
+				</>
+			)
+		}
+	</div>
+</section>

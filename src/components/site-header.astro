@@ -1,0 +1,61 @@
+---
+import Sidebar from "./sidebar.astro";
+
+// Header for every page except the home, whose hero carries its own navigation.
+// Each page using it must wrap its content in <main id="contenido">.
+const routes = [
+  { href: "/catedras", label: "Cátedras" },
+  { href: "/programa-t21-down", label: "Programa T21 Down" },
+  { href: "/galeria", label: "Galería" },
+  { href: "/eventos", label: "Eventos" },
+  { href: "/#contacto", label: "Contacto" },
+];
+
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<a
+  href="#contenido"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-60 focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-wine font-montserrat"
+>
+  Saltar al contenido
+</a>
+
+<header class="sticky top-0 z-50 flex items-center gap-6 w-full h-14 md:h-16 px-[5vw] bg-wine border-b border-gold-trim font-montserrat">
+  <a
+    href="/"
+    class="shrink-0 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+  >
+    <img
+      src="/logo-icon.png"
+      width="40"
+      height="40"
+      alt="Academia Internacional de Música - Maestro José Calabrese: ir al inicio"
+      class="w-10 h-10"
+    />
+  </a>
+
+  <nav aria-label="Principal" class="hidden lg:flex flex-1 justify-center gap-8">
+    {
+      routes.map(({ href, label }) => (
+        <a
+          href={href}
+          aria-current={href === current ? "page" : undefined}
+          class="py-1 text-sm font-medium text-white border-b-2 border-transparent hover:border-white aria-[current=page]:border-gold-trim focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="flex items-center gap-2 ml-auto lg:ml-0">
+    <a
+      href="/registro"
+      class="inline-flex items-center min-h-11 px-5 rounded-full text-sm font-semibold text-wine-deep bg-gold-trim hover:bg-white transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+    >
+      Preinscripción
+    </a>
+    <Sidebar routes={routes} current={current} />
+  </div>
+</header>

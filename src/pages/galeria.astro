@@ -1,14 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/ui/alt-header";
+import Header from "@components/site-header.astro";
+import PageBand from "@components/sections/page-band.astro";
+import PageClose from "@components/sections/page-close.astro";
 import Footer from "@components/sections/footer.astro";
 import Gallery from "@components/gallery/gallery";
+
+import orquesta15 from "@assets/gallery/orquesta15.JPG";
+import orquesta5 from "@assets/gallery/orquesta5.JPG";
+import orquesta4 from "@assets/gallery/orquesta4.JPG";
 ---
 
-<Layout>
+<Layout
+    title="Galería"
+    description="Galería de fotos de la Academia Internacional de Música Maestro José Calabrese."
+>
     <Header />
 
-    <Gallery client:load />
+    <main id="contenido">
+        <PageBand
+            title="Galería de fotos"
+            photos={[
+                { src: orquesta15, alt: "Músico toca el violonchelo con la orquesta en un salón, con el público al fondo" },
+                { src: orquesta5, alt: "Integrantes de la academia posan juntos en un salón de concierto" },
+                { src: orquesta4, alt: "Músico toca un instrumento de viento" },
+            ]}
+        />
+
+        <Gallery client:load />
+
+        <PageClose />
+    </main>
 
     <Footer />
 </Layout>

@@ -1,29 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/ui/alt-header";
+import Header from "@components/site-header.astro";
+import PageBand from "@components/sections/page-band.astro";
+import PageClose from "@components/sections/page-close.astro";
 import Footer from "@components/sections/footer.astro";
-import type { ImageMetadata } from "astro";
-import { Picture } from "astro:assets";
 
-const galleryImages = import.meta.glob<{ default: ImageMetadata }>(
-	"/src/assets/gallery/*.{jpg,JPG}",
-	{ eager: true },
-);
+import orquesta1 from "@assets/gallery/orquesta1.JPG";
+import masterclass from "@assets/gallery/masterclass_violin1.JPG";
+import coro0 from "@assets/gallery/coro0.JPG";
 
-const relatedImages = [
-	{ filename: "masterclass_violin1.JPG", alt: "Clase de violín" },
-	{ filename: "coro0.JPG", alt: "Ensayo de coro" },
-	{ filename: "orquesta1.JPG", alt: "Práctica orquestal" },
-].map(({ filename, alt }) => {
-	const image = galleryImages[`/src/assets/gallery/${filename}`];
+interface Catedra {
+	title: string;
+	description: string;
+	items?: string[];
+	subcategories?: { category: string; items: string[] }[];
+}
 
-	return {
-		src: image.default,
-		alt,
-	};
-});
-
-const catedras = [
+const catedras: Catedra[] = [
 	{
 		title: "Cátedras Teóricas",
 		description:
@@ -89,96 +82,60 @@ const catedras = [
 ];
 ---
 
-<Layout>
+<Layout
+	title="Cátedras"
+	description="Programa académico: cátedras teóricas y prácticas, prácticas grupales y electivas de la Academia Internacional de Música Maestro José Calabrese."
+>
 	<Header />
 
-	<section id="catedras" class="min-h-screen py-12 md:py-24">
-		<div class="flex flex-col w-[80%] mx-auto gap-8 md:gap-10">
-			<div class="flex flex-col gap-4 text-center">
-				<h2 class="text-4xl font-montserrat text-[#7A1F1F] font-bold">
-					Programa Académico
-				</h2>
-			</div>
+	<main id="contenido">
+		<PageBand
+			title="Cátedras"
+			photos={[
+				{ src: masterclass, alt: "Clase de violín" },
+				{ src: coro0, alt: "Ensayo de coro" },
+				{ src: orquesta1, alt: "Práctica orquestal" },
+			]}
+		/>
 
-			<div class="flex flex-col gap-4">
-				{
-					catedras.map((section) => (
-						<details class="group rounded-xl border-2 border-[#F4B400] bg-white shadow-sm overflow-hidden">
-							<summary class="list-none cursor-pointer px-5 py-4 flex items-center justify-between gap-4 font-montserrat text-lg md:text-xl font-semibold text-[#7A1F1F]">
-								<span>{section.title}</span>
-								<span class="text-[#F4B400] text-2xl leading-none transition-transform duration-300 group-open:rotate-180">
-									▾
-								</span>
-							</summary>
-							<div class="border-t border-[#F4B400]/30 px-5 pb-5">
-								{/* <p class="text-sm font-montserrat leading-[4vh] md:leading-[3vh] text-center md:text-left">
-                                {section.description}
-                            </p> */}
-								<div class="mt-4">
-									{section.subcategories ? (
-										section.subcategories.map((sub) => (
-											<div class="mb-5 last:mb-0">
-												<h3 class="text-xs font-montserrat font-semibold text-[#7A1F1F]/90 uppercase tracking mb-2 ml-1">
-													{sub.category}
-												</h3>
-												<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-													{sub.items.map((item) => (
-														<div class="rounded-lg border border-[#7A1F1F]/15 bg-[#ffffff] px-4 py-3 text-sm font-montserrat text-center text-zinc-850 shadow-sm">
-															{item}
-														</div>
-													))}
-												</div>
-											</div>
-										))
-									) : (
-										<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-											{section.items.map((item) => (
-												<div class="rounded-lg border border-[#7A1F1F]/15 bg-[#ffffff] px-4 py-3 text-sm font-montserrat text-center text-zinc-850 shadow-sm">
-													{item}
-												</div>
-											))}
-										</div>
-									)}
-								</div>
-							</div>
-						</details>
-					))
-				}
-			</div>
-
-			<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-				{
-					relatedImages.map(({ src, alt }) => (
-						<div class="bg-white transition duration-500 transform cursor-pointer hover:-translate-y-2 hover:shadow-lg overflow-hidden rounded-lg border border-[#F4B400]/30">
-							<div class="relative group">
-								<Picture
-									src={src}
-									alt={alt}
-									widths={[640, 960, 1200]}
-									sizes="(min-width: 768px) 33vw, 100vw"
-									formats={["webp"]}
-									class="w-full h-full object-cover"
-								/>
-								<div class="absolute inset-0 bg-black opacity-20 group-hover:opacity-0 duration-300 pointer-events-none" />
-							</div>
+		<div class="flex flex-col w-[85vw] mx-auto py-6 md:py-10 divide-y divide-gray-200 font-montserrat text-gray-800">
+			{
+				catedras.map(({ title, description, items, subcategories }) => (
+					<section class="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-6 lg:gap-12 py-10 md:py-12">
+						<div class="flex flex-col gap-3">
+							<h2 class="text-2xl md:text-3xl font-bold leading-tight text-wine text-balance">
+								{title}
+							</h2>
+							<p class="text-base font-light italic leading-relaxed text-pretty max-w-[45ch]">
+								{description}
+							</p>
 						</div>
-					))
-				}
-			</div>
 
-			<div class="flex flex-col gap-1 pt-2">
-				<hr
-					class="w-[85%] md:w-[75%] border-2 border-[#F4B400] rounded-full mx-auto"
-				/>
-				<hr
-					class="w-[85%] md:w-[75%] border-2 border-[#7A1F1F] rounded-full mx-auto"
-				/>
-				<hr
-					class="w-[85%] md:w-[75%] border-2 border-[#F4B400] rounded-full mx-auto"
-				/>
-			</div>
+						{subcategories ? (
+							<div class="grid grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-8 lg:pt-1.5">
+								{subcategories.map(({ category, items }) => (
+									<div class="flex flex-col gap-2">
+										<h3 class="text-base md:text-lg font-semibold leading-tight text-wine">
+											{category}
+										</h3>
+										<ul class="flex flex-col gap-1 text-base leading-relaxed">
+											{items.map((item) => <li>{item}</li>)}
+										</ul>
+									</div>
+								))}
+							</div>
+						) : (
+							<ul class="grid grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-2 text-base leading-relaxed self-start lg:pt-1.5">
+								{items?.map((item) => <li>{item}</li>)}
+							</ul>
+						)}
+					</section>
+				))
+			}
 		</div>
-	</section>
+
+		<PageClose />
+	</main>
 
 	<Footer />
 </Layout>

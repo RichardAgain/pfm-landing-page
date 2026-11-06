@@ -1,14 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/ui/alt-header";
+import Header from "@components/site-header.astro";
+import PageBand from "@components/sections/page-band.astro";
+import PageClose from "@components/sections/page-close.astro";
 import Footer from "@components/sections/footer.astro";
 import Events from "@components/events/events";
+
+import orquesta19 from "@assets/gallery/orquesta19.JPG";
+import orquesta11 from "@assets/gallery/orquesta11.JPG";
+import orquesta9 from "@assets/gallery/orquesta9.JPG";
 ---
 
-<Layout>
+<Layout
+    title="Eventos"
+    description="Conciertos y eventos de la Academia Internacional de Música Maestro José Calabrese."
+>
     <Header />
 
-    <Events client:load />
+    <main id="contenido">
+        <PageBand
+            title="Eventos"
+            photos={[
+                { src: orquesta9, alt: "Músico toca el contrabajo junto a la percusión" },
+                { src: orquesta11, alt: "Músicos tocan saxofón de pie durante un concierto" },
+                { src: orquesta19, alt: "Coro de la academia canta sobre el escenario con luz azul" },
+            ]}
+        />
+
+        <Events client:load />
+
+        <PageClose />
+    </main>
 
     <Footer />
 </Layout>

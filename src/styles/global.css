@@ -25,6 +25,17 @@ section {
   overflow: hidden;
 }
 
+::selection {
+  background-color: var(--color-wine);
+  color: white;
+}
+
+/* Default ring for light surfaces; controls on burgundy and photography set a white one. */
+:where(a, button, summary):focus-visible {
+  outline: 2px solid var(--color-wine);
+  outline-offset: 2px;
+}
+
 .background {
   background-image: url('/background.png');
   background-size: cover;

@@ -1,5 +1,14 @@
 ---
 import "../styles/global.css";
+
+interface Props {
+	/** Page name; the academy name is appended. */
+	title?: string;
+	description?: string;
+}
+
+const academy = "Academia Internacional de Música - Maestro José Calabrese";
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
@@ -10,12 +19,13 @@ import "../styles/global.css";
 		<meta name="generator" content={Astro.generator} />
 
 		<link rel="icon" type="image/png" href="/logo-icon.png">
-		
+
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		
+
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-		<title>Academia Internacional de Música - Maestro José Calabrese</title>
+		<title>{title ? `${title} | ${academy}` : academy}</title>
+		{description && <meta name="description" content={description} />}
 
 		<!-- Entrance animations start hidden and need JS to reveal -->
 		<noscript>
@@ -28,7 +38,7 @@ import "../styles/global.css";
 			</style>
 		</noscript>
 	</head>
-	
+
 	<body>
 		<slot />
 	</body>

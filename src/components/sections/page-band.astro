@@ -1,0 +1,42 @@
+---
+import type { ImageMetadata } from "astro";
+import PhotoTile from "@components/grids/photo-tile.astro";
+
+// The opening band of an inner page: the page title on burgundy beside a photo mosaic.
+// With three photos the first runs the full height, which crops it larger than its
+// neighbors; pass four for equal small tiles when no photo should be shown large.
+interface Props {
+	title: string;
+	photos: [Photo, Photo, Photo] | [Photo, Photo, Photo, Photo];
+}
+
+interface Photo {
+	src: ImageMetadata;
+	alt: string;
+}
+
+const { title, photos } = Astro.props;
+---
+
+<section class="grid md:grid-cols-2 w-full bg-gradient-to-b from-wine-deep to-wine border-b-6 border-white">
+	<div class="flex flex-col justify-center gap-4 px-[7.5vw] md:pr-10 py-10 md:py-14 font-montserrat text-white">
+		<h1 class="text-4xl lg:text-5xl font-bold leading-tight text-balance">{title}</h1>
+		<span aria-hidden="true" class="block w-12 h-0.5 mt-2 bg-gold-trim"></span>
+	</div>
+
+	<div class="grid grid-cols-2 grid-rows-2 gap-0.5 h-56 md:h-auto md:min-h-80 bg-white border-t-2 md:border-t-0 md:border-l-2 border-white">
+		{
+			photos.map(({ src, alt }, i) => (
+				<PhotoTile
+					src={src}
+					alt={alt}
+					overlay="bg-transparent"
+					widths={[400, 800]}
+					sizes="(min-width: 768px) 25vw, 50vw"
+					loading="eager"
+					class:list={{ "row-span-2": i === 0 && photos.length === 3 }}
+				/>
+			))
+		}
+	</div>
+</section>

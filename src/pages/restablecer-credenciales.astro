@@ -1,10 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/ui/alt-header";
+import Header from "@components/site-header.astro";
 import RequestPasswordResetForm from "../components/auth/reset-password/RequestPasswordResetForm";
 ---
 
 <Layout>
     <Header />
-    <RequestPasswordResetForm client:load />
+
+    <main id="contenido">
+        <RequestPasswordResetForm client:load />
+    </main>
 </Layout>

@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/ui/alt-header";
-import Program from "../components/t21-down-program/t21-program";
+import Header from "@components/site-header.astro";
+import PageBand from "@components/sections/page-band.astro";
+import PageClose from "@components/sections/page-close.astro";
 import Footer from "@components/sections/footer.astro";
 import { Picture } from "astro:assets";
 
@@ -10,209 +11,158 @@ import t2110 from "@assets/gallery/t2110.JPG";
 import t214 from "@assets/gallery/t214.JPG";
 import t212 from "@assets/gallery/t212.JPG";
 import t215 from "@assets/gallery/t215.JPG";
+import t216 from "@assets/gallery/t216.JPG";
 import t219 from "@assets/gallery/t219.JPG";
 
-const imagesTop = [
-    { src: t211, alt: "t21-1" },
-    { src: t2110, alt: "t21-10" },
-    { src: t214, alt: "t21-4" },
-];
 const imagesBottom = [
-    { src: t212, alt: "t21-2" },
-    { src: t215, alt: "t21-1" },
-    { src: t219, alt: "t21-11" },
+    { src: t212, alt: "Participante del programa sonríe mientras agita una maraca" },
+    { src: t215, alt: "Participantes del programa tocan claves durante una clase" },
+    { src: t219, alt: "Participante del programa sonríe mirando a la cámara" },
+];
+
+const benefits = [
+    {
+        title: "Desarrollo cognitivo",
+        text: "A través de ejercicios de ritmo, melodía y armonía, se estimulan las funciones cerebrales del participante.",
+    },
+    {
+        title: "Habilidades sociales",
+        text: "Las clases grupales y las presentaciones conjuntas fomentan el trabajo en equipo, la empatía y el respeto.",
+    },
+    {
+        title: "Expresión emocional",
+        text: "La música es un vehículo para canalizar sentimientos, ayudando a los participantes a gestionar sus emociones.",
+    },
+    {
+        title: "Autoestima",
+        text: "Cada logro, por pequeño que sea, se celebra, lo que contribuye a una sensación de logro y valor personal.",
+    },
 ];
 ---
 
-<Layout>
+<Layout
+    title="Programa T21 Down"
+    description="Programa de Formación y Estimulación Musical T21 Down: un espacio de inclusión, desarrollo y alegría, diseñado para personas con Síndrome de Down."
+>
     <Header />
-    <section id="T21" class="min-h-screen">
-        <div class="flex flex-col w-[80%] py-12 md:py-18 gap-6 mx-auto">
-            <h2
-                class="text-4xl font-montserrat text-[#F4B400] font-bold text-center py-4"
-            >
-                Una melodía de inclusión y crecimiento
-            </h2>
 
-            <div>
-                <p
-                    class="text-sm font-montserrat text-center md:text-justify leading-[4vh] md:leading-[3vh]"
-                >
-                    El <b
-                        >Programa de Formación y Estimulación Musical T21 Down</b
-                    >, creado en el año 2019 por la
-                    <b> Fundación Orquesta Sinfónica de Carabobo</b> a través del
+    <main id="contenido" class="font-montserrat text-gray-800">
+        <PageBand
+            title="Una melodía de inclusión y crecimiento"
+            photos={[
+                { src: t214, alt: "Participante del programa toca un xilófono con atención" },
+                { src: t216, alt: "Participante del programa canta mientras toca claves" },
+                { src: t2110, alt: "Grupo de participantes del programa posa sentado con sus franelas negras" },
+                { src: t211, alt: "Dos participantes del programa conversan" },
+            ]}
+        />
+
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 w-[85vw] mx-auto py-12 md:py-16">
+            <div class="flex flex-col gap-4 text-base leading-relaxed text-pretty max-w-[70ch]">
+                <p>
+                    El <b>Programa de Formación y Estimulación Musical T21 Down</b>,
+                    creado en el año 2019 por la
+                    <b>Fundación Orquesta Sinfónica de Carabobo</b> a través del
                     Programa de Formación Musical "Maestro José Calabrese" —ahora
                     Academia Internacional— de la mano del maestro
-                    <b> José Carmelo Calabrese</b>, es una iniciativa
-                    verdaderamente inspiradora que va más allá de la simple
-                    enseñanza musical. Es un espacio de inclusión, desarrollo y
-                    alegría, diseñado para personas con <b>Síndrome de Down</b>.
-                    Este programa no solo se enfoca en la formación musical,
-                    sino que utiliza la música como una poderosa herramienta
-                    terapéutica y de estimulación para potenciar diversas
-                    habilidades en sus participantes. Actualmente este programa
-                    se lleva a cabo gracias a una triple alianza, que involucra
-                    a la
-                    <b>
-                        Fundación "Familia T21 Down", Hesperia WTC Valencia y la
-                        Fundación Orquesta Sinfónica de Carabobo</b
-                    >.
+                    <b>José Carmelo Calabrese</b>, es una iniciativa verdaderamente
+                    inspiradora que va más allá de la simple enseñanza musical. Es un
+                    espacio de inclusión, desarrollo y alegría, diseñado para personas
+                    con <b>Síndrome de Down</b>.
+                </p>
+                <p>
+                    Este programa no solo se enfoca en la formación musical, sino que
+                    utiliza la música como una poderosa herramienta terapéutica y de
+                    estimulación para potenciar diversas habilidades en sus
+                    participantes.
+                </p>
+                <p>
+                    Actualmente este programa se lleva a cabo gracias a una triple
+                    alianza, que involucra a la
+                    <b>Fundación "Familia T21 Down", Hesperia WTC Valencia y la
+                    Fundación Orquesta Sinfónica de Carabobo</b>.
                 </p>
             </div>
 
-            <div
-                class="w-[100%] md:w-[100%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto py-4"
-            >
-                {
-                    imagesTop.map(({ src, alt }) => (
-                        <div class="bg-white transition duration-500 transform cursor-pointer hover:-translate-y-2 hover:shadow-lg">
-                            <div class="relative group">
-                                <Picture
-                                    src={src}
-                                    alt={alt}
-                                    widths={[640, 960, 1200]}
-                                    sizes="(min-width: 768px) 33vw, 100vw"
-                                    formats={["webp"]}
-                                    priority
-                                />
-                                <div class="absolute inset-0 z-5 h-full bg-black opacity-25 group-hover:opacity-0 duration-300 pointer-events-none" />
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-
-            <div>
-                <div class="flex flex-col py-6 gap-6 md:gap-4">
-                    <h3
-                        class="text-2xl font-montserrat text-[#F4B400] font-semibold text-center md:text-left"
-                    >
-                        Metodología y beneficios del programa
-                    </h3>
-
-                    <p
-                        class="text-sm font-montserrat text-center md:text-justify leading-[4vh] md:leading-[3vh] pl-4 border-l-6 border-[#F4B400]"
-                    >
-                        La metodología del programa se basa en un enfoque
-                        personalizado y lúdico. En lugar de seguir un currículo
-                        rígido, los facilitadores adaptan las actividades a las
-                        necesidades y ritmos individuales de cada persona. Esto
-                        permite que los estudiantes desarrollen habilidades
-                        motoras finas y gruesas, mejoren su concentración,
-                        fortalezcan su memoria y aumenten su capacidad de
-                        expresión. La música se convierte en un canal para
-                        comunicar emociones y para interactuar socialmente,
+            <div class="flex flex-col gap-4 max-w-[70ch]">
+                <h2 class="text-3xl font-bold leading-tight text-wine text-balance">
+                    Metodología y beneficios del programa
+                </h2>
+                <div class="flex flex-col gap-4 text-base leading-relaxed text-pretty">
+                    <p>
+                        La metodología del programa se basa en un enfoque personalizado y
+                        lúdico. En lugar de seguir un currículo rígido, los facilitadores
+                        adaptan las actividades a las necesidades y ritmos individuales de
+                        cada persona.
+                    </p>
+                    <p>
+                        Esto permite que los estudiantes desarrollen habilidades motoras
+                        finas y gruesas, mejoren su concentración, fortalezcan su memoria
+                        y aumenten su capacidad de expresión. La música se convierte en un
+                        canal para comunicar emociones y para interactuar socialmente,
                         fomentando así la autoconfianza y la integración de los
                         participantes.
                     </p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-12">
-                    <div
-                        class="bg-white p-6 border-2 border-[#F4B400] rounded-lg hover:scale-105 duration-300 cursor-pointer"
-                    >
-                        <h4
-                            class="text-xl font-montserrat text-[#F4B400] font-semibold text-center mb-2"
-                        >
-                            Desarrollo cognitivo
-                        </h4>
-                        <p class="text-sm font-montserrat text-center">
-                            A través de ejercicios de ritmo, melodía y armonía,
-                            se estimulan las funciones cerebrales del
-                            participante.
-                        </p>
-                    </div>
-
-                    <div
-                        class="bg-white p-6 border-2 border-[#F4B400] rounded-lg hover:scale-105 duration-300 cursor-pointer"
-                    >
-                        <h4
-                            class="text-xl font-montserrat text-[#F4B400] font-semibold text-center mb-2"
-                        >
-                            Habilidades sociales
-                        </h4>
-                        <p class="text-sm font-montserrat text-center">
-                            Las clases grupales y las presentaciones conjuntas
-                            fomentan el trabajo en equipo, la empatía y el
-                            respeto.
-                        </p>
-                    </div>
-
-                    <div
-                        class="bg-white p-6 border-2 border-[#F4B400] rounded-lg hover:scale-105 duration-300 cursor-pointer"
-                    >
-                        <h4
-                            class="text-xl font-montserrat text-[#F4B400] font-semibold text-center mb-2"
-                        >
-                            Expresión emocional
-                        </h4>
-                        <p class="text-sm font-montserrat text-center">
-                            La música es un vehículo para canalizar
-                            sentimientos, ayudando a los participantes a
-                            gestionar sus emociones.
-                        </p>
-                    </div>
-
-                    <div
-                        class="bg-white p-6 border-2 border-[#F4B400] rounded-lg hover:scale-105 duration-300 cursor-pointer"
-                    >
-                        <h4
-                            class="text-xl font-montserrat text-[#F4B400] font-semibold text-center mb-2"
-                        >
-                            Autoestima
-                        </h4>
-                        <p class="text-sm font-montserrat text-center">
-                            Cada logro, por pequeño que sea, se celebra, lo que
-                            contribuye a una sensación de logro y valor
-                            personal.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-4 py-6">
-                    <p
-                        class="text-sm font-montserrat text-center md:text-justify leading-[4vh] md:leading-[3vh]"
-                    >
-                        La <b>Fundación Orquesta Sinfónica de Carabobo</b> demuestra
-                        con este programa un profundo compromiso social y una visión
-                        vanguardista. No se trata sólo de crear músicos, sino de construir
-                        ciudadanos más plenos y felices,{" "}
-                        <b
-                            >demostrando que el arte tiene el poder de
-                            transformar vidas</b
-                        >. <br />
-                        <br /> El <b>Programa T21 Down</b> es un brillante ejemplo
-                        de cómo la cultura y la educación pueden ser agentes de cambio,
-                        <b>rompiendo barreras y creando oportunidades</b> donde antes
-                        no existían. Es una melodía de esperanza que resuena en toda
-                        la comunidad, invitando a reflexionar sobre la importancia
-                        de la inclusión y la equidad.
-                    </p>
-                </div>
-            </div>
-
-            <div
-                class="w-[100%] md:w-[100%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto pb-6"
-            >
-                {
-                    imagesBottom.map(({ src, alt }) => (
-                        <div class="bg-white transition duration-500 transform cursor-pointer hover:-translate-y-2 hover:shadow-lg">
-                            <div class="relative group">
-                                <Picture
-                                    src={src}
-                                    alt={alt}
-                                    widths={[640, 960, 1200]}
-                                    sizes="(min-width: 768px) 33vw, 100vw"
-                                    formats={["webp"]}
-                                />
-                                <div class="absolute inset-0 z-5 h-full bg-black opacity-25 group-hover:opacity-0 duration-300 pointer-events-none" />
-                            </div>
-                        </div>
-                    ))
-                }
             </div>
         </div>
-        <Footer />
-    </section>
+
+        <section class="w-full bg-gradient-to-b from-wine-deep to-wine border-y-6 border-white text-white">
+            <ul class="grid md:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10 w-[85vw] mx-auto py-12 md:py-16">
+                {
+                    benefits.map(({ title, text }) => (
+                        <li class="flex flex-col gap-3">
+                            <span aria-hidden="true" class="block w-12 h-0.5 bg-gold-trim" />
+                            <h3 class="text-xl font-semibold leading-tight text-balance">{title}</h3>
+                            <p class="text-base leading-relaxed text-pretty">{text}</p>
+                        </li>
+                    ))
+                }
+            </ul>
+        </section>
+
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 lg:items-center w-[85vw] mx-auto py-12 md:py-16">
+            <p aria-hidden="true" class="text-4xl lg:text-6xl leading-tight text-wine text-balance">
+                El <b>arte</b> tiene el <b>poder</b> de <b>transformar vidas</b>
+            </p>
+
+            <div class="flex flex-col gap-4 text-base leading-relaxed text-pretty max-w-[70ch]">
+                <p>
+                    La <b>Fundación Orquesta Sinfónica de Carabobo</b> demuestra con este
+                    programa un profundo compromiso social y una visión vanguardista. No
+                    se trata sólo de crear músicos, sino de construir ciudadanos más
+                    plenos y felices,
+                    <b>demostrando que el arte tiene el poder de transformar vidas</b>.
+                </p>
+                <p>
+                    El <b>Programa T21 Down</b> es un brillante ejemplo de cómo la cultura
+                    y la educación pueden ser agentes de cambio,
+                    <b>rompiendo barreras y creando oportunidades</b> donde antes no
+                    existían. Es una melodía de esperanza que resuena en toda la
+                    comunidad, invitando a reflexionar sobre la importancia de la
+                    inclusión y la equidad.
+                </p>
+            </div>
+        </div>
+
+        <!-- Capped at the photos' previous display size until consent for larger use is confirmed. -->
+        <div class="grid sm:grid-cols-3 gap-0.5 w-[80vw] max-w-[1120px] mx-auto pb-12 md:pb-16">
+            {
+                imagesBottom.map(({ src, alt }) => (
+                    <Picture
+                        src={src}
+                        alt={alt}
+                        widths={[640, 960, 1200]}
+                        sizes="(min-width: 640px) 33vw, 100vw"
+                        formats={["webp"]}
+                        class="w-full aspect-[3/2] object-cover"
+                    />
+                ))
+            }
+        </div>
+
+        <PageClose whatsappMessage="¡Hola! Quisiera información sobre el Programa T21 Down." />
+    </main>
+
+    <Footer />
 </Layout>

@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/ui/alt-header";
+import Header from "@components/site-header.astro";
 import Footer from "@components/sections/footer.astro";
 import AlbumDetail from "@components/gallery/album-detail";
 ---
@@ -8,7 +8,9 @@ import AlbumDetail from "@components/gallery/album-detail";
 <Layout>
     <Header />
 
-    <AlbumDetail client:only="react" />
+    <main id="contenido">
+        <AlbumDetail client:only="react" />
+    </main>
 
     <Footer />
 </Layout>
