@@ -29,7 +29,10 @@ function AlbumCard({ album }: { album: Publicacion }) {
     return (
         <a href={albumHref(album)} className="group relative block aspect-square rounded-lg overflow-hidden text-white font-montserrat">
             <div className="absolute inset-0">
-                <Cover src={album.portada_url} className="h-full" />
+                <Cover
+                    src={album.portada_url}
+                    className="h-full transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+                />
             </div>
             {/* The gradient grows with the text, so long titles stay on the dark part */}
             <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-4 pt-14 bg-gradient-to-t from-black/90 via-black/75 to-transparent">

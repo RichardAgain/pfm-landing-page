@@ -49,27 +49,50 @@ export function EventCard({ evento }: { evento: Publicacion }) {
     );
 }
 
-function NextEvent({ evento }: { evento: Publicacion }) {
+const formatBadge = (iso: string, options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat("es-VE", { timeZone: "UTC", ...options }).format(new Date(iso));
+
+function DateBadge({ iso }: { iso: string }) {
     return (
-        <article className="relative grid md:grid-cols-2 font-montserrat text-white">
-            <Cover src={evento.portada_url} className="aspect-[4/3] md:aspect-auto md:min-h-96" />
-            <div className="flex flex-col justify-center items-start gap-3 p-8 lg:p-12 bg-gradient-to-b from-wine-deep to-wine">
-                <h3 className="text-3xl lg:text-4xl font-bold leading-tight text-balance [overflow-wrap:anywhere]">
-                    {evento.titulo}
-                </h3>
-                <EventMeta evento={evento} iconClass="text-gold-trim" />
-                {evento.descripcion && (
-                    <p className="text-base leading-relaxed line-clamp-3 text-pretty">{evento.descripcion}</p>
-                )}
-                <a
-                    href={eventHref(evento)}
-                    aria-label={`Más información sobre ${evento.titulo}`}
-                    className={`inline-flex items-center gap-2 min-h-11 mt-2 px-6 rounded-full font-semibold text-wine-deep bg-gold-trim hover:bg-white transition-colors duration-300 focus-visible:outline-white ${stretchedLink}`}
-                >
-                    Más información
-                    <ArrowRight className="h-5 w-5 shrink-0" aria-hidden="true" />
-                </a>
+        <time
+            dateTime={iso.slice(0, 10)}
+            className="absolute top-3 left-3 flex flex-col items-center min-w-16 px-3 py-2 rounded-md bg-wine text-white leading-none shadow-md"
+        >
+            <span className="sr-only">{formatLongDate(iso)}</span>
+            <span aria-hidden="true" className="text-3xl font-bold">{formatBadge(iso, { day: "2-digit" })}</span>
+            <span aria-hidden="true" className="mt-1 text-xs font-semibold uppercase tracking-wider text-gold-trim">
+                {formatBadge(iso, { month: "short" }).replace(".", "")}
+            </span>
+            <span aria-hidden="true" className="mt-1 text-[0.7rem] opacity-80">{formatBadge(iso, { year: "numeric" })}</span>
+        </time>
+    );
+}
+
+function EventTile({ evento }: { evento: Publicacion }) {
+    return (
+        <article className="group relative flex flex-col h-full gap-3 font-montserrat text-gray-800">
+            <div className="relative rounded-lg overflow-hidden">
+                <Cover
+                    src={evento.portada_url}
+                    className="aspect-[4/3] transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+                />
+                {evento.fecha_evento && <DateBadge iso={evento.fecha_evento} />}
             </div>
+            <h3 className="text-xl font-semibold leading-tight text-balance [overflow-wrap:anywhere]">{evento.titulo}</h3>
+            {evento.ubicacion && (
+                <p className="flex items-start gap-2 text-sm text-gray-600">
+                    <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-wine" aria-hidden="true" />
+                    <span className="min-w-0 [overflow-wrap:anywhere]">{evento.ubicacion}</span>
+                </p>
+            )}
+            <a
+                href={eventHref(evento)}
+                aria-label={`Más información sobre ${evento.titulo}`}
+                className={`inline-flex items-center gap-2 w-fit min-h-11 mt-auto text-sm font-semibold text-wine group-hover:underline underline-offset-4 ${stretchedLink}`}
+            >
+                Más información
+                <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+            </a>
         </article>
     );
 }
@@ -78,7 +101,7 @@ function EventGrid({ eventos }: { eventos: Publicacion[] }) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {eventos.map((evento) => (
-                <EventCard key={evento.id} evento={evento} />
+                <EventTile key={evento.id} evento={evento} />
             ))}
         </div>
     );
@@ -88,12 +111,10 @@ function EventSkeleton() {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-hidden="true">
             {Array.from({ length: 6 }, (_, i) => (
-                <div key={i} className="flex flex-col rounded-lg overflow-hidden bg-gray-100 animate-pulse motion-reduce:animate-none">
-                    <div className="aspect-[16/10] bg-gray-200" />
-                    <div className="flex flex-col gap-3 p-4 h-36">
-                        <div className="h-5 w-3/4 rounded bg-gray-200" />
-                        <div className="h-4 w-1/2 rounded bg-gray-200" />
-                    </div>
+                <div key={i} className="flex flex-col gap-3 animate-pulse motion-reduce:animate-none">
+                    <div className="aspect-[4/3] rounded-lg bg-gray-200" />
+                    <div className="h-5 w-3/4 rounded bg-gray-200" />
+                    <div className="h-4 w-1/2 rounded bg-gray-200" />
                 </div>
             ))}
         </div>
@@ -118,7 +139,6 @@ export default function Events() {
     const upcomingReady = !upcoming.loading && !upcoming.error;
     const upcomingIds = new Set(upcoming.items.map((evento) => evento.id));
     const past = upcomingReady ? all.items.filter((evento) => !upcomingIds.has(evento.id)) : [];
-    const [next, ...later] = upcoming.items;
 
     const hasEvents = upcoming.items.length > 0 || past.length > 0;
     const isEmpty = !loading && !error && !hasEvents;
@@ -139,11 +159,10 @@ export default function Events() {
                 />
             )}
 
-            {next && (
+            {upcoming.items.length > 0 && (
                 <div ref={upcoming.resultsRef} className="flex flex-col gap-6">
                     <h2 className={sectionHeading}>Próximos eventos</h2>
-                    <NextEvent evento={next} />
-                    {later.length > 0 && <EventGrid eventos={later} />}
+                    <EventGrid eventos={upcoming.items} />
                 </div>
             )}
 
