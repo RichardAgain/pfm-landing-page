@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import ArticleContent from "../publicaciones/article-content";
 import PhotoGrid from "../publicaciones/photo-grid";
 import usePublicacion from "../publicaciones/use-publicacion";
 
@@ -29,7 +30,7 @@ function Skeleton() {
 }
 
 export default function AlbumDetail() {
-    const { publicacion, status } = usePublicacion();
+    const { publicacion, status } = usePublicacion("galeria");
 
     if (status === "notfound") return <NotFound />;
 
@@ -39,7 +40,7 @@ export default function AlbumDetail() {
 
     if (!publicacion) return <Skeleton />;
 
-    const imagenes = publicacion.imagenes ?? [];
+    const { imagenes } = publicacion;
 
     return (
         <article className="w-[85%] md:w-[75%] mx-auto flex flex-col gap-6 py-10">
@@ -53,9 +54,7 @@ export default function AlbumDetail() {
 
             <h1 className="text-3xl md:text-4xl font-montserrat font-bold text-gray-900">{publicacion.titulo}</h1>
 
-            {publicacion.descripcion && (
-                <p className="whitespace-pre-line text-gray-700">{publicacion.descripcion}</p>
-            )}
+            <ArticleContent html={publicacion.contenido} />
 
             {imagenes.length > 0 && <PhotoGrid imagenes={imagenes} titulo={publicacion.titulo} />}
         </article>

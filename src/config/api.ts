@@ -11,7 +11,7 @@ export const API_CONFIG = {
     },
 } as const;
 
-const normalizeBaseUrl = (url: string): string => {
+export const normalizeBaseUrl = (url: string): string => {
     const trimmed = url.trim();
 
     if (!trimmed) {
@@ -39,3 +39,5 @@ const getEnvironment = (): "development" | "production" => {
 // Export the current API base URL
 export const API_BASE_URL = normalizeBaseUrl(API_CONFIG[getEnvironment()].baseUrl);
 export const TURNSTILE_KEY = API_CONFIG[getEnvironment()].turnstile_public_key;
+
+export const WP_API_URL = `${normalizeBaseUrl(import.meta.env.PUBLIC_WP_DOMAIN || "")}/wp-json/wp/v2`;

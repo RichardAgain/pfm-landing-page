@@ -249,3 +249,64 @@ input:not([type="radio"], .peer), select {
   background-color: white;
   outline: none;
 }
+/* WordPress post content (see ArticleContent) --------------------------------------------- */
+
+.article-content {
+  @apply text-lg leading-relaxed text-gray-800;
+}
+.article-content :where(h1, h2, h3, h4, h5, h6, p, li, cite, summary) {
+  margin-bottom: 20px;
+}
+.article-content h2 {
+  @apply text-3xl lg:text-4xl font-bold mt-12 mb-6;
+}
+.article-content h3 {
+  @apply text-2xl lg:text-3xl font-bold mt-10 mb-6;
+}
+.article-content h4 {
+  @apply text-xl lg:text-2xl font-bold mt-8 mb-6;
+}
+.article-content a {
+  @apply text-wine underline underline-offset-4 hover:text-wine-deep;
+}
+.article-content ul {
+  @apply list-disc my-6 pl-8;
+}
+.article-content ol {
+  @apply list-decimal my-6 pl-8;
+}
+.article-content li {
+  @apply my-2;
+}
+.article-content blockquote {
+  @apply my-8 py-4 px-6 border-l-4 border-wine bg-gray-50;
+}
+.article-content blockquote cite {
+  @apply block text-right text-base font-semibold mt-4 not-italic;
+}
+.article-content table {
+  @apply w-full border-collapse my-8;
+}
+.article-content th,
+.article-content td {
+  @apply border border-gray-300 p-3 text-center;
+}
+.article-content th {
+  @apply font-bold bg-gray-200;
+}
+.article-content img,
+.article-content video {
+  @apply rounded-lg shadow-md max-w-full h-auto my-8;
+}
+.article-content figure {
+  @apply my-8;
+}
+.article-content figcaption {
+  @apply text-center text-sm mt-2 text-gray-600;
+}
+.article-content .wp-block-verse {
+  @apply max-w-full overflow-x-auto text-center;
+}
+.article-content .wp-block-code {
+  @apply max-w-full overflow-x-auto bg-gray-100 p-4 rounded;
+}

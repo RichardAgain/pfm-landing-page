@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { publicacionesApi, type Publicacion } from "../../lib/publicaciones";
+import { publicacionesApi, type Publicacion, type PublicacionTipo } from "../../lib/publicaciones";
 
-export default function usePublicacion() {
+export default function usePublicacion(tipo: PublicacionTipo) {
     const [publicacion, setPublicacion] = useState<Publicacion | null>(null);
     const [status, setStatus] = useState<"loading" | "ready" | "notfound" | "error">("loading");
 
@@ -14,7 +14,7 @@ export default function usePublicacion() {
 
         const controller = new AbortController();
         publicacionesApi
-            .get(slug, controller.signal)
+            .get(tipo, slug, controller.signal)
             .then((data) => {
                 setPublicacion(data);
                 setStatus("ready");
@@ -25,7 +25,7 @@ export default function usePublicacion() {
             });
 
         return () => controller.abort();
-    }, []);
+    }, [tipo]);
 
     return { publicacion, status };
 }

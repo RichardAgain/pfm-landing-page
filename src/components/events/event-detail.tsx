@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
 import { formatHour, formatLongDate } from "../../lib/publicaciones";
-import PhotoGrid from "../publicaciones/photo-grid";
+import ArticleContent from "../publicaciones/article-content";
 import usePublicacion from "../publicaciones/use-publicacion";
 
 function NotFound() {
@@ -33,7 +33,7 @@ function Skeleton() {
 }
 
 export default function EventDetail() {
-    const { publicacion, status } = usePublicacion();
+    const { publicacion, status } = usePublicacion("evento");
 
     if (status === "notfound") return <NotFound />;
 
@@ -50,8 +50,6 @@ export default function EventDetail() {
         meta.push({ icon: <Clock className={cls} />, text: formatHour(publicacion.fecha_evento) });
     }
     if (publicacion.ubicacion) meta.push({ icon: <MapPin className={cls} />, text: publicacion.ubicacion });
-
-    const imagenes = publicacion.imagenes ?? [];
 
     return (
         <article className="w-[85%] md:w-[75%] max-w-3xl mx-auto flex flex-col gap-6 py-10">
@@ -95,18 +93,7 @@ export default function EventDetail() {
                 <p className="whitespace-pre-line text-gray-700">{publicacion.descripcion}</p>
             )}
 
-            <div className="flex flex-col gap-2 px-5">
-                {imagenes.map((imagen, index) => (
-                    <img
-                        src={imagen.url}
-                        width={imagen.width ?? undefined}
-                        height={imagen.height ?? undefined}
-                        alt={imagen.caption ?? "imagen"}
-                        loading="lazy"
-                        className="w-full h-full object-cover"
-                    />
-                ))}
-            </div>
+            <ArticleContent html={publicacion.contenido} />
 
             <a
                 href="/#contacto"
