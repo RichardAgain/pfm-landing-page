@@ -110,6 +110,16 @@ function InstagramLink() {
   );
 }
 
+export function GallerySkeleton() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-hidden="true">
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} className="aspect-square rounded-lg bg-gray-200 animate-pulse motion-reduce:animate-none" />
+      ))}
+    </div>
+  );
+}
+
 export function LoadMore({ loading, onClick }: { loading: boolean; onClick: () => void }) {
   return (
     <button

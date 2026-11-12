@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import ArticleContent from "../publicaciones/article-content";
 import PhotoGrid from "../publicaciones/photo-grid";
+import { GallerySkeleton } from "../publicaciones/list-parts";
 import usePublicacion from "../publicaciones/use-publicacion";
 
 function NotFound() {
@@ -20,15 +21,6 @@ function NotFound() {
     );
 }
 
-function Skeleton() {
-    return (
-        <div className="w-[85%] md:w-[75%] mx-auto py-10 animate-pulse">
-            <div className="h-9 w-1/2 rounded bg-gray-200" />
-            <div className="mt-6 h-4 w-2/3 rounded bg-gray-200" />
-        </div>
-    );
-}
-
 export default function AlbumDetail() {
     const { publicacion, status } = usePublicacion("galeria");
 
@@ -38,7 +30,13 @@ export default function AlbumDetail() {
         return <p className="py-24 text-center text-gray-700">No se pudo cargar el álbum. Intenta de nuevo más tarde.</p>;
     }
 
-    if (!publicacion) return <Skeleton />;
+    if (!publicacion) {
+        return (
+            <div className="w-[85%] md:w-[75%] mx-auto py-10">
+                <GallerySkeleton />
+            </div>
+        );
+    }
 
     const { imagenes } = publicacion;
 

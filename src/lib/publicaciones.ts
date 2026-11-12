@@ -134,7 +134,12 @@ export const publicacionesApi = {
 
     const order: Record<string, string> = tipo === "galeria" ? { orderby: "date_taken", order: "desc" } : {};
     const { posts, totalPages } = await request(tipo, { per_page, page, ...order }, signal);
-    return { data: posts.map((post) => toPublicacion(post, tipo)), meta: { last_page: totalPages } };
+    const data = posts.map((post) => toPublicacion(post, tipo));
+    if (tipo === "galeria") {
+      const sortKey = (item: Publicacion) => item.fecha_evento ?? item.created_at;
+      data.sort((a, b) => sortKey(b).localeCompare(sortKey(a)));
+    }
+    return { data, meta: { last_page: totalPages } };
   },
 
   get: async (tipo: PublicacionTipo, slug: string, signal?: AbortSignal) => {

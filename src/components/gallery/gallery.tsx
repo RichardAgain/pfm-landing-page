@@ -1,6 +1,6 @@
 import { Calendar, Images } from "lucide-react";
 import { formatLongDate, type Publicacion } from "../../lib/publicaciones";
-import { Cover, EmptyState, ErrorState, LoadingStatus, LoadMore } from "../publicaciones/list-parts";
+import { Cover, EmptyState, ErrorState, GallerySkeleton, LoadingStatus, LoadMore } from "../publicaciones/list-parts";
 import { usePublicacionesList } from "../publicaciones/use-publicaciones-list";
 
 const PER_PAGE = 12;
@@ -68,13 +68,7 @@ export default function Gallery() {
                 </div>
             )}
 
-            {showSkeleton && (
-                <div className={GRID_CLASS} aria-hidden="true">
-                    {Array.from({ length: 6 }, (_, i) => (
-                        <div key={i} className="aspect-square rounded-lg bg-gray-200 animate-pulse motion-reduce:animate-none" />
-                    ))}
-                </div>
-            )}
+            {showSkeleton && <GallerySkeleton />}
 
             {isEmpty && (
                 <EmptyState
